@@ -17,6 +17,12 @@ public class Jugador
         this.name = "";
         this.ranking = 0;
     }
+
+    public Jugador(String name, double ranking) {
+        this.name = name;
+        this.ranking = ranking;
+    }
+    
     //Gets and Sets
     public String getName() {
         return name;

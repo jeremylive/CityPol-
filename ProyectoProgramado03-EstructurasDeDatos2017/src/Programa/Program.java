@@ -43,12 +43,19 @@ public class Program
         j4.setName("Melanie");
         j4.setRanking(10.5);
         
+        Jugador j5 = new Jugador("Sam", 2.3);
+        Jugador j6 = new Jugador("Diego", 5.3);
+        Jugador j7 = new Jugador("Juan", 2.3);
+        Jugador j8 = new Jugador("Sam", 4.3);
         t.add(j1);
         t.add(j2);
         t.add(j3);
         t.add(j4);
-        
-        t.getRaiz();
+        t.add(j5);
+        t.add(j6);
+        t.add(j7);
+        t.add(j8);
+        t.add(j8);
         String string = t.getString(t.getRaiz(), "", true);
         System.out.println(string);
     }

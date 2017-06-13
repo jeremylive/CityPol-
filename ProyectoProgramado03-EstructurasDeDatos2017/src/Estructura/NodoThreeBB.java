@@ -107,15 +107,26 @@ public class NodoThreeBB
         //
         System.out.println(getCant_keys());
         boolean entry = false;
+        boolean si = true;
+        
         for (int i = 0; i < getCant_keys(); i++) {
             entry = true;
-            if(array_keys.get(i).getName().compareTo(pJugador.getName()) < 0)
+            if(array_keys.get(i).getName().equals(pJugador.getName()))
             {
-                array_keys.add(i, pJugador);                
+                System.out.println("No se ha agragado, está repetido");
+                si = false;
+                break;
+            }
+                
+            
+            if(array_keys.get(i).getName().compareTo(pJugador.getName()) > 0)
+            {
+                array_keys.add(i, pJugador);    
+                si = false;
                 break;
             } 
         }
-        if(!entry){
+        if(!entry || si){
             array_keys.add(pJugador); 
         }
         //System.out.println(array_keys.size());
