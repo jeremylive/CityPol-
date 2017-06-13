@@ -23,29 +23,35 @@ public class TestDijkstraAlgorithm {
         nodes = new ArrayList<>();
         
         edges = new ArrayList<>();
-        for (int i = 0; i < 11; i++) {
-            NodoGrafo location = new NodoGrafo("Node_" + i, "Node_" + i);
+        for (int i = 0; i < 5; i++) {
+            NodoGrafo location = new NodoGrafo("Id: " + i, "Node_" + i);
             nodes.add(location);
         }
 
-        addLane("Edge_0", 0, 1, 85);
-        addLane("Edge_1", 0, 2, 217);
-        addLane("Edge_2", 0, 4, 173);
-        addLane("Edge_3", 2, 6, 186);
-        addLane("Edge_4", 2, 7, 103);
-        addLane("Edge_5", 3, 7, 183);
-        addLane("Edge_6", 5, 8, 250);
-        addLane("Edge_7", 8, 9, 84);
-        addLane("Edge_8", 7, 9, 167);
-        addLane("Edge_9", 4, 9, 502);
-        addLane("Edge_10", 9, 10, 40);
-        addLane("Edge_11", 1, 10, 600);
-
-        // Lets check from location Loc_1 to Loc_10
         Grafo graph = new Grafo(nodes, edges);
-        Dijkstra dijkstra = new Dijkstra(graph);
-        dijkstra.execute(nodes.get(0));
-        LinkedList<NodoGrafo> path = dijkstra.getPath(nodes.get(10));
+        graph.addBorde("Conexion", 0, 1, 10);
+        graph.addBorde("Conexion", 0, 2, 20);
+        graph.addBorde("Conexion", 0, 4, 5);
+        graph.addBorde("Conexion", 1, 2, 2);
+        graph.addBorde("Conexion", 3, 1, 30);
+        graph.addBorde("Conexion", 3, 4, 7);
+        
+        graph.getPaths(graph.getNodo(4));
+        LinkedList<NodoGrafo> path = graph.pathTo(graph.getNodo(1));
+        
+        System.out.println("Del nodo 4 al 1");
+        try{
+            for (NodoGrafo vertex : path) {
+                System.out.println(vertex);
+            }
+        }catch(NullPointerException e)
+        {
+            System.out.println("No hay ruta");
+        }
+        System.out.println("Del nodo 3 al 2");
+        
+        graph.getPaths(graph.getNodo(3));
+        path = graph.pathTo(graph.getNodo(2));
 
         try{
             for (NodoGrafo vertex : path) {
@@ -58,12 +64,7 @@ public class TestDijkstraAlgorithm {
 
     }
 
-    private static void addLane(String laneId, int sourceLocNo, int destLocNo,int duration) 
-    {
-        Borde lane = new Borde(laneId,nodes.get(sourceLocNo), nodes.get(destLocNo), duration );
-        edges.add(lane);
-    }
-    
+ 
 
 }
 

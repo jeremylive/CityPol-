@@ -46,42 +46,42 @@ public class ThreeBB
             raiz = new NodoThreeBB();
             raiz.addKey(pJugador);
         } else {
-            NodoThreeBB node = raiz;
-            while (node != null) {
-                if (node.getCant_hijos() == 0) { //cant_keys
-                    node.addKey(pJugador);
-                    if (node.getCant_keys() <= max_keys) {
+            NodoThreeBB nodo = raiz;
+            while (nodo != null) {
+                if (nodo.getCant_hijos() == 0) { //cant_keys
+                    nodo.addKey(pJugador);
+                    if (nodo.getCant_keys() <= max_keys) {
                         // A-OK
                         break;
                     }                         
                     // Need to split up
-                    split(node);
+                    split(nodo);
                     break;
                 }
                 // Navigate
 
                 // Lesser or equal
-                Jugador lesser = node.getKey(0);
+                Jugador lesser = nodo.getKey(0);
                 if (pJugador.getName().compareTo(lesser.getName()) <= 0) {
-                    node = node.getHijo(0);    
+                    nodo = nodo.getHijo(0);    
                     continue;
                 }
 
                 // Greater
-                int numberOfKeys = node.getCant_keys(); //cant_keys
+                int numberOfKeys = nodo.getCant_keys(); //cant_keys
                 int last = numberOfKeys - 1;
-                Jugador greater = node.getKey(last);
+                Jugador greater = nodo.getKey(last);
                 if (pJugador.getName().compareTo(greater.getName()) > 0) {
-                    node = node.getHijo(numberOfKeys);
+                    nodo = nodo.getHijo(numberOfKeys);
                     continue;
                 }
 
                 // Search internal nodes
-                for (int i = 1; i < node.getCant_keys(); i++) {
-                    Jugador prev = node.getKey(i - 1);
-                    Jugador next = node.getKey(i);
+                for (int i = 1; i < nodo.getCant_keys(); i++) {
+                    Jugador prev = nodo.getKey(i - 1);
+                    Jugador next = nodo.getKey(i);
                     if (pJugador.getName().compareTo(prev.getName()) > 0 && pJugador.getName().compareTo(next.getName()) <= 0) {
-                        node = node.getHijo(i);
+                        nodo = nodo.getHijo(i);
                         break;
                     }
                 }

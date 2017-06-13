@@ -23,12 +23,12 @@ import java.util.Set;
 public class Dijkstra 
 {
 
-    private final List<NodoGrafo> nodes;
-    private final List<Borde> edges;
-    private Set<NodoGrafo> settledNodes;
-    private Set<NodoGrafo> unSettledNodes;
-    private Map<NodoGrafo, NodoGrafo> predecessors;
-    private Map<NodoGrafo, Integer> distance;
+    private List<NodoGrafo> nodos;
+    private List<Borde> bordes;
+    private Set<NodoGrafo> nodosListos;
+    private Set<NodoGrafo> nodosNoListos;
+    private Map<NodoGrafo, NodoGrafo> predecesores;
+    private Map<NodoGrafo, Integer> distancia;
 
     /**
      * Le pasa el grafo al dijkstra
@@ -36,9 +36,8 @@ public class Dijkstra
      */
     public Dijkstra(Grafo graph)
     {
-        // create a copy of the array so that we can operate on this array
-        this.nodes = new ArrayList<>(graph.getNodos());
-        this.edges = new ArrayList<>(graph.getConexiones());
+        this.nodos = new ArrayList<>(graph.getNodos());
+        this.bordes = new ArrayList<>(graph.getConexiones());
     }
 
     /**
@@ -46,96 +45,116 @@ public class Dijkstra
      */
     public Dijkstra() 
     {    
-        this.nodes = null;
-        this.edges = null;
+        this.nodos = null;
+        this.bordes = null;
     }
 
     /**
-     * Inserta el vertice(nodo)
-     * @param source 
+     * Busca rutas
+     * @param origen Nodo del cual se empezará 
      */
-    public void execute(NodoGrafo source) 
+    public void buscarRutas(NodoGrafo origen) 
     {
-        settledNodes = new HashSet<>();
-        unSettledNodes = new HashSet<>();
-        distance = new HashMap<>();
-        predecessors = new HashMap<>();
-        distance.put(source, 0);
-        unSettledNodes.add(source);
-        while (unSettledNodes.size() > 0) {
-            NodoGrafo node = getMinimum(unSettledNodes);
-            settledNodes.add(node);
-            unSettledNodes.remove(node);
-            findMinimalDistances(node);
+        nodosListos = new HashSet<>();
+        nodosNoListos = new HashSet<>();
+        distancia = new HashMap<>();
+        predecesores = new HashMap<>();
+        distancia.put(origen, 0);
+        nodosNoListos.add(origen);
+        while (nodosNoListos.size() > 0) {
+            NodoGrafo nodo = getMinimo(nodosNoListos);
+            nodosListos.add(nodo);
+            nodosNoListos.remove(nodo);
+            encontrarDistanciaMinima(nodo);
         }
     }
 
-    private void findMinimalDistances(NodoGrafo node) 
+    /**
+     * Busca en la lista de nodos adyacentes el nodo con la distancia minima
+     * @param nodo Con el cual hacer el recorrido
+     */
+    private void encontrarDistanciaMinima(NodoGrafo nodo) 
     {
-        List<NodoGrafo> adjacentNodes = (List<NodoGrafo>) getNeighbors(node);
-        for (NodoGrafo target : adjacentNodes) 
+        List<NodoGrafo> adyacentes = (List<NodoGrafo>) getAdyacentes(nodo);
+        //
+        for (NodoGrafo objetivo : adyacentes) 
         {
-            if (getShortestDistance(target) > getShortestDistance(node) + getDistance(node, target)) 
+            if (getDistanciaMasCorta(objetivo) > getDistanciaMasCorta(nodo) + getDistancia(nodo, objetivo)) 
             {
-                distance.put(target, getShortestDistance(node) + getDistance(node, target));
-                predecessors.put(target, node);
-                unSettledNodes.add(target);
+                distancia.put(objetivo, getDistanciaMasCorta(nodo) + getDistancia(nodo, objetivo));
+                predecesores.put(objetivo, nodo);
+                nodosNoListos.add(objetivo);
             }
         }
 
     }
 
-    private int getDistance(NodoGrafo node, NodoGrafo target)
+    private int getDistancia(NodoGrafo origen, NodoGrafo objetivo)
     {
-        for (Borde edge : edges) 
+        for (Borde edge : bordes) 
         {
-            if (edge.getSource().equals(node) && edge.getDestination().equals(target)) 
+            if (edge.getOrigen().equals(origen) && edge.getDestino().equals(objetivo)) 
             {
-                return edge.getWeight();
+                return edge.getDistancia();
             }
         }
         throw new RuntimeException("Should not happen");
     }
 
-    private List<NodoGrafo> getNeighbors(NodoGrafo node) 
+    private List<NodoGrafo> getAdyacentes(NodoGrafo nodo) 
     {
         List<NodoGrafo> neighbors = new ArrayList<>();
-        for (Borde edge : edges) 
+        for (Borde borde : bordes) 
         {
-            if (edge.getSource().equals(node) && !isSettled(edge.getDestination())) 
+            if (borde.getOrigen().equals(nodo) && !estaListo(borde.getDestino())) 
             {
-                neighbors.add(edge.getDestination());
+                neighbors.add(borde.getDestino());
             }
         }
         return neighbors;
     }
 
-    private NodoGrafo getMinimum(Set<NodoGrafo> vertexes) 
+    /**
+     * Busca en adyacentes el nodo mas cercano
+     * @param bordes
+     * @return El nodo más cercano
+     */
+    private NodoGrafo getMinimo(Set<NodoGrafo> bordes) 
     {
-        NodoGrafo minimum = null;
-        for (NodoGrafo vertex : vertexes) 
+        NodoGrafo minimo = null;
+        for (NodoGrafo borde : bordes) 
         {
-            if (minimum == null) 
+            if (minimo == null) 
             {
-                minimum = vertex;
+                minimo = borde;
             } else {
-                if (getShortestDistance(vertex) < getShortestDistance(minimum)) 
+                if (getDistanciaMasCorta(borde) < getDistanciaMasCorta(minimo)) 
                 {
-                    minimum = vertex;
+                    minimo = borde;
                 }
             }
         }
-        return minimum;
+        return minimo;
     }
 
-    private boolean isSettled(NodoGrafo vertex) 
+    /**
+     * Revisa si hay conexion
+     * @param borde Busca la ruta
+     * @return true si existe, false si no
+     */
+    private boolean estaListo(NodoGrafo borde) 
     {
-        return settledNodes.contains(vertex);
+        return nodosListos.contains(borde);
     }
 
-    private int getShortestDistance(NodoGrafo destination) 
+    /**
+     * Busca la distancia minima
+     * @param destino
+     * @return La distancia minima
+     */
+    private int getDistanciaMasCorta(NodoGrafo destino) 
     {
-        Integer d = distance.get(destination);
+        Integer d = distancia.get(destino);
         if (d == null) 
         {
             return Integer.MAX_VALUE;
@@ -145,28 +164,29 @@ public class Dijkstra
         }
     }
 
-    /*
-     * This method returns the path from the source to the selected target and
-     * NULL if no path exists
+    /**
+     * @param objetivo Al cual se requiere llegar
+     * @return Ruta más corta al destino 
      */
-    public LinkedList<NodoGrafo> getPath(NodoGrafo target) 
+    public LinkedList<NodoGrafo> getRuta(NodoGrafo objetivo) 
     {
-        LinkedList<NodoGrafo> path = new LinkedList<>();
-        NodoGrafo step = target;
-        // check if a path exists
-        if (predecessors.get(step) == null) 
+        LinkedList<NodoGrafo> ruta = new LinkedList<>();
+        NodoGrafo paso = objetivo;
+        // Verifico si existe conexion
+        if (predecesores.get(paso) == null) 
         {
             return null;
         }
-        path.add(step);
-        while (predecessors.get(step) != null) 
+        ruta.add(paso);
+        //Añado los caminos más cortios desde el destino al origen
+        while (predecesores.get(paso) != null) 
         {
-            step = predecessors.get(step);
-            path.add(step);
+            paso = predecesores.get(paso);
+            ruta.add(paso);
         }
-        // Put it into the correct order
-        Collections.reverse(path);
-        return path;
+        // Le damos la vuelta para leerlo correctamente
+        Collections.reverse(ruta);
+        return ruta;
     }
 
 }

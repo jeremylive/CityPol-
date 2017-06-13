@@ -6,38 +6,38 @@
 package Estructura;
 
 /**
- * Vertex
+ * Borde, conexion, camino, vertice o como quiera llamarsele
  * @author edgerik
  */
 public class Borde  {
     private final String id;
-    private final NodoGrafo source;
-    private final NodoGrafo destination;
-    private final int weight;
+    private final NodoGrafo origen;
+    private final NodoGrafo destino;
+    private final int distancia;
     public Borde(String id, NodoGrafo source, NodoGrafo destination, int weight) {
         this.id = id;
-        this.source = source;
-        this.destination = destination;
-        this.weight = weight;
+        this.origen = source;
+        this.destino = destination;
+        this.distancia = weight;
     }
 
     public String getId() {
         return id;
     }
-    public NodoGrafo getDestination() {
-        return destination;
+    public NodoGrafo getDestino() {
+        return destino;
     }
 
-    public NodoGrafo getSource() {
-        return source;
+    public NodoGrafo getOrigen() {
+        return origen;
     }
-    public int getWeight() {
-        return weight;
+    public int getDistancia() {
+        return distancia;
     }
 
     @Override
     public String toString() {
-        return source + " " + destination;
+        return origen.toString() + "--" + distancia + "-->" + destino.toString();
     }
 
 

@@ -16,8 +16,8 @@ import java.util.List;
  */
 public class Grafo 
 {
-    private final List<NodoGrafo> nodos;
-    private final List<Borde> conexiones;
+    private List<NodoGrafo> nodos;
+    private List<Borde> conexiones;
     private Dijkstra dijkstra;
     
     
@@ -25,7 +25,7 @@ public class Grafo
     {
         this.nodos = null;
         this.conexiones = null;
-        this.dijkstra = null;
+        this.dijkstra = new Dijkstra();
     }
     
     /**
@@ -56,9 +56,21 @@ public class Grafo
     public void getPaths(NodoGrafo nodo)
     {
         dijkstra = new Dijkstra(this);
-        dijkstra.execute(nodo);
+        dijkstra.buscarRutas(nodo);
     }
     
+    /**
+     * 
+     * @param indice
+     * @return El nodo buscado
+     */
+    public NodoGrafo getNodo(int indice){
+        
+        return nodos.get(indice);
+        
+    }
+            
+           
     
     /**
      * Saca ruta a destino
@@ -67,19 +79,21 @@ public class Grafo
      */
     public LinkedList<NodoGrafo> pathTo(NodoGrafo destino)
     {
-        return dijkstra.getPath(destino);
+        return dijkstra.getRuta(destino);
     }
     
     /**
-     * @param laneId      Identificacion de ruta
-     * @param sourceLocNo Nodo Fuente
-     * @param destLocNo   Nodo Destino
-     * @param duration    Peso de la ruta
+     * @param idCamino      Identificacion de ruta
+     * @param fuente      Nodo Fuente
+     * @param destino     Nodo Destino
+     * @param distancia   Peso de la ruta
      */
-    public void addBorde(String laneId, int sourceLocNo, int destLocNo,int duration) 
+    public void addBorde(String idCamino, int fuente, int destino,int distancia) 
     {
-        Borde lane = new Borde(laneId,nodos.get(sourceLocNo), nodos.get(destLocNo), duration );
-        conexiones.add(lane);
+        Borde ida = new Borde(idCamino,nodos.get(fuente), nodos.get(destino), distancia );
+        Borde vuelta = new Borde (idCamino, nodos.get(destino),nodos.get(fuente),distancia);
+        conexiones.add(ida);
+        conexiones.add(vuelta);
     }
 
     public List<NodoGrafo> getNodos() 
