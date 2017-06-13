@@ -36,12 +36,10 @@ public class TestDijkstraAlgorithm {
         graph.addBorde("Conexion", 3, 1, 30);
         graph.addBorde("Conexion", 3, 4, 7);
         
-        graph.getPaths(graph.getNodo(4));
-        LinkedList<NodoGrafo> path = graph.pathTo(graph.getNodo(1));
-        
+        ;
         System.out.println("Del nodo 4 al 1");
         try{
-            for (NodoGrafo vertex : path) {
+            for (NodoGrafo vertex : graph.getPathFromAtoB(4, 1)) {
                 System.out.println(vertex);
             }
         }catch(NullPointerException e)
@@ -50,11 +48,9 @@ public class TestDijkstraAlgorithm {
         }
         System.out.println("Del nodo 3 al 2");
         
-        graph.getPaths(graph.getNodo(3));
-        path = graph.pathTo(graph.getNodo(2));
-
+        
         try{
-            for (NodoGrafo vertex : path) {
+            for (NodoGrafo vertex : graph.getPathFromAtoB(3, 0)) {
                 System.out.println(vertex);
             }
         }catch(NullPointerException e)

@@ -1,5 +1,7 @@
 package Estructura;
 
+import java.awt.Image;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,13 +13,30 @@ package Estructura;
  * @author edgerik
  */
 public class NodoGrafo {
+    
     final private String id;
     final private String name;
+    private Image thumbnail;
+
+    /**
+     * Nodo con la imagen del lugar
+     * @param id numero de nodo
+     * @param tipoLugar Tipo de lugar
+     * @param thumbnail 
+     */
+    public NodoGrafo(String id, String tipoLugar, Image thumbnail) {
+        this.id = id;
+        this.name = tipoLugar;
+        this.thumbnail = thumbnail;
+    }
 
 
+    
+    
     public NodoGrafo(String id, String name) {
         this.id = id;
         this.name = name;
+        this.thumbnail = null;
     }
     public String getId() {
         return id;

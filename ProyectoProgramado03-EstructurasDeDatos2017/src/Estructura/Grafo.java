@@ -29,7 +29,7 @@ public class Grafo
     }
     
     /**
-     * Constru del grafo
+     * Constructor del grafo
      * @param nodos Lista de nodos
      * @param conexiones Lista de arcos o bordes
      */
@@ -53,12 +53,24 @@ public class Grafo
      * Tomar las rutas más cercanas a nodos
      * @param nodo El nodo del cual sacar rutas
      */
-    public void getPaths(NodoGrafo nodo)
+    public void getDijkstraPaths(NodoGrafo nodo)
     {
         dijkstra = new Dijkstra(this);
         dijkstra.buscarRutas(nodo);
     }
     
+    /**
+     * Devuelve la ruta más cercana del nodo fuente al nodo destino
+     * @param fuente Punto de salida
+     * @param destino Punto de llegada
+     * @return Lista de nodos por los cuales pasar para llegar (Ruta más corta)
+     */
+    public LinkedList<NodoGrafo> getPathFromAtoB(int fuente, int destino)
+    {
+        getDijkstraPaths(getNodo(fuente));
+        return getPathTo(getNodo(destino));
+    }
+              
     /**
      * 
      * @param indice
@@ -77,7 +89,7 @@ public class Grafo
      * @param destino Nodo al cual llegar
      * @return 
      */
-    public LinkedList<NodoGrafo> pathTo(NodoGrafo destino)
+    public LinkedList<NodoGrafo> getPathTo(NodoGrafo destino)
     {
         return dijkstra.getRuta(destino);
     }
@@ -96,11 +108,19 @@ public class Grafo
         conexiones.add(vuelta);
     }
 
+    /**
+     * 
+     * @return Lista de nodos del grafo 
+     */
     public List<NodoGrafo> getNodos() 
     {
         return nodos;
     }
 
+    /**
+     * 
+     * @return Lista de conexiones, puentes o arcos
+     */
     public List<Borde> getConexiones() 
     {
         return conexiones;
