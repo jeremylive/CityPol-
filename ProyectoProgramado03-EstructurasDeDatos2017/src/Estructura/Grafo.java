@@ -3,6 +3,7 @@ package Estructura;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -11,16 +12,20 @@ import java.util.List;
  */
 
 /**
- *
+ * Clase Singleton para manejo global de esta
  * @author edgerik
  */
 public class Grafo 
 {
+    private static Grafo Instance;
     private List<NodoGrafo> nodos;
     private List<Borde> conexiones;
     private Dijkstra dijkstra;
+    private Random random;
     
-    
+    /**
+     * Por si acaso
+     */
     public Grafo() 
     {
         this.nodos = null;
@@ -33,11 +38,41 @@ public class Grafo
      * @param nodos Lista de nodos
      * @param conexiones Lista de arcos o bordes
      */
-    public Grafo(List<NodoGrafo> nodos, List<Borde> conexiones)
+    private Grafo(List<NodoGrafo> nodos, List<Borde> conexiones)
     {
         this.nodos = nodos;
         this.conexiones = conexiones;
         this.dijkstra = new Dijkstra();
+    }
+    
+    /**
+     * Patron singleton para manejar el grafo y sus funciones desde cualquier clase
+     * @param nodos Lista de nodos que tendrá el arbol
+     * @param conexiones Conexiones o rutas de nodo a nodo
+     * @return Instancia de grafo
+     */
+    public synchronized static Grafo getInstance(List<NodoGrafo> nodos, List<Borde> conexiones)
+    {
+        if(Instance == null)
+        {
+            Instance = new Grafo(nodos, conexiones);
+        }
+        return Instance;
+        
+    }
+    
+    /**
+     * 
+     * @return Instancia global de Grafo
+     */
+    public synchronized static Grafo getInstance()
+    {
+        if(Instance == null)
+        {
+            Instance = new Grafo();
+        }
+        return Instance;
+        
     }
     
     /**
@@ -72,8 +107,8 @@ public class Grafo
     }
               
     /**
-     * 
-     * @param indice
+     * Devuelve el nodo en la lista de nodos del grafo
+     * @param indice para buscar en lista
      * @return El nodo buscado
      */
     public NodoGrafo getNodo(int indice){
@@ -82,7 +117,17 @@ public class Grafo
         
     }
             
-           
+    /**
+     * Brinda posiciones aletorias a los nodos para poder pintarlos
+     */
+    public void crearPosicionesNodos(){
+        nodos.stream().map((nodo) -> {
+            nodo.setPosX(random.nextInt(600)+150);
+            return nodo;
+        }).forEachOrdered((nodo) -> {
+            nodo.setPosY(random.nextInt(400)+200);
+        });
+    }
     
     /**
      * Saca ruta a destino

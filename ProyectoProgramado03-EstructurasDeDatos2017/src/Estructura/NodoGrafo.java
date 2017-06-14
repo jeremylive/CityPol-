@@ -15,8 +15,11 @@ import java.awt.Image;
 public class NodoGrafo {
     
     final private String id;
+    private boolean iluminar;
     final private String name;
     private Image thumbnail;
+    private int posX;
+    private int posY;
 
     /**
      * Nodo con la imagen del lugar
@@ -28,24 +31,60 @@ public class NodoGrafo {
         this.id = id;
         this.name = tipoLugar;
         this.thumbnail = thumbnail;
+        this.iluminar = false;
     }
 
-
-    
     
     public NodoGrafo(String id, String name) {
         this.id = id;
         this.name = name;
         this.thumbnail = null;
+        this.iluminar = false;
     }
     public String getId() {
         return id;
+    }
+
+    public boolean isIluminar() {
+        return iluminar;
+    }
+
+    public void setIluminar(boolean iluminar) {
+        this.iluminar = iluminar;
+    }
+
+    public Image getThumbnail() {
+        return thumbnail;
+    }
+
+    public void setThumbnail(Image thumbnail) {
+        this.thumbnail = thumbnail;
+    }
+
+    public int getPosX() {
+        return posX;
+    }
+
+    public void setPosX(int posX) {
+        this.posX = posX;
+    }
+
+    public int getPosY() {
+        return posY;
+    }
+
+    public void setPosY(int posY) {
+        this.posY = posY;
     }
 
     public String getName() {
         return name;
     }
 
+    /**
+     * Crea codigo hash para manejo de nodos
+     * @return La posicion a insertar en la tabla
+     */
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -54,6 +93,11 @@ public class NodoGrafo {
         return result;
     }
 
+    /**
+     * Para comparar con otros nodos
+     * @param obj con el cual comparar
+     * @return true si es igual, false si no
+     */
     @Override
     public boolean equals(Object obj) {
         if (this == obj)
