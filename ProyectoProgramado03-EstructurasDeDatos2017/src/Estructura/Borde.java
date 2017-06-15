@@ -14,6 +14,8 @@ public class Borde  {
     private final NodoGrafo origen;
     private final NodoGrafo destino;
     private final int distancia;
+    private boolean iluminar;
+    
     public Borde(String id, NodoGrafo source, NodoGrafo destination, int weight) {
         this.id = id;
         this.origen = source;
@@ -27,6 +29,15 @@ public class Borde  {
     public NodoGrafo getDestino() {
         return destino;
     }
+
+    public boolean isIluminar() {
+        return iluminar;
+    }
+
+    public void setIluminar(boolean iluminar) {
+        this.iluminar = iluminar;
+    }
+    
 
     public NodoGrafo getOrigen() {
         return origen;

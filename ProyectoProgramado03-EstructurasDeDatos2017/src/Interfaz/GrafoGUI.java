@@ -5,22 +5,24 @@
  */
 package Interfaz;
 
+import Estructura.Borde;
 import Estructura.Grafo;
 import Estructura.NodoGrafo;
+import Programa.IConstants;
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.util.Random;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  *
  * @author Curso
  */
-public class GrafoGUI extends javax.swing.JFrame {
+public class GrafoGUI extends javax.swing.JFrame implements Observer{
 
     private Image dbImage;
     private Graphics dbg;
-    private final int ancho_nodo = 25;
-    private Random random;
     
     /**
      * Creates new form GrafoGUI
@@ -54,11 +56,11 @@ public class GrafoGUI extends javax.swing.JFrame {
         PanelGrafo.setLayout(PanelGrafoLayout);
         PanelGrafoLayout.setHorizontalGroup(
             PanelGrafoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1280, Short.MAX_VALUE)
+            .addGap(0, 1598, Short.MAX_VALUE)
         );
         PanelGrafoLayout.setVerticalGroup(
             PanelGrafoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 615, Short.MAX_VALUE)
+            .addGap(0, 691, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -100,18 +102,40 @@ public class GrafoGUI extends javax.swing.JFrame {
         paintComponent(dbg);
         g.drawImage(dbImage, 0, 0, this);
     }
+    
+    
     public void paintComponent(Graphics g)
     {
         super.paint(g);
-        Graphics panel = PanelGrafo.getGraphics();
     
-        g.fillOval(300, 300, 20, 20);
         //Pintado del grafo
+        //g.setColor(Color.GREEN);
+        int medida = IConstants.medidaNodo/2;
+
+        g.setColor(Color.red);
+        for (Borde conexion : Grafo.getInstance().getConexiones()) {
+            NodoGrafo origen = conexion.getOrigen();
+            NodoGrafo destino = conexion.getDestino();
+            
+            g.drawLine(origen.getPosX()+medida, origen.getPosY()+medida, destino.getPosX()+medida, destino.getPosY()+medida);
+            
+            
+            
+            g.drawString(Integer.toString(conexion.getDistancia()),  destino.getPosX() - origen.getPosX(),  destino.getPosY() - origen.getPosY());
+        }
+        medida *= 2;
+        
         for(NodoGrafo nodo : Grafo.getInstance().getNodos())
         {
-            g.fillOval(nodo.getPosX(), nodo.getPosY(), ancho_nodo, ancho_nodo);
-            g.drawString(nodo.getName(), nodo.getPosX()+ancho_nodo/2,nodo.getPosY()+ancho_nodo/2 );
+            g.setColor(Color.white);
+            g.fillOval(nodo.getPosX(), nodo.getPosY(), medida * 5/4, medida);
+            g.setColor(Color.BLACK);
+            g.drawString(nodo.getName(), nodo.getPosX()+(medida/4),nodo.getPosY()+(medida - medida/4) );
         }
+        
+        
+        
+        
         repaint();
     }
     
@@ -154,4 +178,9 @@ public class GrafoGUI extends javax.swing.JFrame {
     private javax.swing.JPanel PanelGrafo;
     private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update(Observable o, Object arg) {
+        
+    }
 }

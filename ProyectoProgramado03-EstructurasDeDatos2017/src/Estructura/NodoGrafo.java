@@ -15,7 +15,6 @@ import java.awt.Image;
 public class NodoGrafo {
     
     final private String id;
-    private boolean iluminar;
     final private String name;
     private Image thumbnail;
     private int posX;
@@ -25,13 +24,14 @@ public class NodoGrafo {
      * Nodo con la imagen del lugar
      * @param id numero de nodo
      * @param tipoLugar Tipo de lugar
-     * @param thumbnail 
+     * @param thumbnail Imagen del lugar visitado
      */
     public NodoGrafo(String id, String tipoLugar, Image thumbnail) {
         this.id = id;
         this.name = tipoLugar;
         this.thumbnail = thumbnail;
-        this.iluminar = false;
+        this.posX = 0;
+        this.posY = 0;
     }
 
     
@@ -39,18 +39,11 @@ public class NodoGrafo {
         this.id = id;
         this.name = name;
         this.thumbnail = null;
-        this.iluminar = false;
+        this.posX = 0;
+        this.posY = 0;
     }
     public String getId() {
         return id;
-    }
-
-    public boolean isIluminar() {
-        return iluminar;
-    }
-
-    public void setIluminar(boolean iluminar) {
-        this.iluminar = iluminar;
     }
 
     public Image getThumbnail() {
