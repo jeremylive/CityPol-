@@ -4,12 +4,13 @@
  * and open the template in the editor.
  */
 package Estructura;
-
 /**
  *
  * @author edgerik
  */
+import Controlador.JsonManager;
 import Interfaz.GrafoGUI;
+import Programa.IConstants;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,14 +23,14 @@ public class TestDijkstraAlgorithm {
     {
         
         nodes = new ArrayList<>();
-        edges = new ArrayList<>();
-        for (int i = 0; i < 10; i++) 
+    for (int i = 0; i < 10; i++) 
         {
             NodoGrafo location = new NodoGrafo("" + i, "N"+i);
             nodes.add(location);
         }
 
         
+        edges = new ArrayList<>();
         Grafo graph = Grafo.getInstance(nodes, edges);
         graph.addBorde("Conexion", 0, 1, 10);
         graph.addBorde("Conexion", 0, 2, 20);
@@ -50,10 +51,11 @@ public class TestDijkstraAlgorithm {
             System.out.println(n.getPosX()+ " , "+ n.getPosY());
         }
         
-        GrafoGUI interfaz = new GrafoGUI();
-        interfaz.setVisible(true);
-        interfaz.repaint();
-        
+//        GrafoGUI interfaz = new GrafoGUI();
+//        interfaz.setVisible(true);
+//        
+        JsonManager jm = new JsonManager();
+        jm.getJSONFromAPI(IConstants.APIRequest);
 
     }
 

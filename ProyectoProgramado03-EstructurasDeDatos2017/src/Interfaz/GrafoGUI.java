@@ -12,8 +12,11 @@ import Programa.IConstants;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Toolkit;
+import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -21,7 +24,8 @@ import java.util.Observer;
  */
 public class GrafoGUI extends javax.swing.JFrame implements Observer{
 
-    private Image dbImage;
+    private Image dbImage , icono;
+    private Toolkit tools;
     private Graphics dbg;
     
     /**
@@ -30,6 +34,9 @@ public class GrafoGUI extends javax.swing.JFrame implements Observer{
     public GrafoGUI() 
     {
         initComponents();
+        tools = Toolkit.getDefaultToolkit();
+        icono = tools.getImage("C:\\Users\\JUaNIGNaCIO\\Desktop\\foto.jpg");
+        icono = icono.getScaledInstance(IConstants.medidaNodo * IConstants.escalaImagen, IConstants.medidaNodo * IConstants.escalaImagen, Image.SCALE_SMOOTH);
     }
 
     /**
@@ -103,6 +110,19 @@ public class GrafoGUI extends javax.swing.JFrame implements Observer{
         g.drawImage(dbImage, 0, 0, this);
     }
     
+    public int getMid(int origen, int destino){
+        
+        int diferencia;
+        if(origen < destino)
+        {
+                diferencia = destino - origen;
+        }else{
+                diferencia = origen - destino;
+                origen = destino;    
+        }
+        origen += diferencia /2;
+        return origen;
+    }
     
     public void paintComponent(Graphics g)
     {
@@ -111,26 +131,32 @@ public class GrafoGUI extends javax.swing.JFrame implements Observer{
         //Pintado del grafo
         //g.setColor(Color.GREEN);
         int medida = IConstants.medidaNodo/2;
-
+        int x,y;
+        
         g.setColor(Color.red);
         for (Borde conexion : Grafo.getInstance().getConexiones()) {
             NodoGrafo origen = conexion.getOrigen();
             NodoGrafo destino = conexion.getDestino();
             
+            //Dibuja la linea de origen a destino
             g.drawLine(origen.getPosX()+medida, origen.getPosY()+medida, destino.getPosX()+medida, destino.getPosY()+medida);
             
+            x = getMid(origen.getPosX(), destino.getPosX());
+            y = getMid(origen.getPosY(), destino.getPosY());
             
-            
-            g.drawString(Integer.toString(conexion.getDistancia()),  destino.getPosX() - origen.getPosX(),  destino.getPosY() - origen.getPosY());
+            //Pone el texto en medio del la linea con el peso correspondiente
+            g.drawString(Integer.toString(conexion.getDistancia()),  x,  y);
         }
         medida *= 2;
         
         for(NodoGrafo nodo : Grafo.getInstance().getNodos())
         {
             g.setColor(Color.white);
-            g.fillOval(nodo.getPosX(), nodo.getPosY(), medida * 5/4, medida);
-            g.setColor(Color.BLACK);
-            g.drawString(nodo.getName(), nodo.getPosX()+(medida/4),nodo.getPosY()+(medida - medida/4) );
+            //g.fillOval(nodo.getPosX(), nodo.getPosY(), medida * 5/4, medida);
+            g.drawImage(icono, nodo.getPosX(), nodo.getPosY(), this);
+            
+            //g.setColor(Color.BLACK);
+            //g.drawString(nodo.getName(), nodo.getPosX()+(medida/4),nodo.getPosY()+(medida - medida/4) );
         }
         
         
