@@ -32,8 +32,8 @@ public class Grafo implements Observable{
      * Por si acaso
      */
     public Grafo() {
-        this.nodos = null;
-        this.conexiones = null;
+        this.nodos = new ArrayList<>();
+        this.conexiones = new ArrayList<>();
         this.dijkstra = new Dijkstra();
         this.random = new Random();
         this.puntosEnPantalla = new ArrayList<>();
@@ -66,7 +66,12 @@ public class Grafo implements Observable{
             Instance = new Grafo(nodos, conexiones);
         }
         return Instance;
-
+    }
+    
+    public synchronized static Grafo cambiarInstancia(List<NodoGrafo> nodos, List<Borde> conexiones)
+    {
+        Instance = new Grafo(nodos, conexiones);
+        return Instance;
     }
 
     /**
@@ -86,7 +91,8 @@ public class Grafo implements Observable{
      *
      * @param nuevo El nodo a insertar
      */
-    public void addNodo(NodoGrafo nuevo) {
+    public void addNodo(NodoGrafo nuevo) 
+    {
         nodos.add(nuevo);
     }
 
@@ -95,7 +101,8 @@ public class Grafo implements Observable{
      *
      * @param nodo El nodo del cual sacar rutas
      */
-    public void getDijkstraPaths(NodoGrafo nodo) {
+    public void getDijkstraPaths(NodoGrafo nodo) 
+    {
         dijkstra = new Dijkstra(this);
         dijkstra.buscarRutas(nodo);
     }
@@ -107,7 +114,8 @@ public class Grafo implements Observable{
      * @param destino Punto de llegada
      * @return Lista de nodos por los cuales pasar para llegar (Ruta más corta)
      */
-    public LinkedList<NodoGrafo> getPathFromAtoB(int fuente, int destino) {
+    public LinkedList<NodoGrafo> getPathFromAtoB(int fuente, int destino) 
+    {
         getDijkstraPaths(getNodo(fuente));
         return getPathTo(getNodo(destino));
     }
@@ -118,16 +126,16 @@ public class Grafo implements Observable{
      * @param indice para buscar en lista
      * @return El nodo buscado
      */
-    public NodoGrafo getNodo(int indice) {
-
+    public NodoGrafo getNodo(int indice) 
+    {
         return nodos.get(indice);
-
     }
 
     /**
      * Brinda posiciones aletorias a los nodos para poder pintarlos
      */
-    public void crearPosicionesNodos() {
+    public void crearPosicionesNodos() 
+    {
         int x =0, y =0;
         
         for (NodoGrafo nodo : nodos) 

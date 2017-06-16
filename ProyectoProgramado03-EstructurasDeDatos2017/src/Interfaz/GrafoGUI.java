@@ -52,6 +52,8 @@ public class GrafoGUI extends javax.swing.JFrame implements Observer{
         PanelGrafo = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBounds(new java.awt.Rectangle(0, 0, 0, 0));
+        setSize(new java.awt.Dimension(1550, 900));
 
         PanelGrafo.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -63,11 +65,11 @@ public class GrafoGUI extends javax.swing.JFrame implements Observer{
         PanelGrafo.setLayout(PanelGrafoLayout);
         PanelGrafoLayout.setHorizontalGroup(
             PanelGrafoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1598, Short.MAX_VALUE)
+            .addGap(0, 1980, Short.MAX_VALUE)
         );
         PanelGrafoLayout.setVerticalGroup(
             PanelGrafoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 691, Short.MAX_VALUE)
+            .addGap(0, 815, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -133,7 +135,7 @@ public class GrafoGUI extends javax.swing.JFrame implements Observer{
         int medida = IConstants.medidaNodo/2;
         int x,y;
         
-        g.setColor(Color.red);
+        g.setColor(Color.white);
         for (Borde conexion : Grafo.getInstance().getConexiones()) {
             NodoGrafo origen = conexion.getOrigen();
             NodoGrafo destino = conexion.getDestino();
@@ -151,12 +153,12 @@ public class GrafoGUI extends javax.swing.JFrame implements Observer{
         
         for(NodoGrafo nodo : Grafo.getInstance().getNodos())
         {
-            g.setColor(Color.white);
+            g.setColor(Color.black);
             //g.fillOval(nodo.getPosX(), nodo.getPosY(), medida * 5/4, medida);
-            g.drawImage(icono, nodo.getPosX(), nodo.getPosY(), this);
+            g.drawImage(nodo.getLugar().getFoto_lugar(), nodo.getPosX(), nodo.getPosY(), this);
             
             //g.setColor(Color.BLACK);
-            //g.drawString(nodo.getName(), nodo.getPosX()+(medida/4),nodo.getPosY()+(medida - medida/4) );
+            g.drawString(nodo.getName(), nodo.getPosX()-(medida/4),nodo.getPosY()-(medida - medida/4) );
         }
         
         
