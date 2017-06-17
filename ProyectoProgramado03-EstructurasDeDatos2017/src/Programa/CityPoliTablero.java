@@ -32,7 +32,7 @@ public class CityPoliTablero implements Runnable {
         this.jugadorA = new Jugador();
         this.jugadorB = new Jugador();
         this.ventanaTablero = new Thread();
-        random = new Random();
+        this.random = new Random();
     }
     //Gets and Sets
 
