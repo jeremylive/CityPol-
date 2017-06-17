@@ -51,7 +51,7 @@ public class ThreeBB {
         this.nodo_auxiliar = new NodoThreeBB();
         this.derecho = new NodoThreeBB();
         this.izquierdo = new NodoThreeBB();
-        this.indice_medio = llaves_totales*IConstants.porcentaje_llenado;    //(2*llaves_totales)/3
+        this.indice_medio = Math.round(llaves_totales*IConstants.porcentaje_llenado);    //(2*llaves_totales)/3
         this.valor_medio = nodo_auxiliar.getKey(indice_medio);
         this.total_hijos = 0;
     }
@@ -193,7 +193,7 @@ public class ThreeBB {
         llaves_totales = nodo_auxiliar.getCant_keys();
         total_hijos = nodo_auxiliar.getCant_hijos();
         //Inicializo el indice medio, osea 2/3* el total de llaves 
-        indice_medio = llaves_totales*IConstants.porcentaje_llenado; //(2*llaves_totales)/3
+        indice_medio = Math.round(llaves_totales*IConstants.porcentaje_llenado); //(2*llaves_totales)/3
         //Obtengo la pasicion media
         valor_medio = nodo_auxiliar.getKey(indice_medio);
         /*Divido el nodo en dos*/
