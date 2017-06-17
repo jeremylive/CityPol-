@@ -2,12 +2,13 @@ package Estructura;
 
 import Programa.IConstants;
 import java.awt.Point;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Observable;
 import java.util.Random;
 import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -19,9 +20,8 @@ import javafx.beans.Observable;
  *
  * @author edgerik
  */
-public class Grafo implements Observable{
+public class Grafo extends Observable{
 
-    private static Grafo Instance;
     private List<NodoGrafo> nodos;
     private List<Borde> conexiones;
     private Dijkstra dijkstra;
@@ -60,7 +60,7 @@ public class Grafo implements Observable{
      * @param nodos Lista de nodos que tendrá el arbol
      * @param conexiones Conexiones o rutas de nodo a nodo
      * @return Instancia de grafo
-     */
+     *
     public synchronized static Grafo getInstance(List<NodoGrafo> nodos, List<Borde> conexiones) {
         if (Instance == null) {
             Instance = new Grafo(nodos, conexiones);
@@ -77,7 +77,7 @@ public class Grafo implements Observable{
     /**
      *
      * @return Instancia global de Grafo
-     */
+     *
     public synchronized static Grafo getInstance() {
         if (Instance == null) {
             Instance = new Grafo();
@@ -85,7 +85,7 @@ public class Grafo implements Observable{
         return Instance;
 
     }
-
+*/
     /**
      * Agregar nodo a la lista
      *
@@ -150,6 +150,57 @@ public class Grafo implements Observable{
         }
     }
 
+    /**
+     * Mide las distancias de nodo a nodo y crea conexiones entre ellos
+     * dependiendo del la latitud y longitud del Lugar del Nodo
+     */
+    public void crearConexiones()
+    {
+        double distanciaX, distanciaY, hipotenusa;
+        for (NodoGrafo origen : nodos) {
+            NodoGrafo destino;
+            for(int i = 0; i< IConstants.conexionesPorNodo;i++)
+            {
+                int ran = random.nextInt(nodos.size());
+                destino = nodos.get(ran);
+                distanciaX = getDistancia(origen.getLugar().getLatitud()    ,   destino.getLugar().getLatitud());
+                distanciaY = getDistancia(origen.getLugar().getLongitud()   ,   destino.getLugar().getLongitud());
+                distanciaX = Math.pow(distanciaX, 2);
+                distanciaY = Math.pow(distanciaY, 2);
+                hipotenusa = Math.sqrt(distanciaX + distanciaY);
+                hipotenusa = hipotenusa * IConstants.escalaDistancia;
+                DecimalFormat df2 = new DecimalFormat(".#");
+                hipotenusa = Double.valueOf(df2.format(hipotenusa));
+                addBorde("", origen , destino, hipotenusa);
+            }
+            
+        }
+    }
+    
+    /**
+     * Saca la distancia de una coordenada
+     * @param origen nodo inicio
+     * @param destino nodo al cual llegar
+     * @return la distancia de origen a destino
+     */
+    private double getDistancia(double origen, double destino)
+    {
+        double diferencia;
+        
+        if(origen < destino)
+            diferencia = destino - origen;
+        else
+            diferencia = origen - destino;
+        
+        return diferencia;
+    }
+    
+    /**
+     * Dice si la posicion aleatoria dada es valida
+     * @param x en pantalla
+     * @param y en pantalla
+     * @return true si el punto(x,y) es valido
+     */
     private boolean inListaPuntos(int x, int y)
     {
         boolean encontrado = false;
@@ -174,21 +225,40 @@ public class Grafo implements Observable{
      * @param destino Nodo al cual llegar
      * @return
      */
-    public LinkedList<NodoGrafo> getPathTo(NodoGrafo destino) {
+    public LinkedList<NodoGrafo> getPathTo(NodoGrafo destino) 
+    {
         return dijkstra.getRuta(destino);
     }
 
+    public void lightUpPath(NodoGrafo origen, NodoGrafo destino){
+        
+    }
+    
     /**
      * @param idCamino Identificacion de ruta
      * @param fuente Nodo Fuente
      * @param destino Nodo Destino
      * @param distancia Peso de la ruta
      */
-    public void addBorde(String idCamino, int fuente, int destino, int distancia) {
-        Borde ida = new Borde(idCamino, nodos.get(fuente), nodos.get(destino), distancia);
-        Borde vuelta = new Borde(idCamino, nodos.get(destino), nodos.get(fuente), distancia);
-        conexiones.add(ida);
-        conexiones.add(vuelta);
+    public void addBorde(String idCamino, NodoGrafo fuente, NodoGrafo destino, double distancia) 
+    {
+        
+        boolean existe = false;
+        for (Borde conexion : conexiones) 
+        {
+            if( conexion.getOrigen().equals(fuente) && conexion.getDestino().equals(destino))
+            {
+                existe = true;
+                break;
+            }
+        }
+        if(!existe){
+            Borde ida = new Borde(idCamino, fuente, destino, distancia);
+            Borde vuelta = new Borde(idCamino, destino, fuente, distancia);
+
+            conexiones.add(ida);
+            conexiones.add(vuelta);
+        }
     }
 
     /**
@@ -207,14 +277,5 @@ public class Grafo implements Observable{
         return conexiones;
     }
 
-    @Override
-    public void addListener(InvalidationListener il) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void removeListener(InvalidationListener il) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
 }

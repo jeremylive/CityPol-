@@ -28,7 +28,7 @@ public class Dijkstra
     private Set<NodoGrafo> nodosListos;
     private Set<NodoGrafo> nodosNoListos;
     private Map<NodoGrafo, NodoGrafo> predecesores;
-    private Map<NodoGrafo, Integer> distancia;
+    private Map<NodoGrafo, Double> distancia;
 
     /**
      * Le pasa el grafo al dijkstra
@@ -59,7 +59,7 @@ public class Dijkstra
         nodosNoListos = new HashSet<>();
         distancia = new HashMap<>();
         predecesores = new HashMap<>();
-        distancia.put(origen, 0);
+        distancia.put(origen, 0.0);
         nodosNoListos.add(origen);
         while (nodosNoListos.size() > 0) {
             NodoGrafo nodo = getMinimo(nodosNoListos);
@@ -89,7 +89,7 @@ public class Dijkstra
 
     }
 
-    private int getDistancia(NodoGrafo origen, NodoGrafo objetivo)
+    private double getDistancia(NodoGrafo origen, NodoGrafo objetivo)
     {
         for (Borde edge : bordes) 
         {
@@ -152,9 +152,9 @@ public class Dijkstra
      * @param destino
      * @return La distancia minima
      */
-    private int getDistanciaMasCorta(NodoGrafo destino) 
+    private double getDistanciaMasCorta(NodoGrafo destino) 
     {
-        Integer d = distancia.get(destino);
+        Double d = distancia.get(destino);
         if (d == null) 
         {
             return Integer.MAX_VALUE;
@@ -178,7 +178,7 @@ public class Dijkstra
             return null;
         }
         ruta.add(paso);
-        //Añado los caminos más cortios desde el destino al origen
+        //Añado los caminos más cortos desde el destino al origen
         while (predecesores.get(paso) != null) 
         {
             paso = predecesores.get(paso);

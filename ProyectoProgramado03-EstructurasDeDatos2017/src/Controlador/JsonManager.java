@@ -40,10 +40,30 @@ public class JsonManager {
     private JSONParser lector;
     private JSONObject objeto;
     private JSONArray tipos;
+    private Grafo grafo;
     private Iterator<JSONObject> iter;
     private URL link;
     private final HttpClient client = HttpClients.createDefault();
 
+    public void setGrafo(Grafo grafo) {
+        this.grafo = grafo;
+    }
+
+    public Grafo getGrafo() {
+        return grafo;
+    }
+
+    
+    public void construirGrafo(ArrayList<String> tipos, double lat, double lon)
+    {
+        for(int i = 0; i<tipos.size();i++)
+        {
+            getJSONFromAPI(tipos.get(i), lat, lon);
+        }
+        grafo.crearPosicionesNodos();
+        grafo.crearConexiones();
+    }
+    
     public void getJSONFromAPI(String type, double lat, double lon) {
 
         String response = "";
@@ -51,7 +71,7 @@ public class JsonManager {
             URIBuilder builder = new URIBuilder().setScheme("https").setHost("maps.googleapis.com").setPath("/maps/api/place/search/json");
 
             builder.addParameter("location", lat + "," + lon);
-            builder.addParameter("radius", "500");
+            builder.addParameter("radius", IConstants.radioBusqueda);
             builder.addParameter("types", type);
             builder.addParameter("sensor", "true");
             builder.addParameter("key", IConstants.APIKEY);
@@ -125,7 +145,7 @@ public class JsonManager {
                 //System.out.println(lugar.toString());
                 //Se crea el nuevo nodo
                 
-                Grafo.getInstance().addNodo(new NodoGrafo("ID:"+Grafo.getInstance().getNodos().size(), lugar));
+                grafo.addNodo(new NodoGrafo("ID:"+grafo.getNodos().size(), lugar));
                 cont_nodos++;
                 
             }while(iter.hasNext() && cont_nodos < IConstants.nodosPorPeticion);

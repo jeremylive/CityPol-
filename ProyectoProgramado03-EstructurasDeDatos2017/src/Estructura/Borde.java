@@ -13,10 +13,10 @@ public class Borde  {
     private final String id;
     private final NodoGrafo origen;
     private final NodoGrafo destino;
-    private final int distancia;
+    private final double distancia;
     private boolean iluminar;
     
-    public Borde(String id, NodoGrafo source, NodoGrafo destination, int weight) {
+    public Borde(String id, NodoGrafo source, NodoGrafo destination, double weight) {
         this.id = id;
         this.origen = source;
         this.destino = destination;
@@ -42,7 +42,7 @@ public class Borde  {
     public NodoGrafo getOrigen() {
         return origen;
     }
-    public int getDistancia() {
+    public double getDistancia() {
         return distancia;
     }
 

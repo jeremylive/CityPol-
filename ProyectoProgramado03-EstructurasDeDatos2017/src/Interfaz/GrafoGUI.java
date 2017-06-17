@@ -14,6 +14,7 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.io.File;
+import java.util.ConcurrentModificationException;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.ImageIcon;
@@ -27,6 +28,7 @@ public class GrafoGUI extends javax.swing.JFrame implements Observer{
     private Image dbImage , icono;
     private Toolkit tools;
     private Graphics dbg;
+    private Grafo grafo;
     
     /**
      * Creates new form GrafoGUI
@@ -116,9 +118,8 @@ public class GrafoGUI extends javax.swing.JFrame implements Observer{
         
         int diferencia;
         if(origen < destino)
-        {
-                diferencia = destino - origen;
-        }else{
+            diferencia = destino - origen;
+        else{
                 diferencia = origen - destino;
                 origen = destino;    
         }
@@ -135,11 +136,11 @@ public class GrafoGUI extends javax.swing.JFrame implements Observer{
         int medida = IConstants.medidaNodo/2;
         int x,y;
         
-        g.setColor(Color.white);
-        for (Borde conexion : Grafo.getInstance().getConexiones()) {
+        
+        for (Borde conexion : grafo.getConexiones()) {
+            g.setColor(Color.white);
             NodoGrafo origen = conexion.getOrigen();
             NodoGrafo destino = conexion.getDestino();
-            
             //Dibuja la linea de origen a destino
             g.drawLine(origen.getPosX()+medida, origen.getPosY()+medida, destino.getPosX()+medida, destino.getPosY()+medida);
             
@@ -147,18 +148,24 @@ public class GrafoGUI extends javax.swing.JFrame implements Observer{
             y = getMid(origen.getPosY(), destino.getPosY());
             
             //Pone el texto en medio del la linea con el peso correspondiente
-            g.drawString(Integer.toString(conexion.getDistancia()),  x,  y);
+            g.setColor(Color.black);
+            g.drawString(Double.toString(conexion.getDistancia()),  x,  y);
         }
         medida *= 2;
-        
-        for(NodoGrafo nodo : Grafo.getInstance().getNodos())
-        {
-            g.setColor(Color.black);
-            //g.fillOval(nodo.getPosX(), nodo.getPosY(), medida * 5/4, medida);
-            g.drawImage(nodo.getLugar().getFoto_lugar(), nodo.getPosX(), nodo.getPosY(), this);
+        try{
             
-            //g.setColor(Color.BLACK);
-            g.drawString(nodo.getName(), nodo.getPosX()-(medida/4),nodo.getPosY()-(medida - medida/4) );
+        
+            for(NodoGrafo nodo : grafo.getNodos())
+            {
+                //g.fillOval(nodo.getPosX(), nodo.getPosY(), medida * 5/4, medida);
+                g.drawImage(nodo.getLugar().getFoto_lugar(), nodo.getPosX(), nodo.getPosY(), this);
+
+                //g.setColor(Color.BLACK);
+                g.drawString(nodo.getName(), nodo.getPosX()-(medida/4),nodo.getPosY()-(medida - medida/4) );
+            }
+        }catch(ConcurrentModificationException e)
+        {
+            System.out.println("Se ha cambiado el grafo");
         }
         
         
@@ -207,8 +214,13 @@ public class GrafoGUI extends javax.swing.JFrame implements Observer{
     private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
 
+    
+    public void update(Grafo arg) {
+        grafo = arg;
+    }
+
     @Override
     public void update(Observable o, Object arg) {
-        
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
