@@ -18,25 +18,30 @@ public class Jugador
         this.ranking = 0;
     }
 
-    public Jugador(String name, double ranking) {
+    public Jugador(String name, double ranking) 
+    {
         this.name = name;
         this.ranking = ranking;
     }
     
     //Gets and Sets
-    public String getName() {
+    public String getName() 
+    {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(String name) 
+    {
         this.name = name;
     }
     
-    public double getRanking() {
+    public double getRanking() 
+    {
         return ranking;
     }
 
-    public void setRanking(double ranking) {
+    public void setRanking(double ranking) 
+    {
         this.ranking = ranking;
     }
 

@@ -6,8 +6,8 @@ package Programa;
  */
 public class IConstants 
 {
-    public static final int panelHeight = 900;
-    public static final int panelWidth = 1600;
+    public static final int panelHeight = 700;
+    public static final int panelWidth = 1000;
     public static final String radioBusqueda = "2000";
     public static final int menuHeight = 500;
     public static final int menuWidth = 600;
@@ -20,4 +20,6 @@ public class IConstants
     public static final int nodosPorPeticion = 4;
     public static final int conexionesPorNodo = 2;
     public static final int escalaDistancia = 105000;
+    public static final double defaultRate = 4.0;
+    public static final float porcentajeLlenado = (float) 2/3;
 }

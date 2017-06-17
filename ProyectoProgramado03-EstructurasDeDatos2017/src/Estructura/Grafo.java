@@ -27,7 +27,9 @@ public class Grafo extends Observable{
     private Dijkstra dijkstra;
     private Random random;
     private ArrayList<Point> puntosEnPantalla;
-
+    private ArrayList<Borde> rutaActualA;
+    private ArrayList<Borde> rutaActualB;
+    
     /**
      * Por si acaso
      */

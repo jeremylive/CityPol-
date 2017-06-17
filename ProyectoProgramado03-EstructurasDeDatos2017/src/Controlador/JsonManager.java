@@ -45,28 +45,29 @@ public class JsonManager {
     private URL link;
     private final HttpClient client = HttpClients.createDefault();
 
-    public void setGrafo(Grafo grafo) {
-        this.grafo = grafo;
-    }
 
-    public Grafo getGrafo() {
-        return grafo;
-    }
-
-    
-    public void construirGrafo(ArrayList<String> tipos, double lat, double lon)
+    /**
+     * Pido el grafo correspodiente a la ubicacion dada
+     * @param tipos Tipos de comercios que se obtendran
+     * @param lat Posicion y en mapa real
+     * @param lon Posicion x en mapa real
+     * @return Grafo construido con posiciones en pantalla y sus conexiones respectivas
+     */
+    public Grafo construirGrafo(String[] tipos, double lat, double lon)
     {
-        for(int i = 0; i<tipos.size();i++)
-        {
-            getJSONFromAPI(tipos.get(i), lat, lon);
+        grafo = new Grafo();
+        for (String tipo : tipos) {
+            getJSONFromAPI(tipo, lat, lon);
         }
         grafo.crearPosicionesNodos();
         grafo.crearConexiones();
+        
+        return grafo;
     }
     
     public void getJSONFromAPI(String type, double lat, double lon) {
 
-        String response = "";
+        String response;
         try {
             URIBuilder builder = new URIBuilder().setScheme("https").setHost("maps.googleapis.com").setPath("/maps/api/place/search/json");
 
@@ -130,14 +131,20 @@ public class JsonManager {
                         rets[i] = types.next();
                     }
                 }
+                
+                /*
+                 * Busca el icono para guardarlo en la clase 
+                 */
                 URL url =new URL((String) temp.get("icon"));
                 Image image = ImageIO.read(url);
+                
+                //Aveces el dato puede venir como un long, si es asi, no se maneja y se pone valor default
                 double rate;
                 try{
                     rate = (Double) temp.get("rating");
                 }catch(ClassCastException | NullPointerException e)
                 {
-                    rate = 4.0;
+                    rate = IConstants.defaultRate;
                 }    
                  
                 //Contruyo un lugar con estos datos
@@ -150,7 +157,8 @@ public class JsonManager {
                 
             }while(iter.hasNext() && cont_nodos < IConstants.nodosPorPeticion);
             
-        } catch (ParseException | IOException ex) {
+        } catch (ParseException | IOException ex) 
+        {
             System.out.println("Se ha producido un error en la funcion Json");
         }
     }
