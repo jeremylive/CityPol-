@@ -9,14 +9,14 @@ package Estructura;
  * Borde, conexion, camino, vertice o como quiera llamarsele
  * @author edgerik
  */
-public class Borde  {
+public class Conexion  {
     private final String id;
     private final NodoGrafo origen;
     private final NodoGrafo destino;
     private final double distancia;
     private boolean iluminar;
     
-    public Borde(String id, NodoGrafo source, NodoGrafo destination, double weight) {
+    public Conexion(String id, NodoGrafo source, NodoGrafo destination, double weight) {
         this.id = id;
         this.origen = source;
         this.destino = destination;

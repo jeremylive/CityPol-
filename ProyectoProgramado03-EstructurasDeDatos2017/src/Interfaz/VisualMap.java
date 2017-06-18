@@ -5,7 +5,7 @@
  */
 package Interfaz;
 
-import Estructura.Borde;
+import Estructura.Conexion;
 import Estructura.Grafo;
 import Estructura.NodoGrafo;
 import Programa.IConstants;
@@ -18,6 +18,11 @@ import java.util.ConcurrentModificationException;
 import java.util.Observable;
 import java.util.Observer;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JProgressBar;
+import javax.swing.JScrollPane;
 
 /**
  *
@@ -27,9 +32,10 @@ public class VisualMap extends javax.swing.JFrame implements Observer{
 
     private Image dbImage , icono;
     private Toolkit tools;
+    private VisualGraphics aux;
     private Graphics dbg;
     private Grafo grafo;
-    
+    private boolean sacarCarta, throwDice;
     /**
      * Creates new form GrafoGUI
      */
@@ -37,8 +43,12 @@ public class VisualMap extends javax.swing.JFrame implements Observer{
     {
         initComponents();
         tools = Toolkit.getDefaultToolkit();
+        //Imagen default por si no se logra cargar png (poco probable)
         icono = tools.getImage("C:\\Users\\JUaNIGNaCIO\\Desktop\\foto.jpg");
         icono = icono.getScaledInstance(IConstants.medidaNodo * IConstants.escalaImagen, IConstants.medidaNodo * IConstants.escalaImagen, Image.SCALE_SMOOTH);
+        sacarCarta = false;
+        aux = null;
+        
     }
 
     /**
@@ -71,9 +81,16 @@ public class VisualMap extends javax.swing.JFrame implements Observer{
         progressB = new javax.swing.JProgressBar();
         jLabel4 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
+        lblDice = new javax.swing.JLabel();
+        apiProgress = new javax.swing.JProgressBar();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
+        setLocation(new java.awt.Point(0, 0));
         setSize(new java.awt.Dimension(1550, 900));
 
         lblA.setText("Jugador A");
@@ -93,6 +110,11 @@ public class VisualMap extends javax.swing.JFrame implements Observer{
         lblPuntosB.setText("PuntosB");
 
         sacarCartaA.setText("Sacar Carta");
+        sacarCartaA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sacarCartaAActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Reto Actual");
 
@@ -113,6 +135,21 @@ public class VisualMap extends javax.swing.JFrame implements Observer{
 
         jLabel4.setText("PROGRESO");
 
+        lblDice.setText("DICE : ");
+
+        jMenu1.setText("File");
+
+        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_SPACE, java.awt.event.InputEvent.ALT_MASK));
+        jMenuItem1.setText("Ver Ranking");
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Edit");
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -120,9 +157,6 @@ public class VisualMap extends javax.swing.JFrame implements Observer{
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -148,13 +182,17 @@ public class VisualMap extends javax.swing.JFrame implements Observer{
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(36, 36, 36)
-                                .addComponent(sacarCartaA))
-                            .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                                .addComponent(sacarCartaA)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblDice)
+                                .addGap(48, 48, 48)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblturno)
                             .addComponent(jButton1))
-                        .addGap(34, 34, 34)
+                        .addGap(49, 49, 49)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel3)
                             .addComponent(lblRetoA, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
@@ -167,9 +205,14 @@ public class VisualMap extends javax.swing.JFrame implements Observer{
                                     .addComponent(progressB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 166, Short.MAX_VALUE)
                                 .addComponent(jLabel4)
-                                .addGap(150, 150, 150))))))
+                                .addGap(150, 150, 150))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(apiProgress, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane1))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -207,88 +250,214 @@ public class VisualMap extends javax.swing.JFrame implements Observer{
                     .addGroup(layout.createSequentialGroup()
                         .addGap(4, 4, 4)
                         .addComponent(lblturno)
+                        .addGap(1, 1, 1)
+                        .addComponent(lblDice)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(sacarCartaA)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(apiProgress, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 547, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void sacarCartaAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sacarCartaAActionPerformed
+        // TODO add your handling code here:
+        sacarCarta = true;
+        
+    }//GEN-LAST:event_sacarCartaAActionPerformed
+
+    public Image getIcono() {
+        return icono;
+    }
+
+    public Graphics getDbg() {
+        return dbg;
+    }
+
+    public Grafo getGrafo() {
+        return grafo;
+    }
+
+    public boolean isSacarCarta() {
+        return sacarCarta;
+    }
+
+    public JButton getjButton1() {
+        return jButton1;
+    }
+
+    public JComboBox<String> getjComboBox1() {
+        return jComboBox1;
+    }
+
+    public JLabel getLblA() {
+        return lblA;
+    }
+
+    public JLabel getLblB() {
+        return lblB;
+    }
+
+    public JLabel getLblPuntosA() {
+        return lblPuntosA;
+    }
+
+    public JLabel getLblPuntosB() {
+        return lblPuntosB;
+    }
+
+    public JProgressBar getApiProgress() {
+        return apiProgress;
+    }
+
+    public JLabel getLblDice() {
+        return lblDice;
+    }
+
+    public JLabel getLblRateA() {
+        return lblRateA;
+    }
+
+    public JLabel getLblRateB() {
+        return lblRateB;
+    }
+
+    public JLabel getLblRetoA() {
+        return lblRetoA;
+    }
+
+    public JLabel getLblRetoB() {
+        return lblRetoB;
+    }
+
+    public JLabel getLblturno() {
+        return lblturno;
+    }
+
+    public JProgressBar getProgressA() {
+        return progressA;
+    }
+
+    public JProgressBar getProgressB() {
+        return progressB;
+    }
+
+    public JButton getSacarCartaA() {
+        return sacarCartaA;
+    }
+
+    
+    public void setDbg(Graphics dbg) {
+        this.dbg = dbg;
+    }
+
+    public void setGrafo(Grafo grafo) {
+        this.grafo = grafo;
+    }
+
+    public void setSacarCarta(boolean sacarCarta) {
+        this.sacarCarta = sacarCarta;
+    }
+
+    public void setjComboBox1(JComboBox<String> jComboBox1) {
+        this.jComboBox1 = jComboBox1;
+    }
+
+    public void setjScrollPane1(JScrollPane jScrollPane1) {
+        this.jScrollPane1 = jScrollPane1;
+    }
+
+    public void setLblA(JLabel lblA) {
+        this.lblA = lblA;
+    }
+
+    public void setLblB(JLabel lblB) {
+        this.lblB = lblB;
+    }
+
+    public void setLblPuntosA(JLabel lblPuntosA) {
+        this.lblPuntosA = lblPuntosA;
+    }
+
+    public void setLblPuntosB(JLabel lblPuntosB) {
+        this.lblPuntosB = lblPuntosB;
+    }
+
+    public void setLblRateA(JLabel lblRateA) {
+        this.lblRateA = lblRateA;
+    }
+
+    public void setLblRateB(JLabel lblRateB) {
+        this.lblRateB = lblRateB;
+    }
+
+    public void setLblRetoA(JLabel lblRetoA) {
+        this.lblRetoA = lblRetoA;
+    }
+
+    public void setLblRetoB(JLabel lblRetoB) {
+        this.lblRetoB = lblRetoB;
+    }
+
+    public void setLblturno(JLabel lblturno) {
+        this.lblturno = lblturno;
+    }
+
+    public void setProgressA(JProgressBar progressA) {
+        this.progressA = progressA;
+    }
+
+    public void setProgressB(JProgressBar progressB) {
+        this.progressB = progressB;
+    }
+
+    public void setSacarCartaA(JButton sacarCartaA) {
+        this.sacarCartaA = sacarCartaA;
+    }
+
+    public boolean isThrowDice() {
+        return throwDice;
+    }
+
+    public void setThrowDice(boolean throwDice) {
+        this.throwDice = throwDice;
+    }
+
+    public void cartaDesplegada()
+    {
+        setSacarCarta(false);
+    }
+
+    public void setAux(VisualGraphics aux) {
+        this.aux = aux;
+    }
+
+    public VisualGraphics getAux() {
+        return aux;
+    }
+    
+    
     @Override
-    public void paint(Graphics g)
-    {        
-        dbImage = createImage(getWidth(), getHeight());
+    public void paint(Graphics g){
+        dbImage = createImage(getHeight(), getWidth());
         dbg = dbImage.getGraphics();
         paintComponent(dbg);
         g.drawImage(dbImage, 0, 0, this);
     }
-    
-    public int getMid(int origen, int destino){
-        
-        int diferencia;
-        if(origen < destino)
-            diferencia = destino - origen;
-        else{
-                diferencia = origen - destino;
-                origen = destino;    
-        }
-        origen += diferencia /2;
-        return origen;
-    }
-    
-    public void paintComponent(Graphics g)
-    {
+    public void paintComponent(Graphics g){
         super.paint(g);
-    
-        //Pintado del grafo
-        //g.setColor(Color.GREEN);
-        int medida = IConstants.medidaNodo/2;
-        int x,y;
         
-        
-        for (Borde conexion : grafo.getConexiones()) {
-            g.setColor(Color.white);
-            NodoGrafo origen = conexion.getOrigen();
-            NodoGrafo destino = conexion.getDestino();
-            //Dibuja la linea de origen a destino
-            g.drawLine(origen.getPosX()+medida, origen.getPosY()+medida, destino.getPosX()+medida, destino.getPosY()+medida);
-            
-            x = getMid(origen.getPosX(), destino.getPosX());
-            y = getMid(origen.getPosY(), destino.getPosY());
-            
-            //Pone el texto en medio del la linea con el peso correspondiente
-            g.setColor(Color.black);
-            g.drawString(Double.toString(conexion.getDistancia()),  x,  y);
-        }
-        medida *= 2;
-        try{
-            
-        
-            for(NodoGrafo nodo : grafo.getNodos())
-            {
-                //g.fillOval(nodo.getPosX(), nodo.getPosY(), medida * 5/4, medida);
-                g.drawImage(nodo.getLugar().getFoto_lugar(), nodo.getPosX(), nodo.getPosY(), this);
-
-                //g.setColor(Color.BLACK);
-                g.drawString(nodo.getName(), nodo.getPosX()-(medida/4),nodo.getPosY()-(medida - medida/4) );
-            }
-        }catch(ConcurrentModificationException e)
-        {
-            System.out.println("Se ha cambiado el grafo");
-        }
-        
-        
-        
+        aux.paintTablero(g);
         
         repaint();
     }
-    
     /**
      * @param args the command line arguments
      */
@@ -326,6 +495,7 @@ public class VisualMap extends javax.swing.JFrame implements Observer{
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JProgressBar apiProgress;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
@@ -334,9 +504,14 @@ public class VisualMap extends javax.swing.JFrame implements Observer{
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblA;
     private javax.swing.JLabel lblB;
+    private javax.swing.JLabel lblDice;
     private javax.swing.JLabel lblPuntosA;
     private javax.swing.JLabel lblPuntosB;
     private javax.swing.JLabel lblRateA;

@@ -25,7 +25,7 @@ public class Program
         ThreeBB arbol_asterico = controlador1.getArbolB();
         
         //GAMEPLAY
-        
+        controlador2.start();
         
     }
         

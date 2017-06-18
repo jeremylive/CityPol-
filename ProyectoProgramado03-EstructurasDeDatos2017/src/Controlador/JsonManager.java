@@ -1,9 +1,10 @@
 package Controlador;
 
-import Estructura.Borde;
+import Estructura.Conexion;
 import Estructura.Grafo;
 import Estructura.Lugar;
 import Estructura.NodoGrafo;
+import Interfaz.VisualMap;
 import Programa.IConstants;
 import java.awt.Image;
 import java.io.IOException;
@@ -48,31 +49,38 @@ public class JsonManager {
 
     /**
      * Pido el grafo correspodiente a la ubicacion dada
+     * @param control para manejo de la barra de progreso
      * @param tipos Tipos de comercios que se obtendran
      * @param lat Posicion y en mapa real
      * @param lon Posicion x en mapa real
+     * @param radio radio de busqueda con api
      * @return Grafo construido con posiciones en pantalla y sus conexiones respectivas
      */
-    public Grafo construirGrafo(String[] tipos, double lat, double lon)
+    public Grafo construirGrafo(VisualMap control,String[] tipos, double lat, double lon, String radio)
     {
         grafo = new Grafo();
+        int len = tipos.length;
+        int aumento = 100/len;
+        int cont =0;
+        
         for (String tipo : tipos) {
-            getJSONFromAPI(tipo, lat, lon);
+            control.getApiProgress().setValue(cont);
+            getJSONFromAPI(tipo, lat, lon, radio);
+            cont += aumento;
         }
-        grafo.crearPosicionesNodos();
-        grafo.crearConexiones();
+        control.getApiProgress().setValue(cont);
         
         return grafo;
     }
     
-    public void getJSONFromAPI(String type, double lat, double lon) {
+    public void getJSONFromAPI(String type, double lat, double lon, String radius) {
 
         String response;
         try {
             URIBuilder builder = new URIBuilder().setScheme("https").setHost("maps.googleapis.com").setPath("/maps/api/place/search/json");
 
             builder.addParameter("location", lat + "," + lon);
-            builder.addParameter("radius", IConstants.radioBusqueda);
+            builder.addParameter("radius", radius);
             builder.addParameter("types", type);
             builder.addParameter("sensor", "true");
             builder.addParameter("key", IConstants.APIKEY);
@@ -82,10 +90,6 @@ public class JsonManager {
             HttpResponse execute = this.client.execute(request);
 
             response = EntityUtils.toString(execute.getEntity());
-            
-            
-            System.out.println("Se cargo el JSON exitosamente");
-            
             funcionJson(response);
         } catch (MalformedURLException ex) {
             System.out.println("Se ha dado un URL mal formado");

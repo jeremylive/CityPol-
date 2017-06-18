@@ -51,8 +51,8 @@ public class ThreeBB {
         this.nodo_auxiliar = new NodoThreeBB();
         this.derecho = new NodoThreeBB();
         this.izquierdo = new NodoThreeBB();
-        this.indice_medio = Math.round(llaves_totales*IConstants.porcentaje_llenado);    //(2*llaves_totales)/3
-        this.valor_medio = nodo_auxiliar.getKey(indice_medio);
+        this.indice_medio = 0;    //(2*llaves_totales)/3
+        this.valor_medio = null;
         this.total_hijos = 0;
     }
     // Gets and Sets    

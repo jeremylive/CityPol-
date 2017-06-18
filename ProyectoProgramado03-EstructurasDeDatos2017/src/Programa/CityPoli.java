@@ -28,8 +28,8 @@ public class CityPoli
         this.controlador_login = new LoginManager();
         this.controlador_json = new JsonManager();
         this.controlador_users = new UserFileManager();
-        this.control_visual_map = new VisualMap();
-        this.control_visual_graphics = new VisualGraphics();
+        this.control_visual_map = null;
+        this.control_visual_graphics = null;
         this.control_geo_map = new GeoMap();
     }
     //Gets and sets

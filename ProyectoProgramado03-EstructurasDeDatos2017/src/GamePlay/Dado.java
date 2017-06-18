@@ -8,15 +8,22 @@ import java.util.Random;
  */
 public class Dado 
 {
-    Random random;
+    private Random random;
+    private int dice;
 
     public Dado() {
         random = new Random();
+        dice =0;
+    }
+
+    public int getDice() {
+        return dice;
     }
     
     public int throwDice()
     {
-        return random.nextInt(6);
+        dice =random.nextInt(6);
+        return dice;
     }
     
 }
