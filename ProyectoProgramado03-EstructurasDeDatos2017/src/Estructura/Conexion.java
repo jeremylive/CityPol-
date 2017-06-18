@@ -12,7 +12,7 @@ public class Conexion
     private final NodoGrafo origen;
     private final NodoGrafo destino;
     private final double distancia;
-    private boolean iluminar;
+    private boolean iluminarA, iluminarB;
     //Constructor
     public Conexion(String id, NodoGrafo source, NodoGrafo destination, double weight) {
         this.id = id;
@@ -27,12 +27,22 @@ public class Conexion
     public NodoGrafo getDestino() {
         return destino;
     }
-    public boolean isIluminar() {
-        return iluminar;
+    public boolean isIluminarA() {
+        return iluminarA;
     }
-    public void setIluminar(boolean iluminar) {
-        this.iluminar = iluminar;
+    public void setIluminarA(boolean iluminar) {
+        this.iluminarA = iluminar;
+        
     }
+
+    public boolean isIluminarB() {
+        return iluminarB;
+    }
+
+    public void setIluminarB(boolean iluminarB) {
+        this.iluminarB = iluminarB;
+    }
+    
     public NodoGrafo getOrigen() {
         return origen;
     }

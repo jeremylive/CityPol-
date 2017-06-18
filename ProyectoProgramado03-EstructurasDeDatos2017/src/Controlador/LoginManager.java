@@ -30,7 +30,7 @@ public class LoginManager
     //Constructor
     public LoginManager() 
     {
-        this.ruta = "C:\\Users\\Usuario1\\Desktop\\GitHub\\CityPol-\\ProyectoProgramado03-EstructurasDeDatos2017\\src\\GamePlay\\perfiles.as";
+        this.ruta = "C:\\Users\\Edgerik Leguizamon\\Documents\\GitHub\\CityPol-\\ProyectoProgramado03-EstructurasDeDatos2017\\src\\GamePlay\\perfiles.as";
        try {
             this.direccion2 = new FileOutputStream(ruta, true);
             this.archivo2 = new DataOutputStream(direccion2);

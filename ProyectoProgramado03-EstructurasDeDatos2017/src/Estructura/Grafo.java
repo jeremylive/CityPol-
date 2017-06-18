@@ -1,6 +1,8 @@
 package Estructura;
 //Bibliotecas a usar
 import Programa.IConstants;
+import Programa.IObservable;
+import Programa.IObserver;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.text.DecimalFormat;
@@ -14,7 +16,7 @@ import java.util.Random;
  *
  * @author live y edgerik
  */
-public class Grafo extends Observable
+public class Grafo implements IObservable
 {
     //Variables globales
     private List<NodoGrafo> nodos;
@@ -22,6 +24,7 @@ public class Grafo extends Observable
     private Dijkstra dijkstra;
     private Random random;
     private ArrayList<Point> puntosEnPantalla;
+    private ArrayList<IObserver> observadores;
     /**
      * Constructor, defaultf
      */
@@ -68,46 +71,30 @@ public class Grafo extends Observable
         dijkstra.buscarRutas(nodo);
     }
 
-    /**
-     * Devuelve la ruta más cercana del nodo fuente al nodo destino
-     *
-     * @param fuente Punto de salida
-     * @param destino Punto de llegada
-     * @return Lista de nodos por los cuales pasar para llegar (Ruta más corta)
-     */
-    public LinkedList<NodoGrafo> getPathFromAtoB(int fuente, int destino) 
-    {
-        //Saco el mapa de conexiones con el nodo fuente
-        getDijkstraPaths(getNodo(fuente));
-        
-        LinkedList<NodoGrafo> ruta = getPathTo(getNodo(destino));
-        for (int i = 1; i< ruta.size();i++) 
-        {
-            lightUpPath(getNodo(i-1), getNodo(i));
-        }
-        
-        return ruta;
-    }
-    
     
     /**
      * Devuelve la ruta más cercana del nodo fuente al nodo destino
      *
      * @param fuente Punto de salida
      * @param destino Punto de llegada
+     * @param player
      * @return Lista de nodos por los cuales pasar para llegar (Ruta más corta)
      */
-    public LinkedList<NodoGrafo> getPathFromAtoB(NodoGrafo fuente, NodoGrafo destino) 
+    public LinkedList<NodoGrafo> getPathFromAtoB(NodoGrafo fuente, NodoGrafo destino, boolean player) 
     {
         //Saco el mapa de conexiones con el nodo fuente
         getDijkstraPaths(fuente);
         
         LinkedList<NodoGrafo> ruta = getPathTo(destino);
-        for (int i = 1; i< ruta.size();i++) 
-        {
-            lightUpPath(getNodo(i-1), getNodo(i));
+        if(ruta!= null){
+            if(ruta.size()<2){
+                System.out.println("No hay ruta");
+            }
+            for (int i = 1; i< ruta.size();i++) 
+            {
+                lightUpPath(getNodo(i-1), getNodo(i),player);
+            }
         }
-        
         return ruta;
     }
 
@@ -179,14 +166,18 @@ public class Grafo extends Observable
      * Marco el camino para dibujar en pantalla
      * @param origen Nodo origen
      * @param destino Nodo destino
+     * @param player jugador que pasara por esta ruta
      */
-    public void lightUpPath(NodoGrafo origen, NodoGrafo destino)
+    public void lightUpPath(NodoGrafo origen, NodoGrafo destino, boolean player)
     {
         for (Conexion conexion : conexiones)
         {
             if(conexion.getOrigen().equals(origen) && conexion.getDestino().equals(destino))
             {
-                conexion.setIluminar(true);
+                if(player)
+                    conexion.setIluminarA(true);
+                else
+                    conexion.setIluminarB(true);
                 break;
             }
         }
@@ -234,6 +225,18 @@ public class Grafo extends Observable
      */
     public List<Conexion> getConexiones() {
         return conexiones;
+    }
+
+    @Override
+    public void notifyObservers() {
+        for(IObserver obs : observadores){
+            
+        }
+    }
+
+    @Override
+    public void addObserver(IObserver nuevo) {
+        observadores.add(nuevo);
     }
 
     
