@@ -1,19 +1,14 @@
 package Estructura;
-
+//Bibliotecas a usar
 import java.awt.Image;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  *
- * @author edgerik
+ * @author live y edgerik
  */
-public class NodoGrafo {
-    
+public class NodoGrafo 
+{
+    //Variables globales
     private Lugar lugar;
     final private String id;
     final private String name;
@@ -22,7 +17,7 @@ public class NodoGrafo {
     private int posY;
 
     /**
-     * Nodo con la imagen del lugar
+     * Constructor, Nodo con la imagen del lugar
      * @param id para el nodo en el hash table
      * @param lugar info del lugar 
      */
@@ -35,7 +30,11 @@ public class NodoGrafo {
         this.posY = 0;
     }
 
-    
+    /**
+     * Constructor
+     * @param id para el nodo en el hash table
+     * @param name info del lugar 
+     */
     public NodoGrafo(String id, String name) {
         this.id = id;
         this.name = name;
@@ -43,53 +42,44 @@ public class NodoGrafo {
         this.posX = 0;
         this.posY = 0;
     }
-    
+    //Gets and sets
     public Image getThumbnail() {
         return thumbnail;
     }
-
     public void setLugar(Lugar lugar) {
         this.lugar = lugar;
     }
-
     public Lugar getLugar() {
         return lugar;
     }
-
     public String getId() {
         return id;
     }
-
     public void setThumbnail(Image thumbnail) {
         this.thumbnail = thumbnail;
     }
-
     public int getPosX() {
         return posX;
     }
-
     public void setPosX(int posX) {
         this.posX = posX;
     }
-
     public int getPosY() {
         return posY;
     }
-
     public void setPosY(int posY) {
         this.posY = posY;
     }
-
     public String getName() {
         return name;
     }
-
     /**
      * Crea codigo hash para manejo de nodos
      * @return La posicion a insertar en la tabla
      */
     @Override
-    public int hashCode() {
+    public int hashCode() 
+    {
         final int prime = 31;
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
@@ -102,7 +92,8 @@ public class NodoGrafo {
      * @return true si es igual, false si no
      */
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(Object obj) 
+    {
         if (this == obj)
             return true;
         if (obj == null)
@@ -122,5 +113,4 @@ public class NodoGrafo {
     public String toString() {
         return "Nombre: "+name+"\tID: "+id;
     }
-
 }

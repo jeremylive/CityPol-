@@ -1,5 +1,5 @@
 package Controlador;
-
+//Bibliotecas a usar
 import Estructura.Conexion;
 import Estructura.Grafo;
 import Estructura.Lugar;
@@ -31,13 +31,13 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
 /**
  *
- * @author live
+ * @author live y edgerik
  */
-public class JsonManager {
-
+public class JsonManager 
+{
+    //Variables globales
     private JSONParser lector;
     private JSONObject objeto;
     private JSONArray tipos;
@@ -45,8 +45,6 @@ public class JsonManager {
     private Iterator<JSONObject> iter;
     private URL link;
     private final HttpClient client = HttpClients.createDefault();
-
-
     /**
      * Pido el grafo correspodiente a la ubicacion dada
      * @param control para manejo de la barra de progreso
@@ -73,7 +71,8 @@ public class JsonManager {
         return grafo;
     }
     
-    public void getJSONFromAPI(String type, double lat, double lon, String radius) {
+    public void getJSONFromAPI(String type, double lat, double lon, String radius) 
+    {
 
         String response;
         try {
@@ -98,15 +97,10 @@ public class JsonManager {
         } catch (URISyntaxException ex) {
             Logger.getLogger(JsonManager.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-
     }
     
     public void funcionJson(String respuesta)
     {
-        
-        
         try {
             JSONParser parser = new JSONParser();
             Object obj = parser.parse(respuesta);
@@ -166,5 +160,4 @@ public class JsonManager {
             System.out.println("Se ha producido un error en la funcion Json");
         }
     }
-
 }

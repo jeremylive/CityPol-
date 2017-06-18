@@ -1,18 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Estructura;
-
+//Bibliotecas a usar
 import java.awt.Image;
-
 /**
  *
- * @author Curso
+ * @author live y edgerik
  */
 public class Lugar 
 {
+    //Variables globales
     private String name;
     private double latitud;
     private double longitud;
@@ -21,7 +16,7 @@ public class Lugar
     private Image foto_lugar;
 
     /**
-     * Valor para los nodos del grafo
+     * Constructor, Valor para los nodos del grafo
      * @param name Nombre de lugar
      * @param latitud posicion y en mapa
      * @param longitud posicion x en mapa
@@ -40,7 +35,7 @@ public class Lugar
     }
 
     /**
-     * Valor para los nodos del grafo
+     * Constructor, Valor para los nodos del grafo
      * @param name Nombre de lugar
      * @param latitud posicion y en mapa
      * @param longitud posicion x en mapa
@@ -54,62 +49,46 @@ public class Lugar
         this.puntaje = puntaje;
         this.tipos = tipos;
     }
-    
-    
-
+    //Gets and Sets
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public double getLatitud() {
         return latitud;
     }
-
     public void setLatitud(double latitud) {
         this.latitud = latitud;
     }
-
     public double getLongitud() {
         return longitud;
     }
-
     public void setLongitud(double longitud) {
         this.longitud = longitud;
     }
-
     public double getPuntaje() {
         return puntaje;
     }
-
     public void setPuntaje(double puntaje) {
         this.puntaje = puntaje;
     }
-
     public String[] getTipos() {
         return tipos;
     }
-
     public void setTipos(String[] tipos) {
         this.tipos = tipos;
     }
-
     public Image getFoto_lugar() {
         return foto_lugar;
     }
-
     public void setFoto_lugar(Image foto_lugar) {
         this.foto_lugar = foto_lugar;
     }
-    
     @Override
     public String toString()
     {
         return "Nombre: "+ name + "  Lat: " + Double.toString(latitud)+ "  Lng: " + Double.toString(longitud) +  "  Rate: "+  Double.toString(puntaje) + "  Tipo: " + tipos[0];
     }
-    
-    
 }

@@ -1,5 +1,5 @@
 package Estructura;
-
+//Bibliotecas a usar
 import Programa.IConstants;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -9,27 +9,21 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Random;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
  * Clase Singleton para manejo global de esta
  *
- * @author edgerik
+ * @author live y edgerik
  */
-public class Grafo extends Observable{
-
+public class Grafo extends Observable
+{
+    //Variables globales
     private List<NodoGrafo> nodos;
     private List<Conexion> conexiones;
     private Dijkstra dijkstra;
     private Random random;
     private ArrayList<Point> puntosEnPantalla;
-    
     /**
-     * Por si acaso
+     * Constructor, defaultf
      */
     public Grafo() {
         this.nodos = new ArrayList<>();
@@ -53,39 +47,6 @@ public class Grafo extends Observable{
         this.puntosEnPantalla = new ArrayList<>();
     }
 
-    /**
-     * Patron singleton para manejar el grafo y sus funciones desde cualquier
-     * clase
-     *
-     * @param nodos Lista de nodos que tendrá el arbol
-     * @param conexiones Conexiones o rutas de nodo a nodo
-     * @return Instancia de grafo
-     *
-    public synchronized static Grafo getInstance(List<NodoGrafo> nodos, List<Borde> conexiones) {
-        if (Instance == null) {
-            Instance = new Grafo(nodos, conexiones);
-        }
-        return Instance;
-    }
-    
-    public synchronized static Grafo cambiarInstancia(List<NodoGrafo> nodos, List<Borde> conexiones)
-    {
-        Instance = new Grafo(nodos, conexiones);
-        return Instance;
-    }
-
-    /**
-     *
-     * @return Instancia global de Grafo
-     *
-    public synchronized static Grafo getInstance() {
-        if (Instance == null) {
-            Instance = new Grafo();
-        }
-        return Instance;
-
-    }
-*/
     /**
      * Agregar nodo a la lista
      *
@@ -127,6 +88,8 @@ public class Grafo extends Observable{
         
         return ruta;
     }
+    
+    
     /**
      * Devuelve la ruta más cercana del nodo fuente al nodo destino
      *
@@ -147,9 +110,6 @@ public class Grafo extends Observable{
         
         return ruta;
     }
-    
-    
-    
 
     /**
      * Devuelve el nodo en la lista de nodos del grafo
@@ -162,8 +122,6 @@ public class Grafo extends Observable{
         return nodos.get(indice);
     }
 
-    
-    
     /**
      * Saca la distancia de una coordenada
      * @param origen nodo inicio
@@ -280,3 +238,36 @@ public class Grafo extends Observable{
 
     
 }
+    /**
+     * Patron singleton para manejar el grafo y sus funciones desde cualquier
+     * clase
+     *
+     * @param nodos Lista de nodos que tendrá el arbol
+     * @param conexiones Conexiones o rutas de nodo a nodo
+     * @return Instancia de grafo
+     *
+    public synchronized static Grafo getInstance(List<NodoGrafo> nodos, List<Borde> conexiones) {
+        if (Instance == null) {
+            Instance = new Grafo(nodos, conexiones);
+        }
+        return Instance;
+    }
+    
+    public synchronized static Grafo cambiarInstancia(List<NodoGrafo> nodos, List<Borde> conexiones)
+    {
+        Instance = new Grafo(nodos, conexiones);
+        return Instance;
+    }
+
+    /**
+     *
+     * @return Instancia global de Grafo
+     *
+    public synchronized static Grafo getInstance() {
+        if (Instance == null) {
+            Instance = new Grafo();
+        }
+        return Instance;
+
+    }
+*/

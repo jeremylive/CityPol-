@@ -1,11 +1,11 @@
 package Programa;
-
 /**
  *
  * @author live y edgerik
  */
 public class IConstants 
 {
+    //INICIALIZO CONSTANTES A USAR EN CITYPOLI
     public static final int panelHeight = 600;
     public static final int panelWidth = 1200;
     public static final String radioBusqueda = "2000";

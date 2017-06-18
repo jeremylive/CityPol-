@@ -1,20 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package GamePlay;
-
 /**
  *
- * @author Edgerik Leguizamon
+ * @author live y edgerik
  */
-public class Reto {
+public class Reto 
+{
+    //Variables globales
     public final String verbo;
     public final int cantidad;
     public final String tipoLugar;
-
-    public Reto(String verbo, int cantidad, String tipoLugar) {
+    //Constructor
+    public Reto(String verbo, int cantidad, String tipoLugar) 
+    {
         this.verbo = verbo;
         this.cantidad = cantidad;
         this.tipoLugar = tipoLugar;

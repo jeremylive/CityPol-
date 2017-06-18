@@ -2,9 +2,11 @@ package Interfaz;
 
 /**
  *
- * @author live
+ * @author live y edgerik
  */
 public class HttpGPlaces 
 {
+    //Variables globales
     
+    //Constructor
 }

@@ -1,5 +1,5 @@
 package Estructura;
-
+//BiBliotecas a usar
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -8,30 +8,21 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  *
- * @author edgerik
+ * @author live y edgerik
  */
-
 public class Dijkstra 
 {
-
+    //Variables globales
     private List<NodoGrafo> nodos;
     private List<Conexion> bordes;
     private Set<NodoGrafo> nodosListos;
     private Set<NodoGrafo> nodosNoListos;
     private Map<NodoGrafo, NodoGrafo> predecesores;
     private Map<NodoGrafo, Double> distancia;
-
     /**
-     * Le pasa el grafo al dijkstra
+     * Constructor, Le pasa el grafo al dijkstra
      * @param graph El grafo a manejar
      */
     public Dijkstra(Grafo graph)
@@ -39,16 +30,14 @@ public class Dijkstra
         this.nodos = new ArrayList<>(graph.getNodos());
         this.bordes = new ArrayList<>(graph.getConexiones());
     }
-
     /**
-     * Crea un dijkstra para luego darle el grafo y buscar rutas
+     *  Constructor, Crea un dijkstra para luego darle el grafo y buscar rutas
      */
     public Dijkstra() 
     {    
         this.nodos = null;
         this.bordes = null;
     }
-
     /**
      * Busca rutas
      * @param origen Nodo del cual se empezará 
@@ -216,5 +205,4 @@ public class Dijkstra
         Collections.reverse(ruta);
         return ruta;
     }
-
 }

@@ -1,5 +1,5 @@
 package Programa;
-
+//Bibliotecas a usar
 import Controlador.JsonManager;
 import Estructura.Conexion;
 import Estructura.Grafo;
@@ -26,15 +26,12 @@ import java.util.Random;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-/*Librerias a usar*/
 /**
  *
- * @author live
+ * @author live y edgerik
  */
 public class CityPoliTablero extends Thread {
     //Variables globales
-
     //Clases a usar
     private JsonManager json;
     private Grafo controlador_grafo;
@@ -49,20 +46,17 @@ public class CityPoliTablero extends Thread {
     private Mazo mazoPaises;
     private Graphics panelTablero;
     private boolean reset;
-    /**
-     * Rutas calculadas para los jugadores
-     */
-    private int progresoA, progresoB;
-
+    private int progresoA, progresoB;   //Rutas calculadas para los jugadores
     private LinkedList<NodoGrafo> rutaActualA;
     private LinkedList<NodoGrafo> rutaActualB;
-    Retos retosA;
-    Retos retosB;
+    private Retos retosA;
+    private Retos retosB;
 
     /**
      * Crea un controlador del tablero para el gameplay
      */
-    public CityPoliTablero() {
+    public CityPoliTablero() 
+    {
         this.controlador_grafo = null;
         this.jugadorA = new Jugador();
         this.jugadorB = new Jugador();
@@ -87,47 +81,86 @@ public class CityPoliTablero extends Thread {
     public void setControlador_grafo(Grafo controlador_grafo) {
         this.controlador_grafo = controlador_grafo;
     }
-    public void start() {
-        //ventanaTablero.start();
-    }
-    //Funciones
     public Jugador getJugadorA() {
         return jugadorA;
     }
-
     public VisualMap getInterfaz() {
         return interfaz;
     }
-
     public void setInterfaz(VisualMap interfaz) {
         this.interfaz = interfaz;
     }
-
     public Mazo getMazoPaises() {
         return mazoPaises;
     }
-
     public void setMazoPaises(Mazo mazoPaises) {
         this.mazoPaises = mazoPaises;
     }
-
     public Graphics getPanelTablero() {
         return panelTablero;
     }
-
     public void setPanelTablero(Graphics panelTablero) {
         this.panelTablero = panelTablero;
     }
-
-    private void updateGrafo(){
+    public VisualGraphics getVisualG() {
+        return visualG;
+    }
+    public void setVisualG(VisualGraphics visualG) {
+        this.visualG = visualG;
+    }
+    public boolean isReset() {
+        return reset;
+    }
+    public void setReset(boolean reset) {
+        this.reset = reset;
+    }
+    public int getProgresoA() {
+        return progresoA;
+    }
+    public void setProgresoA(int progresoA) {
+        this.progresoA = progresoA;
+    }
+    public int getProgresoB() {
+        return progresoB;
+    }
+    public void setProgresoB(int progresoB) {
+        this.progresoB = progresoB;
+    }
+    public Retos getRetosA() {
+        return retosA;
+    }
+    public void setRetosA(Retos retosA) {
+        this.retosA = retosA;
+    }
+    public Retos getRetosB() {
+        return retosB;
+    }
+    public void setRetosB(Retos retosB) {
+        this.retosB = retosB;
+    }
+    public void avanzarA(){
+       
+    }
+    public void avanzarB(){
+        
+    }
+    //Funciones---------------------------------------------------------------
+    public void start() 
+    {
+        //ventanaTablero.start();
+    }
+    private void updateGrafo()
+    {
         visualG.setControlador_grafo(controlador_grafo);
     }
     /**
      * Brinda posiciones aletorias a los nodos para poder pintarlos
      */
-    public void crearPosicionesNodos() {
+    public void crearPosicionesNodos() 
+    {
         int x = 0, y = 0;
         List<NodoGrafo> nodos = controlador_grafo.getNodos();
+        
         for (NodoGrafo nodo : nodos) {
             do {
                 x = random.nextInt(IConstants.panelWidth - IConstants.medidaNodo) + IConstants.medidaNodo;
@@ -150,11 +183,14 @@ public class CityPoliTablero extends Thread {
      * Mide las distancias de nodo a nodo y crea conexiones entre ellos
      * dependiendo del la latitud y longitud del Lugar del Nodo
      */
-    public void crearConexiones() {
+    public void crearConexiones() 
+    {
         double distanciaX, distanciaY, hipotenusa;
         List<NodoGrafo> nodos = controlador_grafo.getNodos();
+        
         for (NodoGrafo origen : nodos) {
             NodoGrafo destino;
+            
             for (int i = 0; i < IConstants.conexionesPorNodo; i++) {
                 int ran = random.nextInt(nodos.size());
                 destino = nodos.get(ran);
@@ -168,6 +204,7 @@ public class CityPoliTablero extends Thread {
                 hipotenusa = Double.valueOf(df2.format(hipotenusa));
                 controlador_grafo.addBorde("", origen, destino, hipotenusa);
                 updateGrafo();
+                
                 try {
                     Thread.sleep(IConstants.sleep);
                 } catch (InterruptedException ex) {
@@ -177,14 +214,31 @@ public class CityPoliTablero extends Thread {
 
         }
     }
-
-    public LinkedList<NodoGrafo> dijkstra(NodoGrafo a, NodoGrafo b){
+    
+    /**
+     * 
+     * @param a
+     * @param b
+     * @return 
+     */
+    public LinkedList<NodoGrafo> dijkstra(NodoGrafo a, NodoGrafo b)
+    {
         return controlador_grafo.getPathFromAtoB(a, b);
     }
-    public NodoGrafo randomPos(){
+    
+    /**
+     * 
+     * @return 
+     */
+    public NodoGrafo randomPos()
+    {
         return controlador_grafo.getNodo(random.nextInt(controlador_grafo.getNodos().size() - 1));
     }
-    public void nuevoReto() {
+    /**
+     * 
+     */
+    public void nuevoReto() 
+    {
         retosA = new Retos();
         retosB = new Retos();
         progresoA = 0;
@@ -197,71 +251,22 @@ public class CityPoliTablero extends Thread {
         do{
             destinoA = randomPos();
         }while(destinoA.getLugar().getTipos()[0].equals(retoA.tipoLugar));
+        
         do{
             destinoB = randomPos();
         }while(destinoB.getLugar().getTipos()[0].equals(retoB.tipoLugar));
+        
         rutaActualA = dijkstra(posA, destinoA);
         rutaActualB = dijkstra(posB, destinoB);
         reset = false;
     }
-
-    public VisualGraphics getVisualG() {
-        return visualG;
-    }
-
-    public void setVisualG(VisualGraphics visualG) {
-        this.visualG = visualG;
-    }
-
-    public boolean isReset() {
-        return reset;
-    }
-
-    public void setReset(boolean reset) {
-        this.reset = reset;
-    }
-
-    public int getProgresoA() {
-        return progresoA;
-    }
-
-    public void setProgresoA(int progresoA) {
-        this.progresoA = progresoA;
-    }
-
-    public int getProgresoB() {
-        return progresoB;
-    }
-
-    public void setProgresoB(int progresoB) {
-        this.progresoB = progresoB;
-    }
-
-    public Retos getRetosA() {
-        return retosA;
-    }
-
-    public void setRetosA(Retos retosA) {
-        this.retosA = retosA;
-    }
-
-    public Retos getRetosB() {
-        return retosB;
-    }
-
-    public void setRetosB(Retos retosB) {
-        this.retosB = retosB;
-    }
-
-    public void avanzarA(){
-        
-    }
-    public void avanzarB(){
-        
-    }
-
+    
+    /**
+     * 
+     */
     @Override
-    public void run() {
+    public void run() 
+    {
         System.out.println("Comienza tablero");
         interfaz = new VisualMap();
         interfaz.setVisible(true);
@@ -278,12 +283,14 @@ public class CityPoliTablero extends Thread {
                 Carta nueva = mazoPaises.mazoLugares.get(random.nextInt(mazoPaises.mazoLugares.size()));
                 //Le cambio el tablero a la interraz
                 Set<String> tipos =new HashSet<>();
+                
                 while(tipos.size()< IConstants.pedidosPorJuego){
                     String tipo = IConstants.tipos[random.nextInt(IConstants.tipos.length-1)];
                     tipos.add(tipo);
                 } 
                 String[] nuevo = new String[IConstants.pedidosPorJuego];
                 Iterator<String> it = tipos.iterator();
+                
                 for(int i =0 ; i<nuevo.length;i++)
                 {
                     if(it.hasNext())
@@ -303,9 +310,11 @@ public class CityPoliTablero extends Thread {
                 }
                 interfaz.getLblRetoA().setText(retosA.getRetos().get(progresoA).toString());
                 interfaz.getLblRetoB().setText(retosB.getRetos().get(progresoB).toString());
+                
                 if (interfaz.isThrowDice()) {
                     int sleep = 20;
                     Dado dado = new Dado();
+                    
                     while (sleep < 500) {
                         interfaz.getLblDice().setText("DICE : " + dado.throwDice());
                         try {
@@ -315,6 +324,7 @@ public class CityPoliTablero extends Thread {
                         }
                         sleep += 40;
                     }
+                    
                     for (int k = 0; k < dado.getDice(); k++) {
                         if (turno) {
                             avanzarA();

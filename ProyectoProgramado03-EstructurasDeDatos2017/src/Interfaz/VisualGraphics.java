@@ -14,41 +14,46 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author live
+ * @author live y edgerik
  */
-public class VisualGraphics extends Thread {
-
+public class VisualGraphics extends Thread 
+{
+    //Variables globales
     private Graphics panelDB, dbg;
     private Grafo controlador_grafo;
     private final VisualMap interfaz;
     private Image dbImage;
     private boolean terminar;
-
-    public VisualGraphics(VisualMap mapa, Grafo controlador) {
+    //Constructor
+    public VisualGraphics(VisualMap mapa, Grafo controlador) 
+    {
         this.panelDB = mapa.getGraphics();
-        interfaz = mapa;
-        terminar = false;
-        controlador_grafo = controlador;
+        this.interfaz = mapa;
+        this.terminar = false;
+        this.controlador_grafo = controlador;
     }
-
+    //Sets and Get
     public void setControlador_grafo(Grafo controlador_grafo) {
         this.controlador_grafo = controlador_grafo;
     }
-
     public void setPanelDB(Graphics panelDB) {
         this.panelDB = panelDB;
     }
-
     public boolean isTerminar() {
         return terminar;
     }
-
     public void setTerminar(boolean terminar) {
         this.terminar = terminar;
     }
-
-    public int getMid(int origen, int destino) {
-
+    //Funciones-----------------------------
+    /**
+     * Obtengo el pundo intermedio entre dos nodos
+     * @param origen
+     * @param destino
+     * @return 
+     */
+    public int getMid(int origen, int destino) 
+    {
         int diferencia;
         if (origen < destino) {
             diferencia = destino - origen;
@@ -59,11 +64,12 @@ public class VisualGraphics extends Thread {
         origen += diferencia / 2;
         return origen;
     }
-
-
-    public void paintTablero(Graphics panel) {
-
-        
+    /**
+     * Grafico el tablero
+     * @param panel 
+     */
+    public void paintTablero(Graphics panel) 
+    {    
         //Pintado del grafo
         //g.setColor(Color.GREEN);
         int medida = IConstants.medidaNodo / 2;
@@ -114,9 +120,9 @@ public class VisualGraphics extends Thread {
         }
 
     }
-
+    
     /**
-     *
+     * Corre hilo
      */
     @Override
     public void run() {
