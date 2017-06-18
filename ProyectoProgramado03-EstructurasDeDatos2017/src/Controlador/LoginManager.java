@@ -1,6 +1,7 @@
 package Controlador;
 /*Librerias a usar*/
 import Estructura.ThreeBB;
+import GamePlay.Jugador;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -58,7 +59,29 @@ public class LoginManager
         this.arbol_b_asterisco = arbol_b_asterisco;
     }
     //Funciones
-   /**
+    /**
+     * 
+     */
+    public void insertaNodosArbol() throws IOException
+    {
+        try{
+            while(archivo.available() > 0){
+                //Obtengo datos
+                name = archivo.readUTF();
+                estrellas = archivo.readInt();
+                //Creo jugador
+                Jugador pJugador = new Jugador(name, estrellas);
+                //inserto al arbol
+                arbol_b_asterisco.getRaiz().addKey(pJugador);
+                //prueba
+                System.out.println("nombre: "+name+"\nestrellas: "+estrellas);
+            }       
+        } 
+            catch(FileNotFoundException fnfe) {}
+	    catch (IOException ioe) {}
+            archivo.close();
+    }
+    /**
      * LEER EL ARCHIVO SECUENCIAL, USA EL BARRIDO SECUENCIAL
      * 
      * @param ruta 
@@ -70,7 +93,6 @@ public class LoginManager
                 name = archivo.readUTF();
                 estrellas = archivo.readInt();
                 System.out.println("nombre: "+name+"\nestrellas: "+estrellas);
-
             }       
         } 
             catch(FileNotFoundException fnfe) {}
