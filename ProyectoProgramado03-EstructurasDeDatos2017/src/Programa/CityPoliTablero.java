@@ -147,7 +147,7 @@ public class CityPoliTablero extends Thread {
     //Funciones---------------------------------------------------------------
     public void start() 
     {
-        //ventanaTablero.start();
+        run();
     }
     private void updateGrafo()
     {

@@ -6,7 +6,7 @@ package Programa;
 public class IConstants 
 {
     //INICIALIZO CONSTANTES A USAR EN CITYPOLI
-    public static final int panelHeight = 600;
+    public static final int panelHeight = 800;
     public static final int panelWidth = 1200;
     public static final String radioBusqueda = "2000";
     public static final int menuHeight = 500;
@@ -24,4 +24,5 @@ public class IConstants
     public static final double defaultRate = 4.0;
     public static final float porcentaje_llenado = (float) 2/3;
     public static final int sleep = 500;
+    public static final String ruta = "C:\\Users\\Usuario1\\Desktop\\GitHub\\CityPol-\\ProyectoProgramado03-EstructurasDeDatos2017\\src\\GamePlay\\perfiles.as";
 }

@@ -2,6 +2,7 @@ package Controlador;
 /*Librerias a usar*/
 import Estructura.ThreeBB;
 import GamePlay.Jugador;
+import Programa.IConstants;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -30,7 +31,7 @@ public class LoginManager
     //Constructor
     public LoginManager() 
     {
-        this.ruta = "C:\\Users\\Usuario1\\Desktop\\GitHub\\CityPol-\\ProyectoProgramado03-EstructurasDeDatos2017\\src\\GamePlay\\perfiles.as";
+        this.ruta = IConstants.ruta;
        try {
             this.direccion2 = new FileOutputStream(ruta, true);
             this.archivo2 = new DataOutputStream(direccion2);
