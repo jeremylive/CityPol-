@@ -215,17 +215,9 @@ public class CityPoliTablero extends Thread {
         }
     }
     //Funciones---------------------------------------------------------------
-<<<<<<< HEAD
 
-    private void updateGrafo() {
-=======
-    public void start() 
-    {
-        run();
-    }
     private void updateGrafo()
     {
->>>>>>> b0330ab6432ecef622f826d61acba6af119deb28
         visualG.setControlador_grafo(controlador_grafo);
     }
 
