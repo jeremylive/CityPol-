@@ -4,6 +4,7 @@ import Controlador.JsonManager;
 import Controlador.LoginManager;
 import Controlador.UserFileManager;
 import Estructura.ThreeBB;
+import GamePlay.Dado;
 import Interfaz.GeoMap;
 import Interfaz.VisualGraphics;
 import Interfaz.VisualMap;
@@ -14,6 +15,7 @@ import Interfaz.VisualMap;
 public class CityPoli 
 {
     //Variables globales
+    private Dado dado;
     //Clases a usar logica Tree
     private LoginManager controlador_login;
     private JsonManager controlador_json;
@@ -73,4 +75,8 @@ public class CityPoli
         this.control_geo_map = control_geo_map;
     }
     //Funciones 
+    public int obtengoDadoRandom()
+    {
+        return dado.getDice();
+    }
 }

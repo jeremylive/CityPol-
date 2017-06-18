@@ -60,15 +60,23 @@ public class Program
         j4.setName("Melanie");
         j4.setRanking(10.5);
         
+        Jugador j5 = new Jugador();
+        j5.setName("Brayan");
+        j5.setRanking(13.5);  
+      
+        Jugador j6 = new Jugador();
+        j6.setName("simon");
+        j6.setRanking(16.5);
+        
         b1.add(j1);
         b1.add(j2);
         b1.add(j3);
         b1.add(j4);
+        b1.add(j6);
         
-        
-         String a = b1.getString(b1.getRaiz(), "", true);
+        String a = b1.getString(b1.getRaiz(), "", true);
         System.out.println(a);
-        
+        //b1.inOrder(b1.getRaiz());
         
         
         //GAMEPLAY

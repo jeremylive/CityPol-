@@ -6,6 +6,16 @@ import Programa.IObserver;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Toolkit;
+<<<<<<< HEAD
+=======
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ConcurrentModificationException;
+import java.util.Observable;
+import java.util.Observer;
+import javax.swing.ImageIcon;
+>>>>>>> b0330ab6432ecef622f826d61acba6af119deb28
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -73,6 +83,7 @@ public class VisualMap extends javax.swing.JFrame implements IObserver
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
         setFont(new java.awt.Font("Comic Sans MS", 2, 18)); // NOI18N
         setLocation(new java.awt.Point(0, 0));
+        setResizable(false);
         setSize(new java.awt.Dimension(1550, 900));
 
         lblA.setText("Jugador A");
@@ -122,6 +133,7 @@ public class VisualMap extends javax.swing.JFrame implements IObserver
 
         jLabel4.setText("PROGRESO");
 
+<<<<<<< HEAD
         canvas.setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));
 
         javax.swing.GroupLayout canvasLayout = new javax.swing.GroupLayout(canvas);
@@ -136,6 +148,9 @@ public class VisualMap extends javax.swing.JFrame implements IObserver
         );
 
         jScrollPane1.setViewportView(canvas);
+=======
+        jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+>>>>>>> b0330ab6432ecef622f826d61acba6af119deb28
 
         lblDice.setText("DICE : ");
 
@@ -161,6 +176,7 @@ public class VisualMap extends javax.swing.JFrame implements IObserver
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+<<<<<<< HEAD
                         .addGap(90, 90, 90)
                         .addComponent(jLabel2)
                         .addGap(22, 22, 22)
@@ -210,6 +226,64 @@ public class VisualMap extends javax.swing.JFrame implements IObserver
                         .addComponent(jLabel4)
                         .addGap(150, 150, 150))))
             .addComponent(apiProgress, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+=======
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(90, 90, 90)
+                                .addComponent(jLabel2)
+                                .addGap(22, 22, 22)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(lblB, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(lblRateB)
+                                    .addGap(55, 55, 55)
+                                    .addComponent(lblPuntosB))
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                    .addComponent(lblA, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(lblRateA)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lblPuntosA))))
+                        .addGap(32, 32, 32)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(36, 36, 36)
+                                .addComponent(sacarCartaA)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblDice)
+                                .addGap(48, 48, 48)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblturno)
+                            .addComponent(jButton1))
+                        .addGap(49, 49, 49)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel3)
+                            .addComponent(lblRetoA, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
+                            .addComponent(lblRetoB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(progressA, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
+                                    .addComponent(progressB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
+                                .addComponent(jLabel4)
+                                .addGap(150, 150, 150))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(apiProgress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+>>>>>>> b0330ab6432ecef622f826d61acba6af119deb28
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -257,7 +331,12 @@ public class VisualMap extends javax.swing.JFrame implements IObserver
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(apiProgress, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+<<<<<<< HEAD
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE))
+=======
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
+                .addContainerGap())
+>>>>>>> b0330ab6432ecef622f826d61acba6af119deb28
         );
 
         pack();
@@ -271,7 +350,11 @@ public class VisualMap extends javax.swing.JFrame implements IObserver
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+<<<<<<< HEAD
         throwDice = true;
+=======
+        
+>>>>>>> b0330ab6432ecef622f826d61acba6af119deb28
     }//GEN-LAST:event_jButton1ActionPerformed
     //Gets and Sets--------------------------------------------------------
     public Image getIcono() {
@@ -419,12 +502,24 @@ public class VisualMap extends javax.swing.JFrame implements IObserver
         canvas.getGraphics().drawImage(dbImage, 0, 0, this);
     }
     public void paintComponent(Graphics g){
+<<<<<<< HEAD
         try{
             aux.paintTablero(g);
         }catch(NullPointerException e)
         {
             
         }
+=======
+        super.paint(g);
+
+        try{
+            aux.paintTablero(g);
+        }catch(NullPointerException e){
+       
+        }
+        
+        repaint();
+>>>>>>> b0330ab6432ecef622f826d61acba6af119deb28
     }
     /**
      * @param args the command line arguments
