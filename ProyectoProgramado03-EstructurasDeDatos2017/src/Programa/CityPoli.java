@@ -3,6 +3,7 @@ package Programa;
 import Controlador.JsonManager;
 import Controlador.LoginManager;
 import Controlador.UserFileManager;
+import Estructura.ThreeBB;
 import Interfaz.GeoMap;
 import Interfaz.VisualGraphics;
 import Interfaz.VisualMap;
@@ -32,7 +33,9 @@ public class CityPoli
         this.control_geo_map = new GeoMap();
     }
     //Gets and sets
-
+    public ThreeBB getArbolB() {
+        return controlador_login.getArbol_b_asterisco();
+    }
     public LoginManager getControlador_login() {
         return controlador_login;
     }
