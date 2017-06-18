@@ -32,9 +32,10 @@ public class Program
         //PRECARGiO EL ARBOL Y COMIENZO EL LOGIN
         //ThreeBB arbol_asterico = controlador1.getArbolB();
         LoginManager l1 = controlador1.getControlador_login();
-        l1.EscribirArchivoSecuencial("C:\\Users\\Usuario1\\Desktop\\GitHub\\CityPol-\\ProyectoProgramado03-EstructurasDeDatos2017\\src\\GamePlay\\perfiles.as", "jeremy",999);
-        l1.EscribirArchivoSecuencial("C:\\Users\\Usuario1\\Desktop\\GitHub\\CityPol-\\ProyectoProgramado03-EstructurasDeDatos2017\\src\\GamePlay\\perfiles.as", "jeremy222",33);
-        l1.leerArchivoSecuencial("C:\\Users\\Usuario1\\Desktop\\GitHub\\CityPol-\\ProyectoProgramado03-EstructurasDeDatos2017\\src\\GamePlay\\perfiles.as");
+        //Inserto, prueba
+        l1.EscribirArchivoSecuencial("jeremy",974);
+        l1.EscribirArchivoSecuencial("jeremy222",37);
+        l1.leerArchivoSecuencial();
         
 
 
