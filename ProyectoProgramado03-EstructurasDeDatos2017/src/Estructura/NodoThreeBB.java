@@ -85,7 +85,7 @@ public class NodoThreeBB
         for (int i = 0; i < getCant_keys(); i++) {
             if(array_keys.get(i).getName().equals(key.getName()))
             {
-                array_keys.remove(i);
+                array_keys.remove(i-1);
             }
         }
     }

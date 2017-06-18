@@ -4,7 +4,7 @@ package GamePlay;
 
 /**
  *
- * @author live
+ * @author live  y edgerik
  */
 public class Jugador 
 {
