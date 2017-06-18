@@ -50,19 +50,16 @@ public class ThreeBB {
         this.siguiente = null;
         this.player_aux = null;
         this.index_padre_remove = 0;
-<<<<<<< HEAD
         this.nodo_auxiliar = new NodoThreeBB();
         this.derecho = new NodoThreeBB();
         this.izquierdo = new NodoThreeBB();
         this.indice_medio = 0;    //(2*llaves_totales)/3
-=======
         this.largo = 0;
         this.nodo_auxiliar = null;
         this.derecho = null;
         this.izquierdo = null;
         this.nodo_padre = null;
         this.indice_medio = Math.round(llaves_totales*IConstants.porcentaje_llenado);    //(2*llaves_totales)/3
->>>>>>> a83ce6d9440325e12da968707d687c812e2592b0
         this.valor_medio = null;
         this.total_hijos = 0;
     }

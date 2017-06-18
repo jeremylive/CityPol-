@@ -87,15 +87,10 @@ public class CityPoliTablero extends Thread {
     public void setControlador_grafo(Grafo controlador_grafo) {
         this.controlador_grafo = controlador_grafo;
     }
-<<<<<<< HEAD
-
-    
-
-=======
     public void start() {
-        ventanaTablero.start();
+       
+        //ventanaTablero.start();
     }
->>>>>>> a83ce6d9440325e12da968707d687c812e2592b0
     //Funciones
     public Jugador getJugadorA() {
         return jugadorA;
