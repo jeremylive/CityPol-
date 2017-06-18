@@ -72,31 +72,31 @@ public class CityPoliTablero extends Thread {
         reset = false;
     }
     //Gets and Sets
-
     public Jugador getJugadorB() {
         return jugadorB;
     }
-
     public Grafo getControlador_grafo() {
         return controlador_grafo;
     }
-
     public void setJugadorA(Jugador jugadorA) {
         this.jugadorA = jugadorA;
     }
-
     public void setJugadorB(Jugador jugadorB) {
         this.jugadorB = jugadorB;
     }
-
     public void setControlador_grafo(Grafo controlador_grafo) {
         this.controlador_grafo = controlador_grafo;
     }
+<<<<<<< HEAD
 
     
 
+=======
+    public void start() {
+        ventanaTablero.start();
+    }
+>>>>>>> a83ce6d9440325e12da968707d687c812e2592b0
     //Funciones
-    //...
     public Jugador getJugadorA() {
         return jugadorA;
     }

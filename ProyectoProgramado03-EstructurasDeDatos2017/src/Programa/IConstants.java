@@ -2,7 +2,7 @@ package Programa;
 
 /**
  *
- * @author live
+ * @author live y edgerik
  */
 public class IConstants 
 {

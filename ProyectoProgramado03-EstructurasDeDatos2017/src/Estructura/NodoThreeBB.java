@@ -39,13 +39,13 @@ public class NodoThreeBB
         this.array_hijos = array_hijos;
     }
     public NodoThreeBB getIzquierdo() {
-        return derecho;
+        return izquierdo;
     }
     public void setIzquierdo(NodoThreeBB nodo_hijo_izq) {
         this.derecho = nodo_hijo_izq;
     }
     public NodoThreeBB getDerecho() {
-        return izquierdo;
+        return  derecho;
     }
     public void setDerecho(NodoThreeBB nodo_der) {
         array_keys.set(0, nodo_padre.getArray_keys().get(nodo_padre.getArray_keys().size()-1));     
@@ -85,7 +85,7 @@ public class NodoThreeBB
         for (int i = 0; i < getCant_keys(); i++) {
             if(array_keys.get(i).getName().equals(key.getName()))
             {
-                array_keys.remove(i);
+                array_keys.remove(i-1);
             }
         }
     }
@@ -162,8 +162,7 @@ public class NodoThreeBB
             if (getArray_hijos().get(i).equals(child)) {
                 valido = true;
 
-            // shift the rest of the keys down
-            
+            //Roto el resto de las llaves hacia abajo
             } else if (valido) {
                 getArray_hijos().set(i-1, getArray_hijos().get(i)); //(get,igualo)
             }
