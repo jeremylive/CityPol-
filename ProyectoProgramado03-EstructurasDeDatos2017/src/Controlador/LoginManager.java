@@ -37,9 +37,30 @@ public class LoginManager
     //Clases a usar
     private ThreeBB arbol_b_asterisco;
     private VisualMap vMap;
+    private CityPoliTablero cp;
     //Constructor
     public LoginManager() 
     {
+        this.cp = null;
+        this.vMap = null;
+        this.ruta = IConstants.ruta;
+        try {
+            this.direccion2 = new FileOutputStream(ruta, true);
+            this.archivo2 = new DataOutputStream(direccion2);
+            this.direccion = new FileInputStream(ruta);
+            this.archivo = new DataInputStream(direccion);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(LoginManager.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.arbol_b_asterisco = new ThreeBB();
+        this.name = "";
+        this.estrellas = 0;
+        this.datos_ranking = "";
+    }
+    public LoginManager(CityPoli cP1,CityPoliTablero cP) 
+    {
+        this.cp = cP;
+        this.vMap = cP1.getControl_visual_map();
         this.ruta = IConstants.ruta;
         try {
             this.direccion2 = new FileOutputStream(ruta, true);
@@ -55,6 +76,22 @@ public class LoginManager
         this.datos_ranking = "";
     }
     //Gets and Sets
+
+    public VisualMap getvMap() {
+        return vMap;
+    }
+
+    public void setvMap(VisualMap vMap) {
+        this.vMap = vMap;
+    }
+
+    public CityPoliTablero getCp() {
+        return cp;
+    }
+
+    public void setCp(CityPoliTablero cp) {
+        this.cp = cp;
+    }
     
     public String getDatos_ranking() {
         return datos_ranking;
@@ -76,9 +113,9 @@ public class LoginManager
     }
     //Funciones
     /**
-     * 
+     * Reconstruyo el arbol en base al archivo secuencial
      */
-    public void insertaNodosArbol() throws IOException
+    public void reconstruyoArbol() throws IOException
     {
         try{
             while(archivo.available() > 0){
@@ -87,7 +124,7 @@ public class LoginManager
                 estrellas = archivo.readInt();
                 //Creo jugador
                 Jugador pJugador = new Jugador(name, estrellas);
-                //inserto al arbol
+                //inserto al arbol, reconstruyo el arbol
                 arbol_b_asterisco.getRaiz().addKey(pJugador);
                 //prueba
                 System.out.println("nombre: "+name+"\nestrellas: "+estrellas);
@@ -163,16 +200,19 @@ public class LoginManager
      * @param cp
      * @throws java.io.IOException
      */
-    public void empizaJuego(VisualMap pMap, CityPoliTablero cp) throws IOException
+    public void empizaJuego() throws IOException
     {
-        //Nueva partida
+        //------------------------Nueva partida----------------------------
+        //precargo el arbol
+        reconstruyoArbol();
+        
         //Autifico los usuarios
         String user1, user2, pass1, pass2;
         Jugador playerA, playerB;
         user1 = JOptionPane.showInputDialog("Digite su usuario Jugador 1");
         pass1 = JOptionPane.showInputDialog("Digite su clave Jugador 1");
-        if(autetifico(user1, pass1)){
-            pMap.setName1(user1);
+        if(autetifico(user1, pass1)){   // Si existe, inserto Player al arbol
+            getvMap().setName1(user1);
             playerA = new Jugador(user1, 0);
             cp.setJugadorA(playerA);
             //Inserto al arbol el jugar creado
@@ -180,18 +220,15 @@ public class LoginManager
         }
         user2 = JOptionPane.showInputDialog("Digite su usuario Jugador 2");
         pass2 = JOptionPane.showInputDialog("Digite su clave Jugador 2");
-        if(autetifico(user2, pass2)){
-            pMap.setName2(user2);
+        if(autetifico(user2, pass2)){   // Si existe, inserto Player al arbol
+            getvMap().setName2(user2);
             playerB = new Jugador(user2, 0);
             cp.setJugadorB(playerB);
             //Inserto al arbol el jugar creado
             getArbol_b_asterisco().add(playerB);
         }
 
-        
         System.out.println("user1 "+user1+"\nuser2"+user2);
-        //Obtengo controlador
-        vMap = pMap;
     }
 
     /**
@@ -236,26 +273,11 @@ public class LoginManager
      * Boton muestra ranking
      * 
      */
-    public void botonRank() throws IOException
+    public String botonRank() throws IOException
     {
-        
-        //
         //Cargo el nombre y ranking y los muestro 
         String ranking_total = leerArchivoSecuencial();
-        vMap.getRank().getRanking().setText(ranking_total);
-        
-        
-    }
-
-    
-    /**
-     * 
-     * 
-     */
-    public void precargoElArbol()
-    {
-        //Precargo el arbol, osea 
-        
+        return ranking_total;
         
     }
     

@@ -29,13 +29,13 @@ public class Program
         controlador1 = new CityPoli();
         controlador2 = new CityPoliTablero();
       
-        LoginManager l1 = controlador1.getControlador_login();
+        LoginManager l1 = controlador1.getControlador_login(controlador1, controlador2);
           //Obtengo el arbol asterisco
         ThreeBB arbol_asterico = l1.getArbol_b_asterisco();//controlador1.getArbolB();
         
         
         //Inicializo las ventanas a usar
-        ventanas = new Ventanas(l1, controlador1.getControl_visual_map(), controlador2);
+        ventanas = new Ventanas();
         
         //Hago la interfaz menu true
         ventanas.getMenu().setVisible(true);
