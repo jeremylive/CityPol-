@@ -3,530 +3,267 @@ package Interfaz;
 //Bibliotecas a usar
 
 import Estructura.Grafo;
-
 import Programa.IConstants;
-
 import Programa.IObserver;
-
 import java.awt.Graphics;
-
 import java.awt.Image;
-
 import java.awt.Toolkit;
-
 import javax.swing.JButton;
-
 import javax.swing.JComboBox;
-
 import javax.swing.JLabel;
-
 import javax.swing.JProgressBar;
-
 import javax.swing.JScrollPane;
-
 /**
-
  *
-
  * @author live y edgerik
-
  */
-
 public class VisualMap extends javax.swing.JFrame implements IObserver
-
 {
-
     //Variables globales
-
     private Image dbImage , icono;
-
     private final Toolkit tools;
-
     private VisualGraphics aux;
-
     private Graphics dbg;
-
     private Grafo grafo;
-
     private boolean sacarCarta, throwDice;
-
+    private Ranking rank;
     /**
-
      * Constructor
-
      */
-
     public VisualMap() 
-
     {
-
         initComponents();
-
         tools = Toolkit.getDefaultToolkit();
-
         //Imagen default por si no se logra cargar png (poco probable)
-
         sacarCarta = false;
-
         aux = null;
-
-        
-
     }
-
-    
-
     @SuppressWarnings("unchecked")
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-
     private void initComponents() {
 
-
-
-        lblA = new javax.swing.JLabel();
-
-        lblB = new javax.swing.JLabel();
-
+        nam1 = new javax.swing.JLabel();
+        name2 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-
         lblRateA = new javax.swing.JLabel();
-
         lblRateB = new javax.swing.JLabel();
-
         jLabel1 = new javax.swing.JLabel();
-
         lblPuntosA = new javax.swing.JLabel();
-
         lblPuntosB = new javax.swing.JLabel();
-
         sacarCartaA = new javax.swing.JButton();
-
         jLabel3 = new javax.swing.JLabel();
-
         lblRetoA = new javax.swing.JLabel();
-
         lblRetoB = new javax.swing.JLabel();
-
         jComboBox1 = new javax.swing.JComboBox<>();
-
         jLabel5 = new javax.swing.JLabel();
-
         jButton1 = new javax.swing.JButton();
-
         lblturno = new javax.swing.JLabel();
-
         progressA = new javax.swing.JProgressBar();
-
         progressB = new javax.swing.JProgressBar();
-
         jLabel4 = new javax.swing.JLabel();
-
         jScrollPane1 = new javax.swing.JScrollPane();
-
         canvas = new javax.swing.JPanel();
-
         lblDice = new javax.swing.JLabel();
-
         apiProgress = new javax.swing.JProgressBar();
-
         jMenuBar1 = new javax.swing.JMenuBar();
-
         jMenu1 = new javax.swing.JMenu();
-
         jMenuItem1 = new javax.swing.JMenuItem();
-
         jMenu2 = new javax.swing.JMenu();
 
-
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         setBounds(new java.awt.Rectangle(0, 0, 0, 0));
-
         setFont(new java.awt.Font("Comic Sans MS", 2, 18)); // NOI18N
-
         setLocation(new java.awt.Point(0, 0));
-
         setSize(new java.awt.Dimension(1550, 900));
 
+        nam1.setText("Jugador A");
 
-
-        lblA.setText("Jugador A");
-
-
-
-        lblB.setText("Jugador B");
-
-
+        name2.setText("Jugador B");
 
         jLabel2.setText("Ranking Global");
 
-
-
         lblRateA.setText("rating A");
-
-
 
         lblRateB.setText("rating B");
 
-
-
         jLabel1.setText("Partida Actual");
-
-
 
         lblPuntosA.setText("PuntosA");
 
-
-
         lblPuntosB.setText("PuntosB");
 
-
-
         sacarCartaA.setText("Sacar Carta");
-
         sacarCartaA.addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-
                 sacarCartaAActionPerformed(evt);
-
             }
-
         });
-
-
 
         jLabel3.setText("Reto Actual");
 
-
-
         lblRetoA.setText("RetoA");
-
-
 
         lblRetoB.setText("RetoB");
 
-
-
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "500", "1000", "1500" }));
-
         jComboBox1.setSelectedIndex(1);
-
         jComboBox1.setToolTipText("");
-
-
 
         jLabel5.setText("Radio Juego");
 
-
-
         jButton1.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-
         jButton1.setText("TIRAR DADO");
-
         jButton1.addActionListener(new java.awt.event.ActionListener() {
-
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-
                 jButton1ActionPerformed(evt);
-
             }
-
         });
-
-
 
         lblturno.setText("TURNO DE: A");
 
-
-
         jLabel4.setText("PROGRESO");
-
-
 
         canvas.setCursor(new java.awt.Cursor(java.awt.Cursor.CROSSHAIR_CURSOR));
 
-
-
         javax.swing.GroupLayout canvasLayout = new javax.swing.GroupLayout(canvas);
-
         canvas.setLayout(canvasLayout);
-
         canvasLayout.setHorizontalGroup(
-
             canvasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-
             .addGap(0, 1498, Short.MAX_VALUE)
-
         );
-
         canvasLayout.setVerticalGroup(
-
             canvasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-
             .addGap(0, 799, Short.MAX_VALUE)
-
         );
-
-
 
         jScrollPane1.setViewportView(canvas);
 
-
-
         lblDice.setText("DICE : ");
-
-
 
         jMenu1.setText("File");
 
-
-
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_SPACE, java.awt.event.InputEvent.ALT_MASK));
-
         jMenuItem1.setText("Ver Ranking");
-
         jMenu1.add(jMenuItem1);
-
-
 
         jMenuBar1.add(jMenu1);
 
-
-
         jMenu2.setText("Edit");
-
         jMenuBar1.add(jMenu2);
-
-
 
         setJMenuBar(jMenuBar1);
 
-
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-
         getContentPane().setLayout(layout);
-
         layout.setHorizontalGroup(
-
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-
             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-
             .addGroup(layout.createSequentialGroup()
-
                 .addContainerGap()
-
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-
                     .addGroup(layout.createSequentialGroup()
-
                         .addGap(90, 90, 90)
-
                         .addComponent(jLabel2)
-
                         .addGap(22, 22, 22)
-
                         .addComponent(jLabel1))
-
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-
-                            .addComponent(lblB, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-
+                            .addComponent(name2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-
                             .addComponent(lblRateB)
-
                             .addGap(55, 55, 55)
-
                             .addComponent(lblPuntosB))
-
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-
-                            .addComponent(lblA, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-
+                            .addComponent(nam1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-
                             .addComponent(lblRateA)
-
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-
                             .addComponent(lblPuntosA))))
-
                 .addGap(32, 32, 32)
-
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-
                     .addGroup(layout.createSequentialGroup()
-
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-
                         .addGap(36, 36, 36)
-
                         .addComponent(sacarCartaA)
-
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE))
-
                     .addGroup(layout.createSequentialGroup()
-
                         .addComponent(jLabel5)
-
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-
                         .addComponent(lblDice)
-
                         .addGap(48, 48, 48)))
-
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-
                     .addComponent(lblturno)
-
                     .addComponent(jButton1))
-
                 .addGap(49, 49, 49)
-
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-
                     .addComponent(jLabel3)
-
                     .addComponent(lblRetoA, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
-
                     .addComponent(lblRetoB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-
                     .addGroup(layout.createSequentialGroup()
-
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-
                             .addComponent(progressA, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
-
                             .addComponent(progressB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 221, Short.MAX_VALUE)
-
                         .addComponent(jLabel4)
-
                         .addGap(150, 150, 150))))
-
             .addComponent(apiProgress, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-
         );
-
         layout.setVerticalGroup(
-
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-
             .addGroup(layout.createSequentialGroup()
-
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-
                     .addGroup(layout.createSequentialGroup()
-
                         .addContainerGap()
-
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
-
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-
                                 .addComponent(jLabel2)
-
                                 .addComponent(jLabel1)
-
                                 .addComponent(jLabel3)
-
                                 .addComponent(jLabel5)))
-
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-
                             .addGroup(layout.createSequentialGroup()
-
                                 .addGap(12, 12, 12)
-
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-
-                                    .addComponent(lblA, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-
+                                    .addComponent(nam1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblPuntosA)
-
                                     .addComponent(lblRateA)))
-
                             .addGroup(layout.createSequentialGroup()
-
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-
                                     .addComponent(progressA, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-
                                     .addComponent(lblRetoA))))
-
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-
                             .addComponent(progressB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-
-                                .addComponent(lblB, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-
+                                .addComponent(name2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(lblRateB)
-
                                 .addComponent(lblPuntosB)
-
                                 .addComponent(lblRetoB))))
-
                     .addGroup(layout.createSequentialGroup()
-
                         .addGap(4, 4, 4)
-
                         .addComponent(lblturno)
-
                         .addGap(1, 1, 1)
-
                         .addComponent(lblDice)
-
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-
                             .addComponent(sacarCartaA)
-
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))))
-
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-
                 .addComponent(apiProgress, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 517, Short.MAX_VALUE))
-
         );
-
-
 
         pack();
-
     }// </editor-fold>//GEN-END:initComponents
-
-
 
     private void sacarCartaAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sacarCartaAActionPerformed
 
@@ -539,7 +276,6 @@ public class VisualMap extends javax.swing.JFrame implements IObserver
     }//GEN-LAST:event_sacarCartaAActionPerformed
 
 
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
         // TODO add your handling code here:
@@ -547,33 +283,35 @@ public class VisualMap extends javax.swing.JFrame implements IObserver
         throwDice = true;
 
     }//GEN-LAST:event_jButton1ActionPerformed
+    
 
     //Gets and Sets--------------------------------------------------------
+    public Ranking getRank() {
+        return rank;
+    }
 
+    public void setRank(Ranking rank) {    
+        this.rank = rank;
+    }
+
+    public void setName1(String pName1) {
+        this.nam1.setText(pName1);
+    }
+    public void setName2(String pName2) {
+        this.name2.setText(pName2);
+    }
     public Image getIcono() {
-
         return icono;
-
     }
-
     public Graphics getDbg() {
-
         return dbg;
-
     }
-
     public Grafo getGrafo() {
-
         return grafo;
-
     }
-
     public boolean isSacarCarta() {
-
         return sacarCarta;
-
     }
-
     public JButton getjButton1() {
 
         return jButton1;
@@ -588,13 +326,13 @@ public class VisualMap extends javax.swing.JFrame implements IObserver
 
     public JLabel getLblA() {
 
-        return lblA;
+        return nam1;
 
     }
 
     public JLabel getLblB() {
 
-        return lblB;
+        return name2;
 
     }
 
@@ -702,13 +440,13 @@ public class VisualMap extends javax.swing.JFrame implements IObserver
 
     public void setLblA(JLabel lblA) {
 
-        this.lblA = lblA;
+        this.nam1 = lblA;
 
     }
 
     public void setLblB(JLabel lblB) {
 
-        this.lblB = lblB;
+        this.name2 = lblB;
 
     }
 
@@ -797,21 +535,14 @@ public class VisualMap extends javax.swing.JFrame implements IObserver
         this.aux = aux;
 
     }
-
+    
     public VisualGraphics getAux() {
-
         return aux;
-
     }
 
-
-
     /**
-
      * Si cambia el observable, los observer deben actualizarse
-
      * @param obj Instancia a cambiar
-
      */
 
     @Override
@@ -824,45 +555,28 @@ public class VisualMap extends javax.swing.JFrame implements IObserver
 
     //Dibujo--------------------------------------------------------------------
 
-    
-
-    public void paneDB(){
-
+    public void paneDB()
+    {
         dbImage = createImage(IConstants.panelWidth, IConstants.panelHeight);
-
         dbg = dbImage.getGraphics();
-
         paintComponent(dbg);
-
         canvas.getGraphics().drawImage(dbImage, 0, 0, this);
-
     }
 
-    public void paintComponent(Graphics g){
-
+    public void paintComponent(Graphics g)
+    {
         try{
-
             aux.paintTablero(g);
-
-        }catch(NullPointerException e)
-
-        {
-
-            
-
-        }
-
+        }catch(NullPointerException e){}
     }
 
     /**
-
+     * Main interfaz principal
      * @param args the command line arguments
-
      */
 
-    public static void main(String args[]) {
-
-        /* Set the Nimbus look and feel */
+    public static void main(String args[]) 
+    {
 
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
 
@@ -906,82 +620,40 @@ public class VisualMap extends javax.swing.JFrame implements IObserver
 
         //</editor-fold>
 
-        //</editor-fold>
-
-
-
-        /* Create and display the form */
-
         java.awt.EventQueue.invokeLater(new Runnable() {
-
             public void run() {
-
                 new VisualMap().setVisible(true);
-
             }
-
         });
-
     }
-
-
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-
     private javax.swing.JProgressBar apiProgress;
-
     private javax.swing.JPanel canvas;
-
     private javax.swing.JButton jButton1;
-
     private javax.swing.JComboBox<String> jComboBox1;
-
     private javax.swing.JLabel jLabel1;
-
     private javax.swing.JLabel jLabel2;
-
     private javax.swing.JLabel jLabel3;
-
     private javax.swing.JLabel jLabel4;
-
     private javax.swing.JLabel jLabel5;
-
     private javax.swing.JMenu jMenu1;
-
     private javax.swing.JMenu jMenu2;
-
     private javax.swing.JMenuBar jMenuBar1;
-
     private javax.swing.JMenuItem jMenuItem1;
-
     private javax.swing.JScrollPane jScrollPane1;
-
-    private javax.swing.JLabel lblA;
-
-    private javax.swing.JLabel lblB;
-
     private javax.swing.JLabel lblDice;
-
     private javax.swing.JLabel lblPuntosA;
-
     private javax.swing.JLabel lblPuntosB;
-
     private javax.swing.JLabel lblRateA;
-
     private javax.swing.JLabel lblRateB;
-
     private javax.swing.JLabel lblRetoA;
-
     private javax.swing.JLabel lblRetoB;
-
     private javax.swing.JLabel lblturno;
-
+    private javax.swing.JLabel nam1;
+    private javax.swing.JLabel name2;
     private javax.swing.JProgressBar progressA;
-
     private javax.swing.JProgressBar progressB;
-
     private javax.swing.JButton sacarCartaA;
-
     // End of variables declaration//GEN-END:variables
 
 

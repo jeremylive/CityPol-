@@ -172,7 +172,7 @@ public class LoginManager
         user1 = JOptionPane.showInputDialog("Digite su usuario Jugador 1");
         pass1 = JOptionPane.showInputDialog("Digite su clave Jugador 1");
         if(autetifico(user1, pass1)){
-            pMap.setname1(user1);
+            pMap.setName1(user1);
             playerA = new Jugador(user1, 0);
             cp.setJugadorA(playerA);
             //Inserto al arbol el jugar creado
@@ -181,7 +181,7 @@ public class LoginManager
         user2 = JOptionPane.showInputDialog("Digite su usuario Jugador 2");
         pass2 = JOptionPane.showInputDialog("Digite su clave Jugador 2");
         if(autetifico(user2, pass2)){
-            pMap.setname2(user2);
+            pMap.setName2(user2);
             playerB = new Jugador(user2, 0);
             cp.setJugadorB(playerB);
             //Inserto al arbol el jugar creado

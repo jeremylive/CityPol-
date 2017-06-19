@@ -23,7 +23,7 @@ public class CityPoli
     //Clase a usar logica API
     private VisualMap control_visual_map;
     private VisualGraphics control_visual_graphics;
-    private GeoMap control_geo_map;
+    //private GeoMap control_geo_map;
     //Constructor
     public CityPoli()
     {
@@ -31,7 +31,7 @@ public class CityPoli
         this.controlador_users = new UserFileManager();
         this.control_visual_map = null;
         this.control_visual_graphics = null;
-        this.control_geo_map = new GeoMap();
+        //this.control_geo_map = new GeoMap();
     }
     //Gets and sets
     public ThreeBB getArbolB() {
@@ -68,12 +68,7 @@ public class CityPoli
     public void setControl_visual_graphics(VisualGraphics control_visual_graphics) {
         this.control_visual_graphics = control_visual_graphics;
     }
-    public GeoMap getControl_geo_map() {
-        return control_geo_map;
-    }
-    public void setControl_geo_map(GeoMap control_geo_map) {
-        this.control_geo_map = control_geo_map;
-    }
+
     //Funciones 
     public int obtengoDadoRandom()
     {

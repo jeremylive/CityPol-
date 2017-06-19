@@ -13,8 +13,8 @@ public class Dado
     //Constructor
     public Dado() 
     {
-        random = new Random();
-        dice =0;
+        this.random = new Random();
+        this.dice = 0;
     }
     //Gets and Sets
     public int getDice() {

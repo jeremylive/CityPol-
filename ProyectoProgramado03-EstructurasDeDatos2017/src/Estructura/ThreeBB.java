@@ -49,9 +49,6 @@ public class ThreeBB {
         this.siguiente = null;
         this.player_aux = null;
         this.index_padre_remove = 0;
-        this.nodo_auxiliar = new NodoThreeBB();
-        this.derecho = new NodoThreeBB();
-        this.izquierdo = new NodoThreeBB();
         this.indice_medio = 2;
         this.largo = 0;
         this.nodo_auxiliar = null;

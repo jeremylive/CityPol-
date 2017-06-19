@@ -12,7 +12,7 @@ public final class Mazo
     //Constructor
     public Mazo()
     {
-        mazoLugares = new ArrayList<>();
+        this.mazoLugares = new ArrayList<>();
         addCarta("Costa Rica", 9.935949, -84.077431);
         addCarta("Francia", 48.8587737,2.3491262);
     }

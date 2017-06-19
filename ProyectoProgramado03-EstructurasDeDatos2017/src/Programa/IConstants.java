@@ -24,7 +24,7 @@ public class IConstants
     public static final float porcentaje_llenado = (float) 2/3;
     public static final int sleep = 500;
     public static final int cantidadRetos = 3;
-    public static final String ruta = "C:\\Users\\Edgerik Leguizamon\\Documents\\GitHub\\CityPol-\\ProyectoProgramado03-EstructurasDeDatos2017\\src\\GamePlay\\perfiles.as";
-
+    //public static final String ruta = "C:\\Users\\Edgerik Leguizamon\\Documents\\GitHub\\CityPol-\\ProyectoProgramado03-EstructurasDeDatos2017\\src\\GamePlay\\perfiles.as";
+    public static final String ruta = "C:\\Users\\Usuario1\\Desktop\\GitHub\\CityPol-\\ProyectoProgramado03-EstructurasDeDatos2017\\src\\GamePlay\\perfiles.as";
     
 }

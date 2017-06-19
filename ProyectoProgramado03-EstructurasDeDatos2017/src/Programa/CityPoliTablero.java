@@ -63,12 +63,12 @@ public class CityPoliTablero extends Thread {
      */
     public CityPoliTablero() {
         this.controlador_grafo = null;
-        this.jugadorA = new Jugador();
+        this.jugadorA = null;
         this.jugadorB = new Jugador();
         this.random = new Random();
         this.mazoPaises = new Mazo();
-        json = new JsonManager();
-        reset = false;
+        this.json = new JsonManager();
+        this.reset = false;
         this.visualG = null;
         this.posA = null;
         this.destinoA = null;
