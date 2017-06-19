@@ -111,13 +111,12 @@ public class NodoThreeBB
      */
     public int addKey(Jugador pJugador)
     {
-        System.out.println(getCant_keys());
         //Inicializo variables
         valido = false;
         inserte = true;
         int i = -1;
         //Recorro las llaves
-        for (i = 0; i < getCant_keys(); i++) {
+        for (i = 0; i < getCant_keys()-1; i++) {
             valido = true;
             //Caso cuando son iguales, retorna false
             if(array_keys.get(i).getName().equals(pJugador.getName()))

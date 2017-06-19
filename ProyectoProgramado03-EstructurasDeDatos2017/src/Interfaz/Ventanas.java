@@ -15,10 +15,10 @@ public class Ventanas
     private Ranking ranking; 
     
     //Constructor
-    public Ventanas()
+    public Ventanas(CityPoli cP, CityPoliTablero cP2)
     {
         //
-        this.menu = new Menu();
+        this.menu = new Menu(cP, cP2);
         this.ranking = new Ranking();
     }
     //gets and sets

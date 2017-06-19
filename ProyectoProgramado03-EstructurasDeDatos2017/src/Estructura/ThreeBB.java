@@ -241,6 +241,8 @@ public class ThreeBB {
                     }
                 }
                 //Busqueda en el arbol, alfabeticamente
+                System.out.println("1---"+llave_menor.getName());
+                System.out.println("2---"+pJugador.getName());
                 if (pJugador.getName().compareTo(llave_menor.getName()) <= 0) { //Busqueda, menores
                     nodo_auxiliar = nodo_auxiliar.getHijo(0);
                     continue;
@@ -353,6 +355,12 @@ public class ThreeBB {
         }   
     }
     
+
+    
+}
+
+
+/*
     //
     public void recorroArbolBB()
     {
@@ -373,11 +381,9 @@ public class ThreeBB {
             inOrder(nRaiz.getDerecho());
         }
     }
-    
-}
 
 
-/*
+
         //Insertar keys al nodo_auxiliar izquierdo en base al nodo_auxiliar aux, del 0 al indice intermedio
         for (int i = 0; i < indice_medio; i++) {
             izquierdo.addKey(nodo_auxiliar.getKey(i));

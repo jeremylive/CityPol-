@@ -24,12 +24,6 @@ public class Jugador
         this.ranking = ranking;
         this.password = pass;
     }
-    //Constructor
-    public Jugador(String name, double ranking)
-    {
-        this.name = name;
-        this.ranking = ranking;
-    }
     //Gets and Sets
     public String getName() 
     {

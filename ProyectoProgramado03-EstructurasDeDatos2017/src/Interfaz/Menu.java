@@ -20,12 +20,14 @@ import javax.swing.JOptionPane;
  *
  * @author live
  */
-public class Menu extends javax.swing.JFrame {
-
-    //
+public class Menu extends javax.swing.JFrame 
+{
+    //Variables
     private LoginManager lol;
-    public Menu() {
+    //Constructor
+    public Menu(CityPoli cP, CityPoliTablero cP2) {
         initComponents();
+        this.lol = cP.getControlador_login(cP, cP2);
     }
     //gets and sets
     public LoginManager getLol() {
@@ -34,7 +36,6 @@ public class Menu extends javax.swing.JFrame {
     public void setLol(LoginManager lol) {
         this.lol = lol;
     }
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -92,24 +93,15 @@ public class Menu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void registroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroActionPerformed
-        //Registro al usuario
-        //Pido name
-        getLol().registroUser();
+        getLol().setBoton(1);
+        getLol().menu();
         
     }//GEN-LAST:event_registroActionPerformed
 
     private void nueva_partidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nueva_partidaActionPerformed
-        try {
-            getLol().empizaJuego();
-        } catch (IOException ex) {
-            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        
-        
+        getLol().setBoton(2);
+        getLol().menu();
     }//GEN-LAST:event_nueva_partidaActionPerformed
-
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;

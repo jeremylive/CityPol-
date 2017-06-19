@@ -35,7 +35,7 @@ public class Program
         
         
         //Inicializo las ventanas a usar
-        ventanas = new Ventanas();
+        ventanas = new Ventanas(controlador1, controlador2);
         
         //Hago la interfaz menu true
         ventanas.getMenu().setVisible(true);
@@ -46,7 +46,7 @@ public class Program
         //
         
         //GAMEPLAY
-        controlador2.start();
+        //controlador2.start();
     }
     
  
