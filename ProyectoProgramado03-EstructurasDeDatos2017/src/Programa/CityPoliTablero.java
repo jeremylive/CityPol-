@@ -482,7 +482,6 @@ public class CityPoliTablero extends Thread {
         //Podria devolverse al login para jugar otra partida con jugadores diferentes
         System.out.println("Partida terminada");
     }
-<<<<<<< HEAD
 
     /**
      * Muestro en la itnerfaz principal, los datos del juego
@@ -491,6 +490,4 @@ public class CityPoliTablero extends Thread {
     {
         
     }
-=======
->>>>>>> d911a85ba57395dc9929f0587c93ae3ef13c8d98
 }
