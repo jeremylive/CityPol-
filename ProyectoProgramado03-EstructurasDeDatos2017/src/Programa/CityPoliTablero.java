@@ -2,6 +2,7 @@ package Programa;
 //Bibliotecas a usar
 
 import Controlador.JsonManager;
+import Controlador.LoginManager;
 import Estructura.Conexion;
 import Estructura.Grafo;
 import Estructura.NodoGrafo;
@@ -37,34 +38,43 @@ public class CityPoliTablero extends Thread {
 
     //Variables globales
     //Clases a usar
-    private JsonManager json;
+    private final JsonManager json;
     private Grafo controlador_grafo;
     private VisualGraphics visualG;
     private Jugador jugadorA;
     private Jugador jugadorB;
     private NodoGrafo posA, destinoA;
     private NodoGrafo posB, destinoB;
-    private Random random;
+    private final Random random;
     private Reto retoA, retoB;
     private VisualMap interfaz;
     private Mazo mazoPaises;
     private Graphics panelTablero;
     private boolean reset;
     private boolean turno;
+    private int totalVisitados;
+    private int visitasA, visitasB;
     private int progresoA, progresoB;   //Rutas calculadas para los jugadores
     private int pasosA, pasosB;
+    private double puntosA, puntosB, puntosTotal;
     private LinkedList<NodoGrafo> rutaActualA;
     private LinkedList<NodoGrafo> rutaActualB;
     private Retos retosA;
     private Retos retosB;
+    private LoginManager login;
 
     /**
      * Crea un controlador del tablero para el gameplay
+     * @param A Jugador 1
+     * @param B Jugador 2
+     * @param lm Para manejode login
      */
-    public CityPoliTablero() {
+    public CityPoliTablero(Jugador A, Jugador B, LoginManager lm)
+    {
         this.controlador_grafo = null;
-        this.jugadorA = null;
-        this.jugadorB = new Jugador();
+        login = lm;
+        this.jugadorA = A;
+        this.jugadorB = B;
         this.random = new Random();
         this.mazoPaises = new Mazo();
         this.json = new JsonManager();
@@ -81,12 +91,17 @@ public class CityPoliTablero extends Thread {
         this.turno = true;
         this.progresoA = 0;
         this.progresoB = 0;
+        puntosA = 0.0;
+        puntosB = 0.0;
+        puntosTotal = 0.0;
+        visitasA = 0;
+        visitasB = 0;
+        totalVisitados = 0;
         this.rutaActualA = null;
         this.rutaActualB = null;
         this.retosA = null;
         this.retosB = null;
     }
-
 
     //Gets and Sets
     public Jugador getJugadorB() {
@@ -107,10 +122,7 @@ public class CityPoliTablero extends Thread {
 
     public boolean setControlador_grafo(Grafo controlador_grafo) {
         this.controlador_grafo = controlador_grafo;
-        if (this.controlador_grafo == null) {
-            return true;
-        }
-        return false;
+        return this.controlador_grafo == null;
     }
 
     public Jugador getJugadorA() {
@@ -144,7 +156,6 @@ public class CityPoliTablero extends Thread {
     public VisualGraphics getVisualG() {
         return visualG;
     }
-
     public void setVisualG(VisualGraphics visualG) {
         this.visualG = visualG;
     }
@@ -189,35 +200,70 @@ public class CityPoliTablero extends Thread {
         this.retosB = retosB;
     }
 
-    public void avanzarA() {
-        if(rutaActualA != null){
-            pasosA++;
-            posA = rutaActualA.get(pasosA);
-            if(posA.equals(destinoA)){
-                progresoA++;
-                nuevoReto();
-                reset = true;
-            }
-            rutaActualA = dijkstra(posA, destinoA, true);
-        }
+    public NodoGrafo getDestinoA() {
+        return destinoA;
     }
 
-    public void avanzarB() {
-        if(rutaActualB !=null){
-            pasosB++;
-            posB = rutaActualB.get(pasosB);
-            if(posB.equals(destinoB)){
-                progresoB++;
-                nuevoReto();
-                reset = true;
-            }
-            rutaActualB = dijkstra(posB, destinoB, false);
-        }
+    public NodoGrafo getDestinoB() {
+        return destinoB;
     }
-    //Funciones---------------------------------------------------------------
 
-    private void updateGrafo()
-    {
+    public NodoGrafo getPosA() {
+        return posA;
+    }
+
+    public void setPosA(NodoGrafo posA) {
+        this.posA = posA;
+    }
+
+    public NodoGrafo getPosB() {
+        return posB;
+    }
+
+    public void setPosB(NodoGrafo posB) {
+        this.posB = posB;
+    }
+
+    public boolean isTurno() {
+        return turno;
+    }
+
+    public void setTurno(boolean turno) {
+        this.turno = turno;
+    }
+
+    public int getPasosA() {
+        return pasosA;
+    }
+
+    public void setPasosA(int pasosA) {
+        this.pasosA = pasosA;
+    }
+
+    public int getPasosB() {
+        return pasosB;
+    }
+
+    public void setPasosB(int pasosB) {
+        this.pasosB = pasosB;
+    }
+
+    public LinkedList<NodoGrafo> getRutaActualA() {
+        return rutaActualA;
+    }
+
+    public void setRutaActualA(LinkedList<NodoGrafo> rutaActualA) {
+        this.rutaActualA = rutaActualA;
+    }
+
+    public LinkedList<NodoGrafo> getRutaActualB() {
+        return rutaActualB;
+    }
+
+    public void setRutaActualB(LinkedList<NodoGrafo> rutaActualB) {
+        this.rutaActualB = rutaActualB;
+    }
+        private void updateGrafo() {
         visualG.setControlador_grafo(controlador_grafo);
     }
 
@@ -230,8 +276,8 @@ public class CityPoliTablero extends Thread {
 
         for (NodoGrafo nodo : nodos) {
             do {
-                x = random.nextInt(IConstants.panelWidth - IConstants.medidaNodo) + IConstants.medidaNodo;
-                y = random.nextInt(IConstants.panelHeight - IConstants.medidaNodo) - IConstants.medidaNodo;
+                x = random.nextInt(IConstants.panelWidth - (IConstants.medidaNodo*IConstants.escalaImagen)) + IConstants.medidaNodo;
+                y = random.nextInt(IConstants.panelHeight - (IConstants.medidaNodo*IConstants.escalaImagen)) - IConstants.medidaNodo;
             } while (controlador_grafo.inListaPuntos(x, y));
 
             nodo.setPosX(x);
@@ -266,19 +312,23 @@ public class CityPoliTablero extends Thread {
                 distanciaY = Math.pow(distanciaY, 2);
                 hipotenusa = Math.sqrt(distanciaX + distanciaY);
                 hipotenusa = hipotenusa * IConstants.escalaDistancia;
-                DecimalFormat df2 = new DecimalFormat(".#");
-                hipotenusa = Double.valueOf(df2.format(hipotenusa));
+                
+                hipotenusa = form(hipotenusa);
                 controlador_grafo.addBorde("", origen, destino, hipotenusa);
                 updateGrafo();
-
-                try {
-                    Thread.sleep(IConstants.sleep);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(CityPoliTablero.class.getName()).log(Level.SEVERE, null, ex);
-                }
+//
+//                try {
+//                    Thread.sleep(5);
+//                } catch (InterruptedException ex) {
+//                    Logger.getLogger(CityPoliTablero.class.getName()).log(Level.SEVERE, null, ex);
+//                }
             }
 
         }
+    }
+    public double form(double x){
+        DecimalFormat df2 = new DecimalFormat(".#");
+        return Double.valueOf(df2.format(x));
     }
 
     /**
@@ -304,6 +354,46 @@ public class CityPoliTablero extends Thread {
         }
     }
 
+    public void randomA() {
+        try {
+            posA = randomPos();
+            pasosA = 0;
+        } catch (NullPointerException e) {
+        }
+    }
+
+    public void randomB() {
+        try {
+            posB = randomPos();
+            pasosB=0;
+        } catch (NullPointerException e) {
+
+        }
+    }
+    public boolean isInRutaA(Conexion c) {
+        for (int i = 1; i < rutaActualA.size(); i++) {
+            Conexion aux = controlador_grafo.getConexion(rutaActualA.get(i - 1), rutaActualA.get(i));
+            if (aux != null) {
+                if (aux.getOrigen().getName().equals(c.getOrigen().getName()) && aux.getDestino().getName().equals(c.getDestino().getName())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean isInRutaB(Conexion c) {
+        for (int i = 1; i < rutaActualB.size(); i++) {
+            Conexion aux = controlador_grafo.getConexion(rutaActualB.get(i - 1), rutaActualB.get(i));
+            if (aux != null) {
+                if (aux.getOrigen().getName().equals(c.getOrigen().getName()) && aux.getDestino().getName().equals(c.getDestino().getName())) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     /**
      *
      */
@@ -312,51 +402,104 @@ public class CityPoliTablero extends Thread {
         retosB = new Retos();
         progresoA = 0;
         progresoB = 0;
-        cleanNodos();
-        posA = randomPos();
-        if(posA != null)
-            posA.setIsAHere(true);
-        posB = randomPos();
-        if( posB != null)
-            posB.setIsBHere(true);
+        puntosA = 0;
+        puntosB = 0;
+        puntosTotal = 0;
+        interfaz.getLblRateA().setText("0.0");
+        interfaz.getLblRateB().setText("0.0");
+        visitasA = 0;
+        visitasB = 0;
+        totalVisitados = 0;
+        randomA();
+        randomB();
         updateGrafo();
         reset = false;
     }
 
-    public void cleanNodos() {
-        for (NodoGrafo nodo : controlador_grafo.getNodos()) {
-            nodo.setIsAHere(false);
-            nodo.setIsBHere(false);
-            nodo.setIsProcesado(false);
-        }
+    public void reCalA() {
+        do {
+            destinoA = randomPos();
+
+        } while (destinoA.getLugar().getTipos()[0].equals(retoA.tipoLugar));
+
+        rutaActualA = dijkstra(posA, destinoA, true);
+
     }
 
-    public NodoGrafo getDestinoA() {
-        return destinoA;
-    }
+    public void reCalB() {
+        do {
+            destinoB = randomPos();
+        } while (destinoB.getLugar().getTipos()[0].equals(retoB.tipoLugar));
 
-    public NodoGrafo getDestinoB() {
-        return destinoB;
+        rutaActualB = dijkstra(posB, destinoB, false);
     }
 
     public void reCalcularRutas() {
         destinoA = randomPos();
-        if(destinoA != null){
-            do {
-                destinoA = randomPos();
-
-            } while (destinoA.getLugar().getTipos()[0].equals(retoA.tipoLugar));
-
-            do {
-                destinoB = randomPos();
-            } while (destinoB.getLugar().getTipos()[0].equals(retoB.tipoLugar));
-
-            rutaActualA = dijkstra(posA, destinoA, true);
-            rutaActualB = dijkstra(posB, destinoB, false);
+        if (destinoA != null) {
+            reCalA();
+            reCalB();
             updateGrafo();
         }
     }
+    public boolean avanzarA() {
+        if (rutaActualA != null) {
+            pasosA++;
 
+            if (rutaActualA.size() - 1 == pasosA) {
+                progresoA++;
+                posA = rutaActualA.get(pasosA);
+                puntosTotal += posA.getLugar().getPuntaje();
+                jugadorA.setRanking(jugadorA.getRanking() + puntosA);
+                randomA();
+                reCalA();
+                return true;
+            } else {
+                try{
+                    posA = rutaActualA.get(pasosA);
+                }catch(IndexOutOfBoundsException e){
+                    System.out.println("SI SE CAE es por el index out ");
+                    randomA();
+                    reCalA();
+                }
+            }
+//            System.out.println("PosA " + posA.getName());
+//            rutaActualA = dijkstra(posA, destinoA, true);
+//            for (NodoGrafo nodoGrafo : rutaActualA) {
+//                System.out.println("Nodo rutA" + nodoGrafo.getName());
+//            }
+        }
+        return false;
+    }
+
+    public boolean avanzarB() {
+        if (rutaActualB != null) {
+            pasosB++;
+            if (rutaActualB.size() - 1 == pasosB) {
+                progresoB++;
+                posB = rutaActualB.get(pasosB);
+                puntosTotal += posB.getLugar().getPuntaje();
+                jugadorB.setRanking(jugadorB.getRanking() + puntosB);
+                randomB();
+                reCalB();
+                return true;
+            } else {
+                try{
+                    posB = rutaActualB.get(pasosB);
+                }catch(IndexOutOfBoundsException e){
+                    
+                    System.out.println("SI SE CAE es por el index out ");
+                    randomB();
+                    reCalB();
+                }
+            }
+//            rutaActualB = dijkstra(posB, destinoB, false);
+//            for (NodoGrafo nodoGrafo : rutaActualB) {
+//                System.out.println("Nodo RUTAb" + nodoGrafo.getName());
+//            }
+        }
+        return false;
+    }
     /**
      * Logica de juego del tablero
      */
@@ -369,46 +512,76 @@ public class CityPoliTablero extends Thread {
         }
         interfaz.getLblRetoA().setText(retosA.getRetos().get(progresoA).toString());
         interfaz.getLblRetoB().setText(retosB.getRetos().get(progresoB).toString());
-
+        interfaz.getLblPuntosA().setText(form(puntosA)+"");
+        interfaz.getLblPuntosB().setText(form(puntosB)+"");
+        interfaz.getLblRateA().setText(""+form(jugadorA.getRanking()));
+        interfaz.getLblRateB().setText(""+form(jugadorB.getRanking()));
+        interfaz.getLblvisitasA().setText(visitasA+"");
+        interfaz.getLblvisitasB().setText(visitasB+"");
+        interfaz.getLblvisitasTotal().setText(totalVisitados+"");
+        
         if (interfaz.isThrowDice()) {
-            int sleep = 20;
+            int sleep = 100;
             Dado dado = new Dado();
 
-            while (sleep < 600) {
-                interfaz.getLblDice().setText("DICE : " + dado.throwDice());
+            while (sleep > 0) {
+                interfaz.getLblDice().setText("DADO : "+"( " + dado.throwDice()+" )");
                 try {
                     Thread.sleep(sleep);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(CityPoliTablero.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                sleep += 40;
+                sleep -= 5;
             }
+            try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(CityPoliTablero.class.getName()).log(Level.SEVERE, null, ex);
+                }
 
             for (int k = 0; k < dado.getDice(); k++) {
+                totalVisitados++;
                 if (turno) {
-                    avanzarA();
+                    visitasA++;
+                    if (avanzarA()) {
+                        break;
+                    }
                 } else {
-                    avanzarB();
+                    visitasB++;
+                    if (avanzarB()) {
+                        break;
+                    }
                 }
                 updateGrafo();
                 try {
-                    System.out.println("Paso.. "+ (k+1));
-                    Thread.sleep(600);
+                    Thread.sleep(1000);
                 } catch (InterruptedException ex) {
                     Logger.getLogger(CityPoliTablero.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             turno = !turno;
+            if(turno){
+                interfaz.getLblturno().setText("Turno de: A" );
+            }else{
+                interfaz.getLblturno().setText("Turno de: B" );
+            }
+            
 
             interfaz.setThrowDice(false);
         }
-        interfaz.getProgressA().setValue(progresoA* 100/IConstants.cantidadRetos);
+        interfaz.getProgressA().setValue(progresoA * 100 / IConstants.cantidadRetos);
         if (progresoA == IConstants.cantidadRetos) {
-            System.out.println("Ha ganado el A");
+            JOptionPane.showMessageDialog(interfaz,"Se suma total para A y total/2 para B","RETOS COMPLETADOS", JOptionPane.INFORMATION_MESSAGE);
+            jugadorA.setRanking(jugadorA.getRanking()+puntosTotal);
+            jugadorB.setRanking(jugadorB.getRanking()+puntosTotal/2);
+            reset = true;
         }
-        interfaz.getProgressB().setValue(progresoB* 100/IConstants.cantidadRetos);
+        interfaz.getProgressB().setValue(progresoB * 100 / IConstants.cantidadRetos);
         if (progresoB == IConstants.cantidadRetos) {
-            System.out.println("Ha ganado el B");
+            JOptionPane.showMessageDialog(interfaz,"Se suma total para B y total/2 para A","RETOS COMPLETADOS", JOptionPane.INFORMATION_MESSAGE);
+            jugadorB.setRanking(jugadorB.getRanking()+puntosTotal);
+            jugadorA.setRanking(jugadorA.getRanking()+puntosTotal/2);
+            reset = true;
         }
 
     }
@@ -418,8 +591,8 @@ public class CityPoliTablero extends Thread {
      */
     @Override
     public void run() {
-        System.out.println("Comienza tablero");
         interfaz = new VisualMap();
+        interfaz.setLogin(login);
         interfaz.setExtendedState(interfaz.MAXIMIZED_BOTH);
         interfaz.setVisible(true);
         setPanelTablero(interfaz.getGraphics());
@@ -427,18 +600,17 @@ public class CityPoliTablero extends Thread {
         interfaz.setAux(visualG);
         visualG.start();
         turno = true;
-        boolean cerrarTablero =true;
+        boolean cerrarTablero = true;
         while (cerrarTablero) {
 
             if (interfaz.isSacarCarta()) {
-                System.out.println("SACO  CARTA");
                 //Saco una carta random del deck de paises
                 Carta nueva = mazoPaises.mazoLugares.get(random.nextInt(mazoPaises.mazoLugares.size()));
                 //Le cambio el tablero a la interraz
                 Set<String> tipos = new HashSet<>();
                 int progreso = 5;
                 interfaz.getApiProgress().setValue(progreso);
-
+                interfaz.getLblEstadoApi().setText("Cargando datos de jugadores...");
                 while (tipos.size() < IConstants.pedidosPorJuego) {
                     String tipo = IConstants.tipos[random.nextInt(IConstants.tipos.length - 1)];
                     tipos.add(tipo);
@@ -452,21 +624,27 @@ public class CityPoliTablero extends Thread {
                 for (int i = 0; i < nuevo.length; i++) {
                     progreso++;
                     interfaz.getApiProgress().setValue(progreso);
+                    
                     if (it.hasNext()) {
                         nuevo[i] = it.next();
                     } else {
                         break;
                     }
                 }
+                interfaz.getLblEstadoApi().setText("Esperando conexion...");
                 if (setControlador_grafo(json.construirGrafo(interfaz, nuevo, nueva.getLatitud(), nueva.getLongitud(), (String) interfaz.getjComboBox1().getSelectedItem()))) {
-                    JOptionPane.showInternalMessageDialog(interfaz, "Problema...", "Parece haber una mala conexion", JOptionPane.ERROR_MESSAGE);
+                    //JOptionPane.showInternalMessageDialog(null, "Problema...", "Parece haber una mala conexion", JOptionPane.ERROR_MESSAGE);
+                    interfaz.getLblEstadoApi().setText("Parece que no hay conexion... Conectese e intente de nuevo");
                     cerrarTablero = false;
                 } else {
                     crearPosicionesNodos();
                     crearConexiones();
+                    interfaz.getApiProgress().setValue(100);
                     interfaz.cartaDesplegada();
                     reset = true;
+                    interfaz.getLblEstadoApi().setText("Carga satisfactoria");
                 }
+                
             }
             if (controlador_grafo != null) {
                 gameplay();
@@ -486,8 +664,7 @@ public class CityPoliTablero extends Thread {
     /**
      * Muestro en la itnerfaz principal, los datos del juego
      */
-    public void muestroInfo()
-    {
-        
+    public void muestroInfo() {
+
     }
 }

@@ -29,11 +29,9 @@ public class CityPoli
     {
         this.controlador_json = new JsonManager();
         this.controlador_users = new UserFileManager();
-        this.control_visual_map = new VisualMap(this);
         this.control_visual_graphics = null;
         //this.control_geo_map = new GeoMap();
     }
-    //Gets and sets
     public ThreeBB getArbolB() {
         return controlador_login.getArbol_b_asterisco();
     }

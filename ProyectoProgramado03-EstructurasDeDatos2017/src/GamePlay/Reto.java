@@ -7,7 +7,7 @@ public class Reto
 {
     //Variables globales
     public final String verbo;
-    public final int cantidad;
+    public int cantidad;
     public final String tipoLugar;
     //Constructor
     public Reto(String verbo, int cantidad, String tipoLugar) 
@@ -19,6 +19,6 @@ public class Reto
     
     @Override
     public String toString(){
-        return verbo + cantidad + tipoLugar;
+        return verbo + 1 + " " + tipoLugar;
     }
 }

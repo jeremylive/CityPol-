@@ -6,11 +6,8 @@ import Interfaz.VisualMap;
 import Programa.CityPoli;
 import Programa.CityPoliTablero;
 import Programa.IConstants;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -18,7 +15,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JButton;
 import javax.swing.JOptionPane;
 /**
  *
@@ -46,11 +42,11 @@ public class LoginManager
     //Clases a usar
     private ThreeBB arbol_b_asterisco;
     private VisualMap vMap;
-    private CityPoliTablero cp;
+    private CityPoliTablero controladorTablero;
     //Constructor
     public LoginManager() 
     {
-        this.cp = null;
+        this.controladorTablero = null;
         this.vMap = null;
         this.ruta = IConstants.ruta;
         this.arbol_b_asterisco = new ThreeBB();
@@ -65,7 +61,7 @@ public class LoginManager
     }
     public LoginManager(CityPoli cP1,CityPoliTablero cP) 
     {
-        this.cp = cP;
+        this.controladorTablero = cP;
         this.vMap = cP1.getControl_visual_map();
         this.ruta = IConstants.ruta;
         this.arbol_b_asterisco = new ThreeBB();
@@ -162,11 +158,11 @@ public class LoginManager
     public void setvMap(VisualMap vMap) {
         this.vMap = vMap;
     }
-    public CityPoliTablero getCp() {
-        return cp;
+    public CityPoliTablero getControladorTablero() {
+        return controladorTablero;
     }
-    public void setCp(CityPoliTablero cp) {
-        this.cp = cp;
+    public void setControladorTablero(CityPoliTablero controladorTablero) {
+        this.controladorTablero = controladorTablero;
     }
     public String getDatos_ranking() {
         return datos_ranking;
@@ -241,7 +237,9 @@ public class LoginManager
     /**
      *  ESCRIBE EN EL ARCHIVO SECUENCIAL, EL NOMBER Y LAS ESTRELLAS
      * 
-     * @param ruta 
+     * @param name
+     * @param estrellas
+     * @param pass
      */
     public void EscribirArchivoSecuencial(String name, int estrellas, String pass)
     {
@@ -303,23 +301,21 @@ public class LoginManager
         //------------------------Nueva partida----------------------------
         boolean ciclo = false;
         boolean ciclo2 = false;
-        while(!(ciclo && ciclo2))
-        {
+//        while(!(ciclo && ciclo2))
+//        {
             //Pido Info
             pidoInfo();
 
             //Autifico los usuarios
             if(autetifico(getUser1(), getPass1())){   // Si existe, inserto Player al arbol
-                getvMap().setName1(getUser1());
+                
                 playerA = new Jugador(getUser1(), 0, getPass1());
-                cp.setJugadorA(playerA);
                 ciclo = true;
             }
 
             if(autetifico(getUser2(), getPass2())){   // Si existe, inserto Player al arbol
-                getvMap().setName2(getUser2());
+                
                 playerB = new Jugador(getUser2(), 0, getPass2());
-                cp.setJugadorB(playerB);
                 ciclo2 = true;
             } 
             
@@ -329,8 +325,12 @@ public class LoginManager
             if(!ciclo2){
                 JOptionPane.showMessageDialog(null, "No existe el perfil del jugador -> 2", "USUARIO INVALIDO", 2);
             }
+//        }
+        if(ciclo && ciclo2){
+            JOptionPane.showMessageDialog(null, "FELICIDADES, ENTRASTE AL MUNDO DE CITYPOLI", "BIENVENIDO", 2);
+            controladorTablero = new CityPoliTablero(playerA, playerB, this);
+            controladorTablero.start();
         }
-        JOptionPane.showMessageDialog(null, "FELICIDADES, ENTRASTE AL MUNDO DE CITYPOLI", "BIENVENIDO", 2);
     }
 
     public void pidoInfo()
@@ -371,11 +371,12 @@ public class LoginManager
     /**
      * Boton muestra ranking
      * 
+     * @return 
+     * @throws java.io.IOException
      */
     public String botonRank() throws IOException
     {
         //Cargo el nombre y ranking y los muestro 
-        String ranking_total = getDatos_ranking();
-        return ranking_total;   
+        return getDatos_ranking();  
     }  
 }

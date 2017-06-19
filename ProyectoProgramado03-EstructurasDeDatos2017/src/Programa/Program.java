@@ -5,6 +5,7 @@ import Estructura.ThreeBB;
 import GamePlay.Jugador;
 import Interfaz.Menu;
 import Interfaz.Ventanas;
+import Interfaz.VisualMap;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -22,31 +23,23 @@ public class Program
     private static CityPoli controlador1;
     private static CityPoliTablero controlador2;
     private static Ventanas ventanas;
+    private static VisualMap vMap;
+    public static LoginManager login;
 
     public static void main(String[] args) throws IOException 
     {
         //Inicializo Constroladores principales del program CITYPOLI
         controlador1 = new CityPoli();
-        controlador2 = new CityPoliTablero();
-      
-        LoginManager l1 = controlador1.getControlador_login(controlador1, controlador2);
-          //Obtengo el arbol asterisco
-        ThreeBB arbol_asterico = l1.getArbol_b_asterisco();//controlador1.getArbolB();
+        controlador2 = null;
         
-        
+        //Incializo controlador principal
+        login = controlador1.getControlador_login(controlador1, controlador2);
+ 
         //Inicializo las ventanas a usar
         ventanas = new Ventanas(controlador1, controlador2);
         
         //Hago la interfaz menu true
         ventanas.getMenu().setVisible(true);
-        
-                
-        //Logica archivo secuencial
-
-        //
-        
-        //GAMEPLAY
-        //controlador2.start();
     }
     
  

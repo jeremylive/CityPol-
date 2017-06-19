@@ -90,13 +90,13 @@ public class VisualGraphics extends Thread {
                         NodoGrafo origen = conexion.getOrigen();
                         NodoGrafo destino = conexion.getDestino();
                         //Dibuja la linea de origen a destino
-                        if (conexion.isIluminarA()) {
+                        if (tablero.isInRutaA(conexion)) {
                             panel.setColor(Color.GREEN);
                         }
-                        if(conexion.isIluminarB()){
+                        if(tablero.isInRutaB(conexion)){
                             panel.setColor(Color.red);
                         }
-                        if(conexion.isIluminarA() && conexion.isIluminarB()){
+                        if(tablero.isInRutaA(conexion) && tablero.isInRutaB(conexion)){
                             panel.setColor(Color.blue);
                         }
                         panel.drawLine(origen.getPosX() + medida, origen.getPosY() + medida, destino.getPosX() + medida, destino.getPosY() + medida);
@@ -116,18 +116,19 @@ public class VisualGraphics extends Thread {
                 nodos = (ArrayList<NodoGrafo>) controlador_grafo.getNodos();
                 if (nodos != null) 
                 {
-                    for (NodoGrafo nodo : nodos) {
+                    for (NodoGrafo nodo : nodos) 
+                    {
                         panel.drawImage(nodo.getLugar().getFoto_lugar(), nodo.getPosX(), nodo.getPosY(), interfaz);
-                        if(nodo.isIsAHere())
-                            panel.setColor(Color.GREEN);
-                        if(nodo.isIsBHere())
+                        if(nodo.equals(tablero.getPosA()))
+                            panel.setColor(Color.green);
+                        if(nodo.equals(tablero.getPosB()))
                             panel.setColor(Color.red);
                         
-                        if(nodo.isIsAHere() && nodo.isIsBHere())
+                        if(nodo.equals(tablero.getPosA())&& nodo.equals(tablero.getPosB()))
                             panel.setColor(Color.blue);
                         
-                        if(nodo.isIsAHere() || nodo.isIsBHere()) 
-                            panel.fillOval(nodo.getPosX(), nodo.getPosY(), medida * 5/4, medida);
+                        if(nodo.equals(tablero.getPosA()) || nodo.equals(tablero.getPosB())) 
+                            panel.fillOval(nodo.getPosX(), nodo.getPosY(), medida * 5/4 +20, medida+20);
                         panel.setColor(Color.BLACK);
                         
                         if(nodo.equals(tablero.getDestinoA())){
