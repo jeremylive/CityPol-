@@ -5,16 +5,22 @@ import java.util.ArrayList;
  *
  * @author live y edgerik
  */
-public final class Mazo 
+public final class HttpPlaces 
 {
     //Variables globales
     public ArrayList<Carta> mazoLugares;
     //Constructor
-    public Mazo()
+    public HttpPlaces()
     {
         this.mazoLugares = new ArrayList<>();
         addCarta("Costa Rica", 9.935949, -84.077431);
         addCarta("Francia", 48.8587737,2.3491262);
+        addCarta("Tokio", 35.702820, 139.737846);
+//        addCarta("Canada", 53.4514207,-77.3915374);
+        addCarta("Londres", 51.5287718,-0.2417003);
+        addCarta("Moscu",55.752175, 37.620053);
+//        addCarta("Egipto", 30.045062, 31.235458);
+        
     }
     /**
      * Inserto carta al mazo

@@ -5,7 +5,7 @@ import Estructura.ThreeBB;
 import GamePlay.Jugador;
 import Interfaz.Menu;
 import Interfaz.Ventanas;
-import Interfaz.VisualMap;
+import Interfaz.VisualGraphics;
 import java.io.DataInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -23,7 +23,7 @@ public class Program
     private static CityPoli controlador1;
     private static CityPoliTablero controlador2;
     private static Ventanas ventanas;
-    private static VisualMap vMap;
+    private static VisualGraphics vMap;
     public static LoginManager login;
 
     public static void main(String[] args) throws IOException 

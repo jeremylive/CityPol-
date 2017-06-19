@@ -9,11 +9,11 @@ import Estructura.NodoGrafo;
 import GamePlay.Carta;
 import GamePlay.Dado;
 import GamePlay.Jugador;
-import GamePlay.Mazo;
+import GamePlay.HttpPlaces;
 import GamePlay.Reto;
 import GamePlay.Retos;
+import Interfaz.GeoMap;
 import Interfaz.VisualGraphics;
-import Interfaz.VisualMap;
 import Libreria.Dijkstra;
 import java.awt.Color;
 import java.awt.Graphics;
@@ -40,15 +40,15 @@ public class CityPoliTablero extends Thread {
     //Clases a usar
     private final JsonManager json;
     private Grafo controlador_grafo;
-    private VisualGraphics visualG;
+    private GeoMap visualG;
     private Jugador jugadorA;
     private Jugador jugadorB;
     private NodoGrafo posA, destinoA;
     private NodoGrafo posB, destinoB;
     private final Random random;
     private Reto retoA, retoB;
-    private VisualMap interfaz;
-    private Mazo mazoPaises;
+    private VisualGraphics interfaz;
+    private HttpPlaces mazoPaises;
     private Graphics panelTablero;
     private boolean reset;
     private boolean turno;
@@ -76,7 +76,7 @@ public class CityPoliTablero extends Thread {
         this.jugadorA = A;
         this.jugadorB = B;
         this.random = new Random();
-        this.mazoPaises = new Mazo();
+        this.mazoPaises = new HttpPlaces();
         this.json = new JsonManager();
         this.reset = false;
         this.visualG = null;
@@ -120,7 +120,8 @@ public class CityPoliTablero extends Thread {
         this.jugadorB = jugadorB;
     }
 
-    public boolean setControlador_grafo(Grafo controlador_grafo) {
+    public boolean setControlador_grafo(Grafo controlador_grafo)
+    {
         this.controlador_grafo = controlador_grafo;
         return this.controlador_grafo == null;
     }
@@ -129,19 +130,19 @@ public class CityPoliTablero extends Thread {
         return jugadorA;
     }
 
-    public VisualMap getInterfaz() {
+    public VisualGraphics getInterfaz() {
         return interfaz;
     }
 
-    public void setInterfaz(VisualMap interfaz) {
+    public void setInterfaz(VisualGraphics interfaz) {
         this.interfaz = interfaz;
     }
 
-    public Mazo getMazoPaises() {
+    public HttpPlaces getMazoPaises() {
         return mazoPaises;
     }
 
-    public void setMazoPaises(Mazo mazoPaises) {
+    public void setMazoPaises(HttpPlaces mazoPaises) {
         this.mazoPaises = mazoPaises;
     }
 
@@ -153,10 +154,10 @@ public class CityPoliTablero extends Thread {
         this.panelTablero = panelTablero;
     }
 
-    public VisualGraphics getVisualG() {
+    public GeoMap getVisualG() {
         return visualG;
     }
-    public void setVisualG(VisualGraphics visualG) {
+    public void setVisualG(GeoMap visualG) {
         this.visualG = visualG;
     }
 
@@ -276,7 +277,7 @@ public class CityPoliTablero extends Thread {
 
         for (NodoGrafo nodo : nodos) {
             do {
-                x = random.nextInt(IConstants.panelWidth - (IConstants.medidaNodo*IConstants.escalaImagen)) + IConstants.medidaNodo;
+                x = random.nextInt(IConstants.panelWidth - (IConstants.medidaNodo*IConstants.escalaImagen));
                 y = random.nextInt(IConstants.panelHeight - (IConstants.medidaNodo*IConstants.escalaImagen)) - IConstants.medidaNodo;
             } while (controlador_grafo.inListaPuntos(x, y));
 
@@ -448,6 +449,7 @@ public class CityPoliTablero extends Thread {
 
             if (rutaActualA.size() - 1 == pasosA) {
                 progresoA++;
+                posA.procesar();
                 posA = rutaActualA.get(pasosA);
                 puntosTotal += posA.getLugar().getPuntaje();
                 jugadorA.setRanking(jugadorA.getRanking() + puntosA);
@@ -477,6 +479,7 @@ public class CityPoliTablero extends Thread {
             pasosB++;
             if (rutaActualB.size() - 1 == pasosB) {
                 progresoB++;
+                posB.procesar();
                 posB = rutaActualB.get(pasosB);
                 puntosTotal += posB.getLugar().getPuntaje();
                 jugadorB.setRanking(jugadorB.getRanking() + puntosB);
@@ -591,13 +594,15 @@ public class CityPoliTablero extends Thread {
      */
     @Override
     public void run() {
-        interfaz = new VisualMap();
+        interfaz = new VisualGraphics();
         interfaz.setLogin(login);
         interfaz.setExtendedState(interfaz.MAXIMIZED_BOTH);
         interfaz.setVisible(true);
         setPanelTablero(interfaz.getGraphics());
-        visualG = new VisualGraphics(interfaz, controlador_grafo, this);
+        visualG = new GeoMap(interfaz, controlador_grafo, this);
         interfaz.setAux(visualG);
+        interfaz.getLblA().setText(jugadorA.getName());
+        interfaz.getLblB().setText(jugadorB.getName());
         visualG.start();
         turno = true;
         boolean cerrarTablero = true;

@@ -3,7 +3,7 @@ package Controlador;
 import Estructura.Grafo;
 import Estructura.Lugar;
 import Estructura.NodoGrafo;
-import Interfaz.VisualMap;
+import Interfaz.VisualGraphics;
 import Programa.IConstants;
 import java.awt.Image;
 import java.io.IOException;
@@ -32,12 +32,9 @@ import org.json.simple.parser.ParseException;
 public class JsonManager 
 {
     //Variables globales
-    private JSONParser lector;
-    private JSONObject objeto;
     private JSONArray tipos;
     private Grafo grafo;
     private Iterator<JSONObject> iter;
-    private URL link;
     private boolean malaConexion;
     private final HttpClient client = HttpClients.createDefault();
     /**
@@ -49,7 +46,7 @@ public class JsonManager
      * @param radio radio de busqueda con api
      * @return Grafo construido con posiciones en pantalla y sus conexiones respectivas
      */
-    public Grafo construirGrafo(VisualMap control,String[] tipos, double lat, double lon, String radio)
+    public Grafo construirGrafo(VisualGraphics control,String[] tipos, double lat, double lon, String radio)
     {
         grafo = new Grafo();
         int len = tipos.length;

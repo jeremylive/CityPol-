@@ -16,8 +16,7 @@ import javax.swing.JOptionPane;
 public class FileManager 
 {
     // Variables Globables ---------------------------------------------
-    private File controlador;
-    private String ruta;
+
     private FileInputStream fileInput;
     private BufferedInputStream bufferedInput;
     private FileOutputStream fileOutput;

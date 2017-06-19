@@ -22,7 +22,7 @@ public class Dado
     }
     public int throwDice()
     {
-        dice =random.nextInt(4);
+        dice =random.nextInt(3)+1;
         return dice;
     }
 }

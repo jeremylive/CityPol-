@@ -2,7 +2,7 @@ package Controlador;
 /*Librerias a usar*/
 import Estructura.ThreeBB;
 import GamePlay.Jugador;
-import Interfaz.VisualMap;
+import Interfaz.VisualGraphics;
 import Programa.CityPoli;
 import Programa.CityPoliTablero;
 import Programa.IConstants;
@@ -41,7 +41,7 @@ public class LoginManager
     private ArrayList<String> datos_pass;
     //Clases a usar
     private ThreeBB arbol_b_asterisco;
-    private VisualMap vMap;
+    private VisualGraphics vMap;
     private CityPoliTablero controladorTablero;
     //Constructor
     public LoginManager() 
@@ -152,10 +152,10 @@ public class LoginManager
     public void setPlayerB(Jugador playerB) {
         this.playerB = playerB;
     }
-    public VisualMap getvMap() {
+    public VisualGraphics getvMap() {
         return vMap;
     }
-    public void setvMap(VisualMap vMap) {
+    public void setvMap(VisualGraphics vMap) {
         this.vMap = vMap;
     }
     public CityPoliTablero getControladorTablero() {

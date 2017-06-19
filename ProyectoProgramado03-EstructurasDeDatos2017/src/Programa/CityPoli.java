@@ -6,8 +6,8 @@ import Controlador.UserFileManager;
 import Estructura.ThreeBB;
 import GamePlay.Dado;
 import Interfaz.GeoMap;
+import Interfaz.GeoMap;
 import Interfaz.VisualGraphics;
-import Interfaz.VisualMap;
 /**
  *
  * @author live y edgerik
@@ -21,8 +21,8 @@ public class CityPoli
     private JsonManager controlador_json;
     private UserFileManager controlador_users;
     //Clase a usar logica API
-    private VisualMap control_visual_map;
-    private VisualGraphics control_visual_graphics;
+    private VisualGraphics control_visual_map;
+    private GeoMap control_visual_graphics;
     //private GeoMap control_geo_map;
     //Constructor
     public CityPoli()
@@ -58,16 +58,16 @@ public class CityPoli
     public void setControlador_users(UserFileManager controlador_users) {
         this.controlador_users = controlador_users;
     }
-    public VisualMap getControl_visual_map() {
+    public VisualGraphics getControl_visual_map() {
         return control_visual_map;
     }
-    public void setControl_visual_map(VisualMap control_visual_map) {
+    public void setControl_visual_map(VisualGraphics control_visual_map) {
         this.control_visual_map = control_visual_map;
     }
-    public VisualGraphics getControl_visual_graphics() {
+    public GeoMap getControl_visual_graphics() {
         return control_visual_graphics;
     }
-    public void setControl_visual_graphics(VisualGraphics control_visual_graphics) {
+    public void setControl_visual_graphics(GeoMap control_visual_graphics) {
         this.control_visual_graphics = control_visual_graphics;
     }
 

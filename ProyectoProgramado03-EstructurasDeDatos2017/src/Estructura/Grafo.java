@@ -3,13 +3,10 @@ package Estructura;
 import Programa.IConstants;
 import Programa.IObservable;
 import Programa.IObserver;
-import java.awt.Graphics;
 import java.awt.Point;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Observable;
 import java.util.Random;
 /**
  * Clase Singleton para manejo global de esta
@@ -100,10 +97,6 @@ public class Grafo implements IObservable
             if(ruta.size()<2){
                 System.out.println("No hay ruta");
             }
-            for (int i = 1; i< ruta.size();i++) 
-            {
-                lightUpPath(getNodo(i-1), getNodo(i),player);
-            }
         }
         return ruta;
     }
@@ -172,26 +165,6 @@ public class Grafo implements IObservable
         return dijkstra.getRuta(destino);
     }
 
-    /**
-     * Marco el camino para dibujar en pantalla
-     * @param origen Nodo origen
-     * @param destino Nodo destino
-     * @param player jugador que pasara por esta ruta
-     */
-    public void lightUpPath(NodoGrafo origen, NodoGrafo destino, boolean player)
-    {
-        for (Conexion conexion : conexiones)
-        {
-            if(conexion.getOrigen().equals(origen) && conexion.getDestino().equals(destino))
-            {
-                if(player)
-                    conexion.setIluminarA(true);
-                else
-                    conexion.setIluminarB(true);
-                break;
-            }
-        }
-    }
     
     /**
      * @param idCamino Identificacion de ruta
@@ -240,7 +213,7 @@ public class Grafo implements IObservable
     @Override
     public void notifyObservers() {
         for(IObserver obs : observadores){
-            
+            obs.update(this);
         }
     }
 
