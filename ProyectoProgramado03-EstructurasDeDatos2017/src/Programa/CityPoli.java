@@ -29,7 +29,7 @@ public class CityPoli
     {
         this.controlador_json = new JsonManager();
         this.controlador_users = new UserFileManager();
-        this.control_visual_map = null;
+        this.control_visual_map = new VisualMap(this);
         this.control_visual_graphics = null;
         //this.control_geo_map = new GeoMap();
     }
@@ -37,7 +37,11 @@ public class CityPoli
     public ThreeBB getArbolB() {
         return controlador_login.getArbol_b_asterisco();
     }
-    public LoginManager getControlador_login() {
+    public LoginManager getControlador_login(CityPoli cP, CityPoliTablero cPt) {
+        this.controlador_login = new LoginManager(cP, cPt);
+        return controlador_login;
+    }
+    public LoginManager getControlador_login2() {
         this.controlador_login = new LoginManager();
         return controlador_login;
     }

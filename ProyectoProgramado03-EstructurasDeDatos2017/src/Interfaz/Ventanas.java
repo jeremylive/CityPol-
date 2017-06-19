@@ -15,10 +15,10 @@ public class Ventanas
     private Ranking ranking; 
     
     //Constructor
-    public Ventanas(LoginManager lol, VisualMap map, CityPoliTablero cP)
+    public Ventanas()
     {
         //
-        this.menu = new Menu(lol, map, cP);
+        this.menu = new Menu();
         this.ranking = new Ranking();
     }
     //gets and sets
