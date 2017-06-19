@@ -31,12 +31,13 @@ public class LoginManager
     private FileOutputStream direccion2;
     private FileInputStream direccion;
     private String ruta;
-    private String datos_ranking;
     private String user1, user2, pass1, pass2;
     private Jugador playerA, playerB, pJugador, nuevo_jugador;
     private int boton;
     private String pname, pasword;
-    private int largo_bits; 
+    private int largo_bits;
+    private String ranked;
+    private ArrayList<Integer> datos_ranking;
     private ArrayList<String> datos_nombre;
     private ArrayList<String> datos_pass;
     //Clases a usar
@@ -53,9 +54,13 @@ public class LoginManager
         this.name = "";
         this.estrellas = 0;
         this.password = "";
-        this.datos_ranking = "";
         this.boton = 0;
-        setLargoBits();
+        this.direccion2 = null;
+        this.archivo2 = null;
+        this.direccion = null;
+        this.archivo = null;
+        this.ranked = "";
+        this.datos_ranking = new ArrayList<>();
         this.datos_nombre = new ArrayList<>();
         this.datos_pass =  new ArrayList<>();
     }
@@ -68,45 +73,38 @@ public class LoginManager
         this.name = "";
         this.estrellas = 0;
         this.password = "";
-        this.datos_ranking = "";
         this.boton = 0;
-        setLargoBits();
+        this.direccion2 = null;
+        this.archivo2 = null;
+        this.direccion = null;
+        this.archivo = null;
+        this.ranked = "";
+        this.datos_ranking = new ArrayList<>();
         this.datos_nombre =  new ArrayList<>();
         this.datos_pass =  new ArrayList<>();
     }
     //Gets and Sets
-    public void setLargoBits(){
-        try {
-            this.direccion2 = new FileOutputStream(ruta, true);
-            this.archivo2 = new DataOutputStream(direccion2);
-            this.direccion = new FileInputStream(ruta);
-            this.archivo = new DataInputStream(direccion);
-            try {
-                this.largo_bits =  archivo.available();
-            } catch (IOException ex) {
-                Logger.getLogger(LoginManager.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(LoginManager.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+    public String getRanked() {
+        return ranked;
     }
 
+    public void setRanked(String ranked) {
+        this.ranked = ranked;
+    }
+    
     public ArrayList<String> getDatos_nombre() {
         return datos_nombre;
     }
-
     public void setDatos_nombre(String pdatos_nombre) {
         this.datos_nombre.add(pdatos_nombre);
     }
-
     public ArrayList<String> getDatos_pass() {
         return datos_pass;
     }
-
     public void setDatos_pass(String pdatos_pass) {
         this.datos_pass.add(pdatos_pass);
     }
-    
     public int getLargoBits(){
         return largo_bits;
     }
@@ -164,11 +162,11 @@ public class LoginManager
     public void setControladorTablero(CityPoliTablero controladorTablero) {
         this.controladorTablero = controladorTablero;
     }
-    public String getDatos_ranking() {
+    public ArrayList<Integer> getDatos_ranking() {
         return datos_ranking;
     }
-    public void setDatos_ranking(String datos_ranking) {
-        this.datos_ranking += datos_ranking;   
+    public void setDatos_ranking(int datos_ranking) {
+        this.datos_ranking.add(datos_ranking);   
     }
     public String getName() {
         return name;
@@ -185,25 +183,29 @@ public class LoginManager
     //Funciones
     /**
      * Reconstruyo el arbol en base al archivo secuencial
+     * 
      */
     public void reconstruyoArbol() 
     {
-        System.out.println("-------------arbol asterisco-------------");
         try{
+            System.out.println("Reconstruyo el arbol b asterisvo\n");
+            direccion = new FileInputStream(ruta);
+            archivo = new DataInputStream(direccion);
+            largo_bits =  archivo.available();
             while(largo_bits > 0){
                 //Obtengo datos
                 name = archivo.readUTF();
                 estrellas = archivo.readInt();
                 password = archivo.readUTF();
                 //Creo jugador  
-                System.out.println(name);
+                //System.out.println(name);
                 pJugador = new Jugador(name, estrellas, password);
                 //inserto al arbol, reconstruyo el arbol
                 getArbol_b_asterisco().add(pJugador);
                 //Inserto datos a usar mas adelante
                 setDatos_nombre(name);
                 setDatos_pass(password);
-            }       
+            }
             archivo.close();
         } 
             catch(FileNotFoundException fnfe) {}
@@ -218,15 +220,23 @@ public class LoginManager
      */
     public void leerArchivoSecuencial() 
     {
+        //datos_nombre = null;
+        //datos_pass = null;
         try{
+            System.out.println("Leer archivo secuencial\n");
+            direccion = new FileInputStream(ruta);
+            archivo = new DataInputStream(direccion);
+            largo_bits =  archivo.available();
             while(largo_bits > 0){
                 name = archivo.readUTF();
                 estrellas = archivo.readInt();
                 password = archivo.readUTF();
-                System.out.println("n:"+name);
-                datos_ranking += "\nnombre: "+name+" - estrellas: "+estrellas+" - Password: "+password;
+                //System.out.println("n:"+name);
+                ranked += "\n"+"nombre: "+name+" - estrellas: "+estrellas+" - Password: "+password;
+                //setDatos_nombre(name);
+                //setDatos_ranking(estrellas);
             }     
-            System.out.println(datos_ranking);
+            
             archivo.close();
         } 
             catch(FileNotFoundException fnfe) {}
@@ -244,10 +254,13 @@ public class LoginManager
     public void EscribirArchivoSecuencial(String name, int estrellas, String pass)
     {
         try{
+            System.out.println("Escirbo en el archivo secuencial\n");
+            direccion2 = new FileOutputStream(ruta, true);
+            archivo2 = new DataOutputStream(direccion2);
             archivo2.writeUTF(name);
             archivo2.writeInt(estrellas);
             archivo2.writeUTF(pass);
-            //archivo2.close();
+            archivo2.close();
         }
             catch(FileNotFoundException fnfe) {}
             catch (IOException ioe) {}    
@@ -259,7 +272,9 @@ public class LoginManager
     public void menu()
     {
         //precargo el arbol
+        
         reconstruyoArbol();
+        
         //String a = getArbol_b_asterisco().getString(getArbol_b_asterisco().getRaiz(), "", true);
         //System.out.println(a);
         if(getBoton() == 1)
@@ -297,7 +312,6 @@ public class LoginManager
      */
     public void empizaJuego() 
     {
-        leerArchivoSecuencial();
         //------------------------Nueva partida----------------------------
         boolean ciclo = false;
         boolean ciclo2 = false;
@@ -374,9 +388,100 @@ public class LoginManager
      * @return 
      * @throws java.io.IOException
      */
-    public String botonRank() throws IOException
+    public String botonR()
     {
-        //Cargo el nombre y ranking y los muestro 
-        return getDatos_ranking();  
-    }  
+        //Obtengo los nombres y las estrellas de todos los usuarios
+        leerArchivoSecuencial();
+        
+        //Ordeno con el mergesort
+        //ordenoMer();
+       
+        return getRanked();
+    }
+    
+    /**
+     * Funcion que ordena el String de nombres de todos los usuarios
+     */
+    public void ordenoMer()
+    {
+        String[] mersort = null;
+        int contador = 0;
+        for (String pStr : getDatos_nombre()) {
+            mersort[contador] = pStr;
+        }
+        
+        mergesort(mersort, 0, mersort.length-1);
+    }
+    
+    /**
+     * Algoritmos mersort, capaz de dividir el String entre dos, hasta
+     * que no pueda mas y va ordenando cada uno hasta q sean de largo 1
+     * y se van volviendo a unir, ya ordenados....
+     */ 
+     
+    public void mergesort(String[] array_nombres,int izq, int der)
+    {
+        if(izq < der){
+            int medio = (izq + der) / 2;
+            mergesort(array_nombres, izq, medio);
+            mergesort(array_nombres, medio+1, der);
+            merge(array_nombres,izq,medio,der);
+        }
+        
+    }
+    
+    public void merge(String[] array_nombres,int izq, int m, int der)
+    {
+        int i, j , k;
+        String[] B = new String[array_nombres.length];
+        for(i=izq; i<=der;i++){     //copia ambas mitades en el array auxiliar
+            B[i] = array_nombres[i];
+            
+            i=izq; j=m+1; k=izq;
+            while(i<=m && j<=der){  //Element max
+                if(B[i].equals(B[j]))
+                {
+                    array_nombres[k++]=B[i++];
+                }else
+                {
+                    array_nombres[k++]=B[j++];
+                }
+                while(i<=m){
+                    array_nombres[k++] = B[i++];
+                }
+            }
+        }
+    }
 }
+
+/*
+
+
+
+
+    public ArrayList<String> botonRankName() throws IOException
+    {
+        
+        //Cargo el nombre y ranking y los muestro 
+        //leerArchivoSecuencial();
+        return getDatos_nombre();
+    }  
+
+    public ArrayList<Integer> botonRank() throws IOException
+    {
+        
+        //Cargo el nombre y ranking y los muestro 
+        //leerArchivoSecuencial();
+        return getDatos_ranking();
+    }  
+
+
+
+
+
+
+        direccion2 = new FileOutputStream(ruta, true);
+        archivo2 = new DataOutputStream(direccion2);
+        direccion = new FileInputStream(ruta);
+        archivo = new DataInputStream(direccion);
+*/
