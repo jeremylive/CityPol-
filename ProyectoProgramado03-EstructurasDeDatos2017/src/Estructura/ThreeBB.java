@@ -119,29 +119,25 @@ public class ThreeBB {
         {
             if(nodo_auxiliar.getIzquierdo().getCant_keys() < 4)
             {
-                //Inseto en el padre el jugador
-                valor_medio = nodo_auxiliar.getKey(0);//indice_medio);
-                nodo_padre.addKey(valor_medio);                      //Agrego el valor inicial al nodo padre
-                //Elimino el jugador del nodo actual
-                nodo_auxiliar.remove(0);                             //Lo remuevo del original
-                nodo_auxiliar.setPadre(nodo_padre);                  //actual -> padre
+                valor_medio = nodo_auxiliar.getKey(0);                          //Obtengo el jugador q se sube al padre
                 
-                index_padre_remove = nodo_auxiliar.getPadre().addKey(pJugador);//Obtengo index donde se inserto la key en el nodo padre 
+                nodo_padre.addKey(valor_medio);                                 //Agrego el jugador inicial del nodo actual al nodo padre
+                
+                nodo_auxiliar.remove(0);                                        //Elimino el jugador del nodo actual
+                nodo_auxiliar.setPadre(nodo_padre);                             //actual -> padre
+       
+                index_padre_remove = nodo_auxiliar.getPadre().addKey(pJugador); //Obtengo index donde se inserto la key en el nodo padre 
 
                 //Obtengo el jugador que se inserto en padre anteriormente
                 player_aux = nodo_auxiliar.getPadre().getArray_keys().get(index_padre_remove-1);
-                //Inserto en el nodo adyasente izquierdo el jugador
-                nodo_auxiliar.getPadre().getArray_hijos().get(index_padre_remove-1).addKey(player_aux);
-                nodo_auxiliar.getPadre().remove(index_padre_remove-1);    //Remuevo la key incio del nodo_auxiliar actual
 
-                if(player_aux != null)      //Verifico que el key no sea nulo
-                { 
-                    nodo_auxiliar.getIzquierdo().setDerecho(nodo_auxiliar);  //izq->actual
-                    nodo_auxiliar.setIzquierdo(nodo_auxiliar.getIzquierdo());//actual->izq
+                nodo_auxiliar.getPadre().remove(index_padre_remove-1);          //Remuevo el Jugador incio del nodo_auxiliar actual
 
-                    nodo_auxiliar.getIzquierdo().setPadre(nodo_auxiliar.getPadre()); //Seteo padre en nodo izquierdo
-                    nodo_auxiliar.setPadre(nodo_auxiliar.getPadre());                //Seteo padre en nodo actual
-                } 
+                nodo_auxiliar.getIzquierdo().addKey(player_aux);                //Inserto en el nodo adyasente izquierdo el jugador
+ 
+                nodo_auxiliar.getIzquierdo().setPadre(nodo_auxiliar.getPadre());//izq -> padre
+                nodo_auxiliar.getIzquierdo().setDerecho(nodo_auxiliar);         //izq->actual
+                nodo_auxiliar.setIzquierdo(nodo_auxiliar.getIzquierdo());       //actual->izq
                 return true;
             } 
         }
@@ -151,45 +147,29 @@ public class ThreeBB {
             //Caso derecho
             if(nodo_auxiliar.getDerecho().getCant_keys() < 4)
             {
-                //Inseto en el padre el jugador
-                valor_medio = nodo_auxiliar.getKey(nodo_auxiliar.getCant_keys()-1);//indice_medio);
-                nodo_padre.addKey(valor_medio);                      //Agrego el valor inicial al nodo padre
-                //Elimino el jugador del nodo actual
-                nodo_auxiliar.remove(nodo_auxiliar.getCant_keys()-1);//0);                             //Lo remuevo del original
-                nodo_auxiliar.setPadre(nodo_padre);                  //actual -> padre}
+                valor_medio = nodo_auxiliar.getKey(nodo_auxiliar.getCant_keys()-1);//Obtengo el jugador q se sube al padre
                 
-                index_padre_remove = nodo_auxiliar.getPadre().addKey(pJugador);//Obtengo index donde se inserto la key en el nodo padre 
+                nodo_padre.addKey(valor_medio);                                 //Agrego el valor inicial al nodo padre
+                
+                nodo_auxiliar.remove(nodo_auxiliar.getCant_keys()-1);           //Elimino el jugador del nodo actual
+                nodo_auxiliar.setPadre(nodo_padre);                             //actual -> padre
+                
+                index_padre_remove = nodo_auxiliar.getPadre().addKey(pJugador); //Obtengo index donde se inserto la key en el nodo padre 
                     
                 //Obtengo el jugador que se inserto en padre anteriormente
                 player_aux = nodo_auxiliar.getPadre().getArray_keys().get(index_padre_remove+1);
-                //Inserto en el nodo adyasente izquierdo el jugador
-                nodo_auxiliar.getPadre().getArray_hijos().get(index_padre_remove+1).addKey(player_aux);
-                nodo_auxiliar.getPadre().remove(index_padre_remove+1);    //Remuevo la key incio del nodo_auxiliar actual
 
-                //Verifico que el key no sea nulo
-                if(player_aux != null)
-                {
-                    nodo_auxiliar.getDerecho().setIzquierdo(nodo_auxiliar);        //izq->actual
-                    nodo_auxiliar.setDerecho(nodo_auxiliar.getDerecho());          //actual->izq
+                nodo_auxiliar.getPadre().remove(index_padre_remove+1);          //Remuevo el Jugador incio del nodo_auxiliar actual
 
-                    nodo_auxiliar.getDerecho().setPadre(nodo_auxiliar.getPadre()); //Seteo padre en nodo izquierdo
-                    nodo_auxiliar.setPadre(nodo_auxiliar.getPadre());              //Seteo padre en nodo actual   
-                }     
+                nodo_auxiliar.getDerecho().addKey(player_aux);                  //Inserto en el nodo adyasente izquierdo el jugador
+ 
+                nodo_auxiliar.getDerecho().setPadre(nodo_auxiliar.getPadre());  //der -> padre
+                nodo_auxiliar.getDerecho().setIzquierdo(nodo_auxiliar);         //der->actual
+                nodo_auxiliar.setIzquierdo(nodo_auxiliar.getDerecho());         //actual->der   
                 return true;
             }
         }
-        //Caso cuando los nodos adyasentes estan llenos
-        if(nodo_auxiliar.getDerecho() != null || nodo_auxiliar.getIzquierdo() != null)
-        {
-            if(nodo_auxiliar.getDerecho().getCant_keys() > 3 || nodo_auxiliar.getIzquierdo().getCant_keys() > 3)
-            {
-                valor_medio = nodo_auxiliar.getKey(indice_medio);
-                nodo_auxiliar.getPadre().addKey(valor_medio);
 
-            }       
-            return true;
-        }
-    
         return false;
     }
     /**
@@ -241,8 +221,6 @@ public class ThreeBB {
                     }
                 }
                 //Busqueda en el arbol, alfabeticamente
-                System.out.println("1---"+llave_menor.getName());
-                System.out.println("2---"+pJugador.getName());
                 if (pJugador.getName().compareTo(llave_menor.getName()) <= 0) { //Busqueda, menores
                     nodo_auxiliar = nodo_auxiliar.getHijo(0);
                     continue;
@@ -361,6 +339,29 @@ public class ThreeBB {
 
 
 /*
+
+
+
+
+        Caso cuando los nodos adyasentes estan llenos
+        if(nodo_auxiliar.getDerecho() != null || nodo_auxiliar.getIzquierdo() != null)
+        {
+            if(nodo_auxiliar.getDerecho().getCant_keys() > 3 || nodo_auxiliar.getIzquierdo().getCant_keys() > 3)
+            {
+                valor_medio = nodo_auxiliar.getKey(indice_medio);
+                nodo_auxiliar.getPadre().addKey(valor_medio);
+
+            }       
+            return true;
+        }
+    
+
+
+
+
+
+               //nodo_auxiliar.getPadre().getArray_hijos().get(index_padre_remove-1).addKey(player_aux);
+  
     //
     public void recorroArbolBB()
     {

@@ -20,6 +20,6 @@ public class IConstants
     public static final int sleep = 200;
     public static final int cantidadRetos = 5;
     //public static final String ruta = "C:\\Users\\Edgerik Leguizamon\\Documents\\GitHub\\CityPol-\\ProyectoProgramado03-EstructurasDeDatos2017\\src\\GamePlay\\perfiles.as";
-    public static final String ruta = "C:\\Users\\Curso\\Desktop\\CityPol--NetBeans\\ProyectoProgramado03-EstructurasDeDatos2017\\src\\GamePlay\\perfiles.as";
+    public static final String ruta = "C:\\Users\\Usuario1\\Desktop\\GitHub\\CityPol-\\ProyectoProgramado03-EstructurasDeDatos2017\\src\\GamePlay\\perfiles.as";
     
 }

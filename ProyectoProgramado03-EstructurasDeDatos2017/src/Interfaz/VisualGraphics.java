@@ -375,13 +375,9 @@ public class VisualGraphics extends javax.swing.JFrame
         
         rank.setVisible(true);
         String result = null;
-        try {
-            result = login.botonRank();
-        } catch (IOException ex) {
-            Logger.getLogger(VisualGraphics.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        System.out.println("Imprime rank");
-        System.out.println(result);
+        result = login.botonR();
+        //System.out.println("Imprime rank");
+        //System.out.println(result);
         rank.getRanking().setText(result);
         
     }//GEN-LAST:event_boton_rankingActionPerformed
