@@ -15,6 +15,9 @@ public class NodoGrafo
     private Image thumbnail;
     private int posX;
     private int posY;
+    private boolean isAHere;
+    private boolean isBHere;
+    private boolean isProcesado;
 
     /**
      * Constructor, Nodo con la imagen del lugar
@@ -28,6 +31,30 @@ public class NodoGrafo
         this.thumbnail = lugar.getFoto_lugar();
         this.posX = 0;
         this.posY = 0;
+    }
+
+    public boolean isIsAHere() {
+        return isAHere;
+    }
+
+    public boolean isIsProcesado() {
+        return isProcesado;
+    }
+
+    public void setIsProcesado(boolean isProcesado) {
+        this.isProcesado = isProcesado;
+    }
+
+    public void setIsAHere(boolean isAHere) {
+        this.isAHere = isAHere;
+    }
+
+    public boolean isIsBHere() {
+        return isBHere;
+    }
+
+    public void setIsBHere(boolean isBHere) {
+        this.isBHere = isBHere;
     }
 
     /**

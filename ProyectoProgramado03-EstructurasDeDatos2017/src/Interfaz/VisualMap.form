@@ -2,8 +2,6 @@
 
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
-    <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
-    </Component>
     <Menu class="javax.swing.JMenuBar" name="jMenuBar1">
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="jMenu1">
@@ -34,6 +32,9 @@
     <Property name="bounds" type="java.awt.Rectangle" editor="org.netbeans.beaninfo.editors.RectangleEditor">
       <Rectangle value="[0, 0, 0, 0]"/>
     </Property>
+    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+      <Font name="Comic Sans MS" size="18" style="2"/>
+    </Property>
     <Property name="location" type="java.awt.Point" editor="org.netbeans.beaninfo.editors.PointEditor">
       <Point value="[0, 0]"/>
     </Property>
@@ -62,10 +63,30 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
+          <Component id="jScrollPane1" alignment="0" pref="0" max="32767" attributes="0"/>
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
+<<<<<<< HEAD
                   <Group type="102" alignment="0" attributes="0">
+=======
+<<<<<<< HEAD
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
+                      <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
+                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="lblB" min="-2" pref="84" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="lblRateB" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
+                          <Component id="lblPuntosB" min="-2" max="-2" attributes="0"/>
+=======
+                  <Group type="102" attributes="0">
+>>>>>>> d911a85ba57395dc9929f0587c93ae3ef13c8d98
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
@@ -104,7 +125,9 @@
                               <Component id="lblDice" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                           </Group>
+>>>>>>> b0330ab6432ecef622f826d61acba6af119deb28
                       </Group>
+<<<<<<< HEAD
                   </Group>
                   <Group type="102" attributes="0">
                       <Component id="apiProgress" max="32767" attributes="0"/>
@@ -116,9 +139,50 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblturno" min="-2" max="-2" attributes="0"/>
                           <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+=======
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="lblA" min="-2" pref="84" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="lblRateA" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="lblPuntosA" min="-2" max="-2" attributes="0"/>
+>>>>>>> d911a85ba57395dc9929f0587c93ae3ef13c8d98
                       </Group>
-                      <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jComboBox1" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                      <Component id="sacarCartaA" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="154" max="32767" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="lblDice" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="lblturno" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblRetoA" pref="111" max="32767" attributes="0"/>
+                  <Component id="lblRetoB" alignment="0" max="32767" attributes="0"/>
+              </Group>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
+<<<<<<< HEAD
+                          <Component id="progressA" pref="249" max="32767" attributes="0"/>
+                          <Component id="progressB" max="32767" attributes="0"/>
+=======
                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblRetoA" pref="111" max="32767" attributes="0"/>
                           <Component id="lblRetoB" alignment="0" max="32767" attributes="0"/>
@@ -137,11 +201,28 @@
                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="150" max="-2" attributes="0"/>
                           </Group>
+>>>>>>> b0330ab6432ecef622f826d61acba6af119deb28
                       </Group>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
+<<<<<<< HEAD
                   <Group type="102" attributes="0">
                       <Component id="m_ranking" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="534" max="-2" attributes="0"/>
+=======
+                  <Group type="102" alignment="1" attributes="0">
+<<<<<<< HEAD
+                      <EmptySpace pref="221" max="32767" attributes="0"/>
+                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="150" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+          </Group>
+          <Component id="apiProgress" alignment="1" max="32767" attributes="0"/>
+=======
+                      <Component id="apiProgress" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+>>>>>>> d911a85ba57395dc9929f0587c93ae3ef13c8d98
                   </Group>
               </Group>
           </Group>
@@ -149,6 +230,7 @@
               <Component id="jScrollPane1" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
+>>>>>>> b0330ab6432ecef622f826d61acba6af119deb28
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -218,8 +300,18 @@
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
+<<<<<<< HEAD
               <Component id="jScrollPane1" pref="540" max="32767" attributes="0"/>
+=======
+              <Component id="apiProgress" min="-2" pref="22" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
+<<<<<<< HEAD
+              <Component id="jScrollPane1" pref="517" max="32767" attributes="0"/>
+=======
+              <Component id="jScrollPane1" pref="541" max="32767" attributes="0"/>
+>>>>>>> d911a85ba57395dc9929f0587c93ae3ef13c8d98
+              <EmptySpace max="-2" attributes="0"/>
+>>>>>>> b0330ab6432ecef622f826d61acba6af119deb28
           </Group>
       </Group>
     </DimensionLayout>
@@ -340,6 +432,28 @@
       </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+      <SubComponents>
+        <Container class="javax.swing.JPanel" name="canvas">
+          <Properties>
+            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+              <Color id="Cursor de Punto de Mira"/>
+            </Property>
+          </Properties>
+
+          <Layout>
+            <DimensionLayout dim="0">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <EmptySpace min="0" pref="1498" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+            <DimensionLayout dim="1">
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <EmptySpace min="0" pref="799" max="32767" attributes="0"/>
+              </Group>
+            </DimensionLayout>
+          </Layout>
+        </Container>
+      </SubComponents>
     </Container>
     <Component class="javax.swing.JLabel" name="lblDice">
       <Properties>

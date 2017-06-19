@@ -74,7 +74,7 @@ public class Dijkstra
     {
         List<NodoGrafo> adyacentes = (List<NodoGrafo>) getAdyacentes(nodo);
         //Recorro los nodos que lo conectan
-        for (NodoGrafo objetivo : adyacentes) 
+        for (NodoGrafo objetivo : adyacentes)
         {
             //Si la distancia mas corta del objetivo es mayor a la distancia de
             //mas corta del nodo + la distancia del nodo al objetivo
