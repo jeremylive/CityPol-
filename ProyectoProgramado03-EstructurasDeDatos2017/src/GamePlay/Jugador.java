@@ -14,7 +14,7 @@ public class Jugador
     public Jugador()
     {
         this.name = "";
-        this.ranking = 0;
+        this.ranking = 0.0;
         this.password = "";
     }
     //Constructor

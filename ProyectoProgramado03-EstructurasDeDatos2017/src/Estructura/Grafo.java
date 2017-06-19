@@ -49,6 +49,16 @@ public class Grafo implements IObservable
         this.random = new Random();
         this.puntosEnPantalla = new ArrayList<>();
     }
+    
+    public Conexion getConexion(NodoGrafo A, NodoGrafo B){
+        for (Conexion conexion : conexiones) {
+            if(conexion.getOrigen().getName().equals(A.getName()) && conexion.getDestino().getName().equals(B.getName()))
+            {
+                return conexion;
+            }
+        }
+        return null;
+    }
 
     /**
      * Agregar nodo a la lista

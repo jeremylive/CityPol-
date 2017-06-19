@@ -1,6 +1,5 @@
 package Controlador;
 //Bibliotecas a usar
-import Estructura.Conexion;
 import Estructura.Grafo;
 import Estructura.Lugar;
 import Estructura.NodoGrafo;
@@ -9,22 +8,17 @@ import Programa.IConstants;
 import java.awt.Image;
 import java.io.IOException;
 import java.net.MalformedURLException;
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.json.simple.JSONArray;
@@ -44,6 +38,7 @@ public class JsonManager
     private Grafo grafo;
     private Iterator<JSONObject> iter;
     private URL link;
+    private boolean malaConexion;
     private final HttpClient client = HttpClients.createDefault();
     /**
      * Pido el grafo correspodiente a la ubicacion dada
@@ -67,8 +62,11 @@ public class JsonManager
             cont += aumento;
         }
         control.getApiProgress().setValue(cont);
-        
-        return grafo;
+        if(malaConexion){
+            return null;
+        }else{
+            return grafo;
+        }
     }
     
     public void getJSONFromAPI(String type, double lat, double lon, String radius) 
@@ -94,6 +92,7 @@ public class JsonManager
             System.out.println("Se ha dado un URL mal formado");
         } catch (IOException ex) {
             System.out.println("Se ha producido un error al leer el JSON del API");
+            malaConexion = true;
         } catch (URISyntaxException ex) {
             Logger.getLogger(JsonManager.class.getName()).log(Level.SEVERE, null, ex);
         }
