@@ -176,3 +176,27 @@ public class NodoThreeBB
         return valido;
     }    
 }
+
+
+   /*
+        if (nodo_auxiliar.getPadre() == null) 
+        {
+            //Nuevo nodo_auxiliar raiz es igual al nodo_auxiliar intermedio 
+            nodo_padre = new NodoThreeBB();         //Creo nodo padre
+            nodo_padre.addKey(valor_medio);         //Agrego el valor medio al nodo padre
+            nodeToSplit.setPadre(nodo_padre);       //actual -> padre
+            nodeToSplit.remove(indice_medio);       //Lo remuevo del original
+
+            derecho = new NodoThreeBB();            //Creo nodo derecho                                       
+            nodeToSplit.setDerecho(derecho);        //actual -> derecho
+            derecho.setPadre(nodo_padre);           //derecho -> padre
+            derecho.setIzquierdo(nodeToSplit);      //derecho -> izquierdo            
+            derecho.getArray_keys().add(nodeToSplit.getArray_keys().get(indice_medio+1));//Agrego en el nodo de la derecha el ultimo key del nodo actual
+            nodeToSplit.remove(indice_medio+1);       //Lo remuevo del original
+
+            raiz = nodo_padre;                      //actualizo raiz con padre
+            nodo_auxiliar = raiz;                   //actualizo aux con raiz
+            
+            nodo_auxiliar.addHijo(nodeToSplit);     //Inserto al final de array el nodo actual
+            nodo_auxiliar.addHijo(derecho);         //Inserto al final de array el nodo derecho
+*/

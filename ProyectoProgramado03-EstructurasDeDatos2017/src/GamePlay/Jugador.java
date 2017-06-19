@@ -9,14 +9,23 @@ public class Jugador
     //Variables Globales
     private String name;
     private double ranking;
+    private String password;
     //Constructor
     public Jugador()
     {
         this.name = "";
         this.ranking = 0;
+        this.password = "";
     }
     //Constructor
-    public Jugador(String name, double ranking) 
+    public Jugador(String name, double ranking, String pass) 
+    {
+        this.name = name;
+        this.ranking = ranking;
+        this.password = pass;
+    }
+    //Constructor
+    public Jugador(String name, double ranking)
     {
         this.name = name;
         this.ranking = ranking;

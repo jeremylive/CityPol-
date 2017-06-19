@@ -33,6 +33,7 @@ public class VisualMap extends javax.swing.JFrame implements Observer
     private Graphics dbg;
     private Grafo grafo;
     private boolean sacarCarta, throwDice;
+    private Ranking rank;
     /**
      * Constructor
      */
@@ -45,9 +46,20 @@ public class VisualMap extends javax.swing.JFrame implements Observer
         icono = icono.getScaledInstance(IConstants.medidaNodo * IConstants.escalaImagen, IConstants.medidaNodo * IConstants.escalaImagen, Image.SCALE_SMOOTH);
         sacarCarta = false;
         aux = null;
+        this.rank = new Ranking();
         
     }
+    //Gets and sets
+
+    public Ranking getRank() {
+        return rank;
+    }
+
+    public void setRank(Ranking rank) {
+        this.rank = rank;
+    }
     
+    //
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -56,8 +68,8 @@ public class VisualMap extends javax.swing.JFrame implements Observer
         lblA = new javax.swing.JLabel();
         lblB = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        lblRateA = new javax.swing.JLabel();
-        lblRateB = new javax.swing.JLabel();
+        ranking1 = new javax.swing.JLabel();
+        ranking2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         lblPuntosA = new javax.swing.JLabel();
         lblPuntosB = new javax.swing.JLabel();
@@ -75,6 +87,7 @@ public class VisualMap extends javax.swing.JFrame implements Observer
         jScrollPane1 = new javax.swing.JScrollPane();
         lblDice = new javax.swing.JLabel();
         apiProgress = new javax.swing.JProgressBar();
+        m_ranking = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -92,9 +105,9 @@ public class VisualMap extends javax.swing.JFrame implements Observer
 
         jLabel2.setText("Ranking Global");
 
-        lblRateA.setText("rating A");
+        ranking1.setText("rating A");
 
-        lblRateB.setText("rating B");
+        ranking2.setText("rating B");
 
         jLabel1.setText("Partida Actual");
 
@@ -137,6 +150,13 @@ public class VisualMap extends javax.swing.JFrame implements Observer
 
         lblDice.setText("DICE : ");
 
+        m_ranking.setText("Mostrar Ranking");
+        m_ranking.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                m_rankingActionPerformed(evt);
+            }
+        });
+
         jMenu1.setText("File");
 
         jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_SPACE, java.awt.event.InputEvent.ALT_MASK));
@@ -168,13 +188,13 @@ public class VisualMap extends javax.swing.JFrame implements Observer
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                     .addComponent(lblB, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(lblRateB)
+                                    .addComponent(ranking2)
                                     .addGap(55, 55, 55)
                                     .addComponent(lblPuntosB))
                                 .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                     .addComponent(lblA, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(lblRateA)
+                                    .addComponent(ranking1)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(lblPuntosA))))
                         .addGap(32, 32, 32)
@@ -188,7 +208,12 @@ public class VisualMap extends javax.swing.JFrame implements Observer
                                 .addComponent(jLabel5)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(lblDice)
-                                .addGap(48, 48, 48)))
+                                .addGap(48, 48, 48))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(apiProgress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(29, 29, 29)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblturno)
                             .addComponent(jButton1))
@@ -205,12 +230,12 @@ public class VisualMap extends javax.swing.JFrame implements Observer
                                     .addComponent(progressB, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 167, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jLabel4)
                                 .addGap(150, 150, 150))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(apiProgress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(m_ranking)
+                        .addGap(534, 534, 534))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jScrollPane1)
                 .addContainerGap())
@@ -234,7 +259,7 @@ public class VisualMap extends javax.swing.JFrame implements Observer
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(lblA, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblPuntosA)
-                                    .addComponent(lblRateA)))
+                                    .addComponent(ranking1)))
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,7 +270,7 @@ public class VisualMap extends javax.swing.JFrame implements Observer
                             .addComponent(progressB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(lblB, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(lblRateB)
+                                .addComponent(ranking2)
                                 .addComponent(lblPuntosB)
                                 .addComponent(lblRetoB))))
                     .addGroup(layout.createSequentialGroup()
@@ -258,10 +283,15 @@ public class VisualMap extends javax.swing.JFrame implements Observer
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(sacarCartaA)
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addComponent(apiProgress, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(m_ranking)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(apiProgress, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 540, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -278,7 +308,27 @@ public class VisualMap extends javax.swing.JFrame implements Observer
         // TODO add your handling code here:
         
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void m_rankingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_m_rankingActionPerformed
+        // TODO add your handling code here:
+        getRank().setVisible(true);
+        
+    }//GEN-LAST:event_m_rankingActionPerformed
     //Gets and Sets--------------------------------------------------------
+    public void setRank1(String pt){
+        ranking1.setText(pt);
+    }
+    public void setRank2(String pt){
+        ranking2.setText(pt);
+    }
+    public void setname1(String pt){
+        ranking1.setText(pt);
+    }
+    public void setname2(String pt){
+        ranking2.setText(pt);
+    }
+        
+
     public Image getIcono() {
         return icono;
     }
@@ -316,10 +366,10 @@ public class VisualMap extends javax.swing.JFrame implements Observer
         return lblDice;
     }
     public JLabel getLblRateA() {
-        return lblRateA;
+        return ranking1;
     }
     public JLabel getLblRateB() {
-        return lblRateB;
+        return ranking2;
     }
     public JLabel getLblRetoA() {
         return lblRetoA;
@@ -367,10 +417,10 @@ public class VisualMap extends javax.swing.JFrame implements Observer
         this.lblPuntosB = lblPuntosB;
     }
     public void setLblRateA(JLabel lblRateA) {
-        this.lblRateA = lblRateA;
+        this.ranking1 = lblRateA;
     }
     public void setLblRateB(JLabel lblRateB) {
-        this.lblRateB = lblRateB;
+        this.ranking2 = lblRateB;
     }
     public void setLblRetoA(JLabel lblRetoA) {
         this.lblRetoA = lblRetoA;
@@ -484,13 +534,14 @@ public class VisualMap extends javax.swing.JFrame implements Observer
     private javax.swing.JLabel lblDice;
     private javax.swing.JLabel lblPuntosA;
     private javax.swing.JLabel lblPuntosB;
-    private javax.swing.JLabel lblRateA;
-    private javax.swing.JLabel lblRateB;
     private javax.swing.JLabel lblRetoA;
     private javax.swing.JLabel lblRetoB;
     private javax.swing.JLabel lblturno;
+    private javax.swing.JButton m_ranking;
     private javax.swing.JProgressBar progressA;
     private javax.swing.JProgressBar progressB;
+    private javax.swing.JLabel ranking1;
+    private javax.swing.JLabel ranking2;
     private javax.swing.JButton sacarCartaA;
     // End of variables declaration//GEN-END:variables
 

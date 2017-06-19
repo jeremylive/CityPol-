@@ -351,4 +351,11 @@ public class CityPoliTablero extends Thread {
         System.out.println("PArtida terminada");
     }
 
+    /**
+     * Muestro en la itnerfaz principal, los datos del juego
+     */
+    public void muestroInfo()
+    {
+        
+    }
 }

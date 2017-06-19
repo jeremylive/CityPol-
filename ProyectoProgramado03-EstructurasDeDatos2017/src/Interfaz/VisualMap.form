@@ -65,7 +65,7 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
@@ -77,14 +77,14 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="lblB" min="-2" pref="84" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="lblRateB" min="-2" max="-2" attributes="0"/>
+                                  <Component id="ranking2" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
                                   <Component id="lblPuntosB" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="lblA" min="-2" pref="84" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="lblRateA" min="-2" max="-2" attributes="0"/>
+                                  <Component id="ranking1" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
                                   <Component id="lblPuntosA" min="-2" max="-2" attributes="0"/>
                               </Group>
@@ -105,6 +105,14 @@
                               <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                           </Group>
                       </Group>
+                  </Group>
+                  <Group type="102" attributes="0">
+                      <Component id="apiProgress" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="lblturno" min="-2" max="-2" attributes="0"/>
                           <Component id="jButton1" min="-2" max="-2" attributes="0"/>
@@ -125,15 +133,15 @@
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace pref="167" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="150" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="apiProgress" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="m_ranking" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="534" max="-2" attributes="0"/>
                   </Group>
               </Group>
           </Group>
@@ -164,7 +172,7 @@
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="lblA" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
                                   <Component id="lblPuntosA" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="lblRateA" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="ranking1" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
@@ -180,7 +188,7 @@
                           <Component id="progressB" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="lblB" alignment="3" min="-2" pref="26" max="-2" attributes="0"/>
-                              <Component id="lblRateB" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="ranking2" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="lblPuntosB" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="lblRetoB" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
@@ -199,10 +207,18 @@
                       </Group>
                   </Group>
               </Group>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                      <Component id="apiProgress" min="-2" pref="22" max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="m_ranking" min="-2" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="apiProgress" min="-2" pref="22" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="541" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="540" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -224,12 +240,12 @@
         <Property name="text" type="java.lang.String" value="Ranking Global"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblRateA">
+    <Component class="javax.swing.JLabel" name="ranking1">
       <Properties>
         <Property name="text" type="java.lang.String" value="rating A"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblRateB">
+    <Component class="javax.swing.JLabel" name="ranking2">
       <Properties>
         <Property name="text" type="java.lang.String" value="rating B"/>
       </Properties>
@@ -331,6 +347,14 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JProgressBar" name="apiProgress">
+    </Component>
+    <Component class="javax.swing.JButton" name="m_ranking">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Mostrar Ranking"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="m_rankingActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

@@ -27,7 +27,6 @@ public class CityPoli
     //Constructor
     public CityPoli()
     {
-        this.controlador_login = new LoginManager();
         this.controlador_json = new JsonManager();
         this.controlador_users = new UserFileManager();
         this.control_visual_map = null;
@@ -39,6 +38,7 @@ public class CityPoli
         return controlador_login.getArbol_b_asterisco();
     }
     public LoginManager getControlador_login() {
+        this.controlador_login = new LoginManager();
         return controlador_login;
     }
     public void setControlador_login(LoginManager controlador_login) {

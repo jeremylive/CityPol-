@@ -52,7 +52,7 @@ public class ThreeBB {
         this.nodo_auxiliar = new NodoThreeBB();
         this.derecho = new NodoThreeBB();
         this.izquierdo = new NodoThreeBB();
-        this.indice_medio = (2*llaves_totales)/3;
+        this.indice_medio = 2;
         this.largo = 0;
         this.nodo_auxiliar = null;
         this.derecho = null;
@@ -115,72 +115,84 @@ public class ThreeBB {
     /**
      * 
      */
-    public boolean logicaCasosArbolBB()
+    public boolean logicaCasosArbolBB(Jugador pJugador)
     {
-        if(largo == max_keys+1) //largo==4
+        //Caso izquierdo
+        if(nodo_auxiliar.getIzquierdo() != null &&  nodo_auxiliar.getDerecho() == null)
         {
-            //Caso izquierdo
-            if(nodo_auxiliar.getIzquierdo() != null &&  nodo_auxiliar.getDerecho() == null)
+            if(nodo_auxiliar.getIzquierdo().getCant_keys() < 4)
             {
-                if(nodo_auxiliar.getIzquierdo().getCant_keys() < 4)
-                {
-                    //Inseto en el padre el jugador
-                    valor_medio = nodo_auxiliar.getKey(indice_medio);
-                    nodo_padre.addKey(valor_medio);                      //Agrego el valor inicial al nodo padre
-                    //Elimino el jugador del nodo actual
-                    nodo_auxiliar.remove(0);                             //Lo remuevo del original
-                    nodo_auxiliar.setPadre(nodo_padre);                  //actual -> padre
-                    //Obtengo el jugador que se inserto en padre anteriormente
-                    player_aux = nodo_auxiliar.getPadre().getArray_keys().get(index_padre_remove-1);
-                    //Inserto en el nodo adyasente izquierdo el jugador
-                    nodo_auxiliar.getPadre().getArray_hijos().get(index_padre_remove-1).addKey(player_aux);
-                    nodo_auxiliar.getPadre().remove(index_padre_remove-1);    //Remuevo la key incio del nodo_auxiliar actual
+                //Inseto en el padre el jugador
+                valor_medio = nodo_auxiliar.getKey(0);//indice_medio);
+                nodo_padre.addKey(valor_medio);                      //Agrego el valor inicial al nodo padre
+                //Elimino el jugador del nodo actual
+                nodo_auxiliar.remove(0);                             //Lo remuevo del original
+                nodo_auxiliar.setPadre(nodo_padre);                  //actual -> padre
+                
+                index_padre_remove = nodo_auxiliar.getPadre().addKey(pJugador);//Obtengo index donde se inserto la key en el nodo padre 
 
-                    if(player_aux != null)      //Verifico que el key no sea nulo
-                    {   
-                        nodo_auxiliar.getIzquierdo().addKey(player_aux); //Inserto alfabeticamente en el array del nodo_auxiliar izquierdo   
-                        nodo_auxiliar.getPadre().removeKey(player_aux);  //Borro el key en padre
-                        
-                        nodo_auxiliar.getIzquierdo().setDerecho(nodo_auxiliar);  //izq->actual
-                        nodo_auxiliar.setIzquierdo(nodo_auxiliar.getIzquierdo());//actual->izq
-                        
-                        nodo_auxiliar.getIzquierdo().setPadre(nodo_auxiliar.getPadre());
-                        nodo_auxiliar.setPadre(raiz);
-                    } 
-                    return true;
+                //Obtengo el jugador que se inserto en padre anteriormente
+                player_aux = nodo_auxiliar.getPadre().getArray_keys().get(index_padre_remove-1);
+                //Inserto en el nodo adyasente izquierdo el jugador
+                nodo_auxiliar.getPadre().getArray_hijos().get(index_padre_remove-1).addKey(player_aux);
+                nodo_auxiliar.getPadre().remove(index_padre_remove-1);    //Remuevo la key incio del nodo_auxiliar actual
+
+                if(player_aux != null)      //Verifico que el key no sea nulo
+                { 
+                    nodo_auxiliar.getIzquierdo().setDerecho(nodo_auxiliar);  //izq->actual
+                    nodo_auxiliar.setIzquierdo(nodo_auxiliar.getIzquierdo());//actual->izq
+
+                    nodo_auxiliar.getIzquierdo().setPadre(nodo_auxiliar.getPadre()); //Seteo padre en nodo izquierdo
+                    nodo_auxiliar.setPadre(nodo_auxiliar.getPadre());                //Seteo padre en nodo actual
                 } 
-            }
-            //Caso si el nodo adyasente es nulo
-            if(nodo_auxiliar.getDerecho() != null && nodo_auxiliar.getIzquierdo() == null)
-            {
-                //Caso derecho
-                if(nodo_auxiliar.getDerecho().getCant_keys() < 4)
-                {
-                    //Inseto en el padre el jugador
-                    valor_medio = nodo_auxiliar.getKey(indice_medio);
-                    nodo_padre.addKey(valor_medio);                      //Agrego el valor inicial al nodo padre
-                    //Elimino el jugador del nodo actual
-                    nodo_auxiliar.remove(0);                             //Lo remuevo del original
-                    nodo_auxiliar.setPadre(nodo_padre);                  //actual -> padre
-                    //Obtengo el jugador que se inserto en padre anteriormente
-                    player_aux = nodo_auxiliar.getPadre().getArray_keys().get(index_padre_remove+1);
-                    //Inserto en el nodo adyasente izquierdo el jugador
-                    nodo_auxiliar.getPadre().getArray_hijos().get(index_padre_remove+1).addKey(player_aux);
-                    nodo_auxiliar.getPadre().remove(index_padre_remove+1);    //Remuevo la key incio del nodo_auxiliar actual
-
-                    //Verifico que el key no sea nulo
-                    if(player_aux != null)
-                    {
-                        //Inserto alfabeticamente en el array del nodo_auxiliar derecho
-                        nodo_auxiliar.getDerecho().addKey(player_aux);
-                        //Borro el key en padre
-                        nodo_auxiliar.getPadre().removeKey(player_aux);
-                    }     
-                    return true;
-                }
-            }
-
+                return true;
+            } 
         }
+        //Caso si el nodo adyasente es nulo
+        if(nodo_auxiliar.getDerecho() != null && nodo_auxiliar.getIzquierdo() == null)
+        {
+            //Caso derecho
+            if(nodo_auxiliar.getDerecho().getCant_keys() < 4)
+            {
+                //Inseto en el padre el jugador
+                valor_medio = nodo_auxiliar.getKey(nodo_auxiliar.getCant_keys()-1);//indice_medio);
+                nodo_padre.addKey(valor_medio);                      //Agrego el valor inicial al nodo padre
+                //Elimino el jugador del nodo actual
+                nodo_auxiliar.remove(nodo_auxiliar.getCant_keys()-1);//0);                             //Lo remuevo del original
+                nodo_auxiliar.setPadre(nodo_padre);                  //actual -> padre}
+                
+                index_padre_remove = nodo_auxiliar.getPadre().addKey(pJugador);//Obtengo index donde se inserto la key en el nodo padre 
+                    
+                //Obtengo el jugador que se inserto en padre anteriormente
+                player_aux = nodo_auxiliar.getPadre().getArray_keys().get(index_padre_remove+1);
+                //Inserto en el nodo adyasente izquierdo el jugador
+                nodo_auxiliar.getPadre().getArray_hijos().get(index_padre_remove+1).addKey(player_aux);
+                nodo_auxiliar.getPadre().remove(index_padre_remove+1);    //Remuevo la key incio del nodo_auxiliar actual
+
+                //Verifico que el key no sea nulo
+                if(player_aux != null)
+                {
+                    nodo_auxiliar.getDerecho().setIzquierdo(nodo_auxiliar);        //izq->actual
+                    nodo_auxiliar.setDerecho(nodo_auxiliar.getDerecho());          //actual->izq
+
+                    nodo_auxiliar.getDerecho().setPadre(nodo_auxiliar.getPadre()); //Seteo padre en nodo izquierdo
+                    nodo_auxiliar.setPadre(nodo_auxiliar.getPadre());              //Seteo padre en nodo actual   
+                }     
+                return true;
+            }
+        }
+        //Caso cuando los nodos adyasentes estan llenos
+        if(nodo_auxiliar.getDerecho() != null || nodo_auxiliar.getIzquierdo() != null)
+        {
+            if(nodo_auxiliar.getDerecho().getCant_keys() > 3 || nodo_auxiliar.getIzquierdo().getCant_keys() > 3)
+            {
+                valor_medio = nodo_auxiliar.getKey(indice_medio);
+                nodo_auxiliar.getPadre().addKey(valor_medio);
+
+            }       
+            return true;
+        }
+    
         return false;
     }
     /**
@@ -215,44 +227,35 @@ public class ThreeBB {
                     if (nodo_auxiliar.getCant_keys() <= max_keys) { 
                         break;
                     }
+                    
                     //Caso cuando las keys son 4--------------------------------
-                    largo = nodo_auxiliar.getCant_keys();       //cantidad de llaves    
- 
-                    nodo_auxiliar.setPadre(new NodoThreeBB());  //Seteo el padre como un uevo nodo
-                    raiz = nodo_auxiliar.getPadre();            //raiz -> padre
+                    //nodo_auxiliar.setPadre(new NodoThreeBB());  //Seteo el padre como un uevo nodo
+                    //raiz = nodo_auxiliar.getPadre();            //raiz -> padre
                     
-                    //Obtengo index donde se inserto la key en el nodo padre 
-                    index_padre_remove = nodo_auxiliar.getPadre().addKey(pJugador);
-                    
-                    //Los dos casos principales
-                    if(!logicaCasosArbolBB())
+                    //Los 3 casos principales
+                    if(!logicaCasosArbolBB(pJugador))   //!false
                     {
                         //Caso SPLIT, Equilibrio el Arbol
                         System.out.println("split.......");
-                        split(nodo_auxiliar);
+                        split(nodo_auxiliar, pJugador);
                         break;
                     }else{
                         break;
                     }
                 }
-                
-                //Menor o igual
-                if (pJugador.getName().compareTo(llave_menor.getName()) <= 0) {
+                //Busqueda en el arbol, alfabeticamente
+                if (pJugador.getName().compareTo(llave_menor.getName()) <= 0) { //Busqueda, menores
                     nodo_auxiliar = nodo_auxiliar.getHijo(0);
                     continue;
                 }
-
-                //Mayores
-                if (pJugador.getName().compareTo(llave_mayor.getName()) > 0) {
+                if (pJugador.getName().compareTo(llave_mayor.getName()) > 0) {  //Busqueda, mayores
                     nodo_auxiliar = nodo_auxiliar.getHijo(llaves_totales);
                     continue;
                 }
-                
-                //Busqueda interna de nodos
-                for (int i = 1; i < nodo_auxiliar.getCant_keys(); i++) {
+                for (int i = 1; i < nodo_auxiliar.getCant_keys(); i++) {        //Busqueda interna de nodos
                     anterior = nodo_auxiliar.getKey(i - 1);
                     siguiente = nodo_auxiliar.getKey(i);
-                    //Obtengo los nodos del arbol de izquierda a derecha
+                    //Obtengo el nodo donde se debe insertar alfabeticamente 
                     if (pJugador.getName().compareTo(anterior.getName()) > 0 && pJugador.getName().compareTo(siguiente.getName()) <= 0) {
                         nodo_auxiliar = nodo_auxiliar.getHijo(i);
                         break;
@@ -269,58 +272,57 @@ public class ThreeBB {
     /**
      *  EQUILIBRIA EL ARBOL B ASTERISCO, SPLIT
      * 
-     * @param nodeToSplit 
+     * @param nodo_auxiliar 
      */
-    private void split(NodoThreeBB nodeToSplit) 
+    private void split(NodoThreeBB pNodo, Jugador pJugador) 
     {
-        //Inicializo no auxiliar al nodo_auxiliar que se le hace el split
-        nodo_auxiliar = nodeToSplit;
-        //Inicializo el total de llaves
-        setLlaves_totales(nodo_auxiliar.getCant_keys());
-        setTotal_hijos(nodo_auxiliar.getCant_hijos());
-        //setIndice_medio((2*llaves_totales) / 3);         //Inicializo el indice medio, osea 2/3* el total de llaves 
-        setValor_medio(nodo_auxiliar.getKey(indice_medio)); //Obtengo la pasicion media
+        nodo_auxiliar = pNodo;                                  //Inicializo no auxiliar al nodo_auxiliar que se le hace el split
+        setLlaves_totales(nodo_auxiliar.getCant_keys());        //Inicializo el total de llaves
+        setTotal_hijos(nodo_auxiliar.getCant_hijos());          //Inicializo el total de hijos
+        setIndice_medio((2*llaves_totales) / 3);                //Inicializo el indice medio, osea 2/3* el total de llaves 
+        setValor_medio(nodo_auxiliar.getKey(indice_medio));     //Obtengo la pasicion media
        
-        System.out.println("indice intermedio "+indice_medio);
         /*Caso cuando el padre es nulo*/
         if (nodo_auxiliar.getPadre() == null) 
         {
             //Nuevo nodo_auxiliar raiz es igual al nodo_auxiliar intermedio 
-            nodo_padre = new NodoThreeBB();         //Creo nodo padre
-            nodo_padre.addKey(valor_medio);         //Agrego el valor medio al nodo padre
-            nodeToSplit.setPadre(nodo_padre);       //actual -> padre
-            nodeToSplit.remove(indice_medio);       //Lo remuevo del original
+            nodo_padre = new NodoThreeBB();           //Creo nodo padre
+            nodo_padre.addKey(valor_medio);           //Agrego el valor medio al nodo padre
+            pNodo.setPadre(nodo_padre);               //actual -> padre
+            
+            raiz.remove(indice_medio);               //Lo remuevo del original
 
-            derecho = new NodoThreeBB();            //Creo nodo derecho                                       
-            nodeToSplit.setDerecho(derecho);        //actual -> derecho
-            derecho.setPadre(nodo_padre);           //derecho -> padre
-            derecho.setIzquierdo(nodeToSplit);      //derecho -> izquierdo            
-            derecho.getArray_keys().add(nodeToSplit.getArray_keys().get(indice_medio+1));//Agrego en el nodo de la derecha el ultimo key del nodo actual
-            nodeToSplit.remove(indice_medio+1);       //Lo remuevo del original
+            derecho = new NodoThreeBB();              //Creo nodo derecho                                       
+            pNodo.setDerecho(derecho);                //actual -> derecho
+            derecho.setIzquierdo(pNodo);              //derecho -> izquierdo(actual)            
+            derecho.setPadre(nodo_padre);             //derecho -> padre
+
+            derecho.getArray_keys().add(pNodo.getArray_keys().get(indice_medio-1));//Agrego en el nodo de la derecha el ultimo key del nodo actual
+            raiz.remove(indice_medio+1);            //Lo remuevo del original
 
             raiz = nodo_padre;                      //actualizo raiz con padre
             nodo_auxiliar = raiz;                   //actualizo aux con raiz
             
-            nodo_auxiliar.addHijo(nodeToSplit);     //Inserto al final de array el nodo actual
-            nodo_auxiliar.addHijo(derecho);         //Inserto al final de array el nodo derecho
+            raiz.addHijo(pNodo);                //Inserto al final de array el nodo actual
+            raiz.addHijo(derecho);             //Inserto al final de array el nodo derecho
 
 
         //Si padre no es nulo
         } else {
-            nodo_padre = new NodoThreeBB();
-            nodeToSplit.setPadre(nodo_padre);   //seteo el nuevo padre
+            nodo_padre = new NodoThreeBB();             //Creo nodo padre
+            pNodo.setPadre(nodo_padre);                 //seteo el nuevo padre
    
-            logicaCasosArbolBB();               //
+            logicaCasosArbolBB(pJugador);                       //Logica de casos nodos adyasentes
    
             if (nodo_padre.getCant_keys() > max_keys) { //Si nodo_auxiliar esta lleno(hijos = 4)
-                split(nodo_padre);                      //Realizo split nuevamente
+                split(nodo_padre, pJugador);                      //Realizo split nuevamente
             }
         }        
     }
 
     //PRUEBA
-    public String getString(NodoThreeBB node, String prefix, boolean isTail) {
-        
+    public String getString(NodoThreeBB node, String prefix, boolean isTail) 
+    {
         if (node == null) {
             return "El arbol b* no tiene nodos";
         } else {
@@ -340,7 +342,6 @@ public class ThreeBB {
                 }
             }
             builder.append("\n");
-            System.out.println("Cantidad de hijos"+node.getCant_hijos());
             if (node.getArray_hijos() != null) {
                 for (int i = 0; i < node.getCant_hijos() - 1; i++) {
                     NodoThreeBB obj = node.getHijo(i);
